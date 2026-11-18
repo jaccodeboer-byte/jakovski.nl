@@ -395,7 +395,6 @@ body.dark #plcd{box-shadow:inset 0 0 0 3px #1b2233,0 0 34px rgba(190,255,120,.75
       <div class="ch" id="ch1">
         <img src="operator.gif" alt="Jacco on television: long reddish hair, greying beard, round glasses, gold chain. He winks.">
                 <canvas id="sing" width="600" height="600" aria-hidden="true"></canvas>
-        <video id="hairoff" src="wind6off.mp4" playsinline preload="auto" aria-hidden="true" style="display:none"></video>
         <span class="bug" id="bug">JTV</span>
         <i class="glint" aria-hidden="true"></i>
         <div class="sing-pick" id="singPick" role="group" aria-label="Make Jacco sing"><span>make me sing:</span><button type="button" data-side="0"></button><button type="button" data-side="1"></button></div>
@@ -907,87 +906,24 @@ sing.img.onload = () => { const j = el("canvas"); j.width = j.height = 600; cons
   g.globalCompositeOperation = "destination-in"; const m = g.createRadialGradient(302, 342, 44, 302, 348, 92); m.addColorStop(0, "#000"); m.addColorStop(1, "rgba(0,0,0,0)"); g.fillStyle = m; g.fillRect(0, 0, 600, 600);
   sing.jaw = j; singDraw(0); };
 sing.img.src = "operator-still.jpg";
-/* Wind in the hair: each fan speed plays one of Jacco's six wind clips (wind1..6.mp4), crossfading between speeds. At MAX the hair (hairfly.png) blows off the bald
-   head (wind6off.mp4, the rest of the MAX clip), a kiss lands on the scalp, and the hair grows back from the roots outward. */
-const loadImg = src => { const im = new Image(); im.src = src; return im; };
-/* wind1..wind6.mp4: Jacco's own animation of six wind strengths, each aligned on the face and looping back and forth */
-const WV = [null]; for (let k = 1; k <= 6; k++) { const v = document.createElement("video"); v.src = "wind" + k + ".mp4"; v.muted = true; v.loop = true; v.playsInline = true; v.setAttribute("playsinline", ""); v.preload = k <= 2 ? "auto" : "metadata"; WV.push(v); }
+/* Wind in the hair: each fan speed plays one of Jacco's four wind clips (wind1..4.mp4), crossfading between speeds.
+   They come from his own animation of the portrait in the wind, each aligned on the face and looping softly. */
+const WV = [null]; for (let k = 1; k <= 4; k++) { const v = document.createElement("video"); v.src = "wind" + k + ".mp4"; v.muted = true; v.loop = true; v.playsInline = true; v.setAttribute("playsinline", ""); v.preload = k <= 2 ? "auto" : "metadata"; WV.push(v); }
 const WIN = { cur: 0, prev: 0, t: 0 };
-const HAIR = { bald: loadImg("bald.jpg"), fly: loadImg("hairfly.png"), kiss: loadImg("kiss.png"), grow: loadImg("grow.png"), state: "on", t0: 0, ph: 0 };
-const KISS = { x: 323, y: 107, w: 69, h: 60 };
-const FAN = { speed: 1, broken: false, angle: 0, wind: 0, maxT: 0 };
-const WIND = [0, .2, .35, .55, .8, 1.05, 1.45];
-const ok = im => im && im.complete && im.naturalWidth;
+const FAN = { speed: 1, broken: false, angle: 0, wind: 0 };
+const WIND = [0, .3, .6, .95, 1.4];
 let windLast = 0, mainImg = null;
 function drawPhotos(g, now) {
-  const dt = Math.min(.05, (now - (windLast || now)) / 1000); windLast = now; const st = HAIR.state, T = now - HAIR.t0;
-  if (st === "on") {
-    const want = FAN.broken ? 0 : FAN.speed;
-    if (want !== WIN.cur) { WIN.prev = WIN.cur; WIN.cur = want; WIN.t = now; const v = WV[want]; if (v) { v.preload = "auto"; if (want === 6) try { v.currentTime = 1.9; } catch (e) {} v.play().catch(() => {}); } }
-    WV.forEach((v, k) => { if (v && k !== WIN.cur && k !== WIN.prev && !v.paused) v.pause(); });
-    const layer = k => { const v = WV[k]; return k && v && v.readyState >= 2 ? v : sing.img; };
-    const f = Math.min(1, (now - WIN.t) / 450);
-    g.drawImage(layer(WIN.prev), 0, 0, 600, 600); if (f < 1) g.globalAlpha = f; g.drawImage(layer(WIN.cur), 0, 0, 600, 600); g.globalAlpha = 1;
-    if (f >= 1 && WIN.prev !== WIN.cur) { const pv = WV[WIN.prev]; if (pv) pv.pause(); WIN.prev = WIN.cur; }
-    const live = WIN.cur && WV[WIN.cur].readyState >= 2; mainImg = live ? null : sing.img; return live ? 6 : 0;
-  }
-  if (st === "video") {                       /* the MAX clip continues into its own blow-off: same frame at the cut */
-    const v = $("#hairoff");
-    if (v.readyState >= 2) g.drawImage(v, 0, 0, 600, 600); else g.drawImage(WV[6].readyState >= 2 ? WV[6] : HAIR.bald, 0, 0, 600, 600);
-    if (!WV[6].paused && v.currentTime > .2) WV[6].pause();
-    mainImg = HAIR.bald; return 6;
-  }
-  if (st === "flying" && ok(HAIR.fly)) {        // fallback when the video cannot play
-    g.drawImage(HAIR.bald, 0, 0, 600, 600); mainImg = HAIR.bald;
-    const q = Math.min(1, T / 1600), e = q * q, sh = (1 - q) * 6 * Math.sin(now / 17);
-    g.save(); g.globalAlpha = 1 - Math.max(0, (q - .55) / .45);
-    g.translate(305 - e * 620 + sh, 230 - q * 170 - e * 120); g.rotate(-e * 1.1); g.scale(1 + .25 * q, 1 + .25 * q);
-    g.drawImage(HAIR.fly, -305, -230, 600, 600); g.restore(); return 6;
-  }
-  if (st === "gone") {                          /* bald; the last video frame melts into the bald photo, then a kiss lands */
-    g.drawImage(HAIR.bald, 0, 0, 600, 600); mainImg = HAIR.bald;
-    const v = $("#hairoff"); if (T < 400 && v.readyState >= 2) { g.globalAlpha = 1 - T / 400; g.drawImage(v, 0, 0, 600, 600); g.globalAlpha = 1; }
-    drawKiss(g, T - 500); return 6;
-  }
-  if (st === "growing") { drawGrowth(g, T); mainImg = T > 4500 ? sing.img : HAIR.bald; return 6; }
-  g.drawImage(sing.img, 0, 0, 600, 600); mainImg = sing.img; return 0;
+  windLast = now;
+  const want = FAN.speed;
+  if (want !== WIN.cur) { WIN.prev = WIN.cur; WIN.cur = want; WIN.t = now; const v = WV[want]; if (v) { v.preload = "auto"; v.play().catch(() => {}); } }
+  WV.forEach((v, k) => { if (v && k !== WIN.cur && k !== WIN.prev && !v.paused) v.pause(); });
+  const layer = k => { const v = WV[k]; return k && v && v.readyState >= 2 ? v : sing.img; };
+  const f = Math.min(1, (now - WIN.t) / 450);
+  g.drawImage(layer(WIN.prev), 0, 0, 600, 600); if (f < 1) g.globalAlpha = f; g.drawImage(layer(WIN.cur), 0, 0, 600, 600); g.globalAlpha = 1;
+  if (f >= 1 && WIN.prev !== WIN.cur) { const pv = WV[WIN.prev]; if (pv) pv.pause(); WIN.prev = WIN.cur; }
+  const live = WIN.cur && WV[WIN.cur].readyState >= 2; mainImg = live ? null : sing.img; return live ? 6 : 0;
 }
-function drawKiss(g, since) {
-  if (!ok(HAIR.kiss) || since < 0) return;
-  const q = Math.min(1, since / 700), e = 1 - Math.pow(1 - q, 3), land = since > 700 && since < 950 ? Math.sin((since - 700) / 250 * Math.PI) * .12 : 0;
-  g.save(); g.translate(KISS.x + KISS.w / 2 - (1 - e) * 420, KISS.y + KISS.h / 2 - (1 - e) * 140); g.rotate((1 - e) * -.9);
-  g.scale((1 + (1 - e) * 1.4) * (1 + land), (1 + (1 - e) * 1.4) * (1 - land)); g.globalAlpha = Math.min(1, q * 2);
-  g.drawImage(HAIR.kiss, -KISS.w / 2, -KISS.h / 2, KISS.w, KISS.h); g.restore();
-}
-/* Growing back: grow.png holds, per pixel, how far it is from the roots (red) and whether it is face or scalp (green).
-   The hair of the portrait appears from the roots outward, its ends last; the face eases from the bald one to the usual one,
-   and with it the kiss fades. */
-const GROW = { ready: false };
-function growPrep() {
-  const c = el("canvas"); c.width = c.height = 600; const x = c.getContext("2d", { willReadFrequently: true });
-  x.drawImage(HAIR.grow, 0, 0, 600, 600); const gm = x.getImageData(0, 0, 600, 600).data;
-  x.drawImage(sing.img, 0, 0, 600, 600); const hair = x.getImageData(0, 0, 600, 600).data;
-  x.drawImage(HAIR.bald, 0, 0, 600, 600); drawKiss(x, 5000); const bald = x.getImageData(0, 0, 600, 600).data;
-  const n = 360000, dist = new Float32Array(n), face = new Uint8Array(n);
-  for (let i = 0; i < n; i++) { dist[i] = gm[4 * i] / 255 * 300; face[i] = gm[4 * i + 1] > 127 ? 1 : 0; }
-  Object.assign(GROW, { dist, face, hair, bald, out: x.createImageData(600, 600), ready: true });
-}
-function drawGrowth(g, T) {
-  if (!GROW.ready) { if (ok(HAIR.grow) && ok(HAIR.bald) && ok(sing.img)) growPrep(); else { g.drawImage(HAIR.bald, 0, 0, 600, 600); return; } }
-  const q = Math.min(1, T / 6500), ease = q * q * (3 - 2 * q), reach = -20 + ease * 340, faceMix = Math.min(1, Math.max(0, (q - .15) / .7));
-  const { dist, face, hair, bald, out } = GROW, o = out.data;
-  for (let i = 0, p = 0; i < 360000; i++, p += 4) {
-    let a = face[i] ? faceMix : (reach - dist[i]) / 22;
-    a = a < 0 ? 0 : a > 1 ? 1 : a;
-    o[p] = bald[p] + (hair[p] - bald[p]) * a; o[p + 1] = bald[p + 1] + (hair[p + 1] - bald[p + 1]) * a; o[p + 2] = bald[p + 2] + (hair[p + 2] - bald[p + 2]) * a; o[p + 3] = 255;
-  }
-  growCv.getContext("2d").putImageData(out, 0, 0); g.drawImage(growCv, 0, 0);
-  if (q >= 1) { HAIR.state = "on"; HAIR.ph = 0; }
-}
-const growCv = el("canvas"); growCv.width = growCv.height = 600;
-const vid = $("#hairoff");
-function videoDone() { if (HAIR.state !== "video") return; HAIR.state = "gone"; HAIR.t0 = performance.now(); lcd("BALD. BUT LOVED."); }
-vid.addEventListener("ended", videoDone);
 const snapCv = el("canvas"); snapCv.width = snapCv.height = 600; const jawCv = el("canvas"); jawCv.width = jawCv.height = 600;
 function jawLive(src) {
   const g = jawCv.getContext("2d"); g.globalCompositeOperation = "source-over"; g.clearRect(0, 0, 600, 600);
@@ -1005,21 +941,21 @@ function jawFor(img) {
 }
 function singDraw(d, w, now) {
   if (!sing.jaw) return; const g = sing.cv.getContext("2d"); if (w == null) w = 1; now = now || performance.now();
-  const k = drawPhotos(g, now); if (HAIR.state === "video") return;
+  const k = drawPhotos(g, now);
   if (!mainImg && d >= .7) { const sc = snapCv.getContext("2d", { willReadFrequently: true }); sc.globalCompositeOperation = "copy"; sc.drawImage(sing.cv, 0, 0);
     /* hair blowing across the mouth: then the mouth stays as the clip shows it, a hole on top of hair looks wrong */
     const px = sc.getImageData(262, 284, 80, 26).data; let hair = 0;
     for (let i = 0; i < px.length; i += 16) { const r = px[i], gg = px[i + 1], b = px[i + 2], mx = Math.max(r, gg, b), mn = Math.min(r, gg, b); if (mx > 115 && mx === r && (mx - mn) / mx > .35) { const hue = 60 * (gg - b) / (mx - mn); if (hue > 20 && hue < 48) hair++; } }
     sing.hairOver += ((hair / (px.length / 16) > .1 ? 1 : 0) - sing.hairOver) * .25;
     if (sing.hairOver > .5) return; d *= 1 - sing.hairOver * 2; }
-  if (k <= 1 && HAIR.state === "on" && sing.blink >= 0 && sing.eyes.complete && sing.eyes.naturalWidth) g.drawImage(sing.eyes, Math.min(5, Math.floor(sing.blink)) * 140, 0, 140, 30, 236, 198, 140, 30);
+  if (k <= 1 && sing.blink >= 0 && sing.eyes.complete && sing.eyes.naturalWidth) g.drawImage(sing.eyes, Math.min(5, Math.floor(sing.blink)) * 140, 0, 140, 30, 236, 198, 140, 30);
   if (d < .7) return;
   const hw = 30 + 18 * w, t = .5 - hw / 96, ye = 291 + 26 * t * (1 - t), cy = 595 - ye;      // narrow mouth for dark vowels, wide for bright ones
   g.fillStyle = "#1b0606"; g.beginPath(); g.moveTo(302 - hw, ye); g.quadraticCurveTo(302, cy, 302 + hw, ye); g.quadraticCurveTo(302, cy + d * 2.1, 302 - hw, ye); g.fill();
   g.save(); g.clip(); g.fillStyle = "#e6dccb"; g.fillRect(302 - hw + 8, 295, hw * 2 - 16, Math.min(6, d * .4) * (.25 + .75 * w)); g.restore();
   g.drawImage(mainImg ? jawFor(mainImg) : jawLive(snapCv), 0, d);
 }
-const isLive = () => A.play || (FAN.speed > 0 && !FAN.broken) || HAIR.state !== "on";
+const isLive = () => A.play || FAN.speed > 0;
 function singStep(now) {
   const live = isLive() && !reduced; $("#ch1").classList.toggle("live", live); if (!live) return;
   let open = 0;
@@ -1033,39 +969,20 @@ function singStep(now) {
   if (sing.blink >= 0) { sing.blink += .42; if (sing.blink >= 6) { sing.blink = -1; sing.nextBlink = now + 2200 + Math.random() * 3800; } }
   singDraw(sing.d, sing.w, now);
 }
-/* the minifan: 1, 2, 3, MAX. At MAX the hair goes, the fan gives up, the hair grows back. */
+/* the minifan: off, 1, 2, 3, MAX */
 const fanEl = $("#fan");
 function fanSet(n) {
-  FAN.speed = n; $("#fanSpeed").textContent = n === 6 ? "MAX" : n === 0 ? "OFF" : String(n);
-  fanEl.classList.toggle("max", n === 6); fanEl.setAttribute("aria-label", "Minifan, " + (n === 0 ? "off" : n === 6 ? "maximum" : "speed " + n) + ". Press for more wind.");
-  $("#fan .lbl").textContent = n === 6 ? "uh oh" : n === 5 ? "MAX? →" : n === 0 ? "on →" : "more wind →";
-  if (n === 6) { FAN.maxT = performance.now(); lcd("MAXIMUM WIND. HOLD ON TO SOMETHING."); try { vid.muted = false; const q = vid.play(); if (q && q.then) q.then(() => { vid.pause(); vid.currentTime = 0; }).catch(() => {}); } catch (e) {} }
+  FAN.speed = n; $("#fanSpeed").textContent = n === 4 ? "MAX" : n === 0 ? "OFF" : String(n);
+  fanEl.classList.toggle("max", n === 4); fanEl.setAttribute("aria-label", "Minifan, " + (n === 0 ? "off" : n === 4 ? "maximum" : "speed " + n) + ". Press for more wind.");
+  $("#fan .lbl").textContent = n === 4 ? "off →" : n === 3 ? "MAX? →" : n === 0 ? "on →" : "more wind →";
+  if (n === 4) lcd("MAXIMUM WIND. HOLD ON TO SOMETHING.");
 }
-fanEl.addEventListener("click", () => { sfx("click"); if (chan !== 1) setChan(1);
-  if (FAN.broken) { if (HAIR.state !== "on") { lcd("THE FAN IS COOLING DOWN. SO IS HE."); return; } FAN.broken = false; fanEl.classList.remove("broken"); lcd("FAN REPAIRED. GENTLY THIS TIME."); fanSet(1); return; }
-  fanSet((FAN.speed + 1) % 7); });
+fanEl.addEventListener("click", () => { sfx("click"); if (chan !== 1) setChan(1); fanSet((FAN.speed + 1) % 5); });
 function fanStep(now, dt) {
-  const lt = WV[6].currentTime;
-  if (FAN.speed === 6 && !FAN.broken && HAIR.state === "on" && ok(HAIR.bald) && WIN.cur === 6 && now - FAN.maxT > 900 && lt > 3.1 && lt < 3.45) {
-    HAIR.t0 = now; sfx("whoosh"); lcd("THERE GOES THE HAIR.");
-    vid.currentTime = Math.max(0, lt - 3.2); vid.muted = !A.on || A.play; vid.playbackRate = 1.35;
-    const p = vid.play(); HAIR.state = "video";
-    if (p && p.catch) p.catch(() => { vid.muted = true; vid.play().catch(() => { HAIR.state = "flying"; HAIR.t0 = performance.now(); }); });
-  }
-  if (FAN.speed === 6 && !FAN.broken && HAIR.state === "on" && now - FAN.maxT > 9000) { HAIR.state = "flying"; HAIR.t0 = now; sfx("whoosh"); }   // the clip never loaded
-  if (HAIR.state === "video" && !FAN.broken && vid.currentTime > 1.2) fanBreak();
-  if (HAIR.state === "video" && now - HAIR.t0 > 14000) videoDone();     // safety net if "ended" never fires
-  if (HAIR.state === "flying" && !FAN.broken && now - HAIR.t0 > 900) fanBreak();
-  if (HAIR.state === "flying" && now - HAIR.t0 > 1600) { HAIR.state = "gone"; HAIR.t0 = now; }
-  if (HAIR.state === "gone" && now - HAIR.t0 > 2600) { HAIR.state = "growing"; HAIR.t0 = now; lcd("DON'T WORRY. IT GROWS BACK. IT ALWAYS DOES."); }
-  const target = FAN.broken ? 0 : WIND[FAN.speed]; FAN.wind += (target - FAN.wind) * Math.min(1, dt * 1.6);
-  FAN.angle = (FAN.angle + (FAN.broken ? 0 : WIND[FAN.speed] * 1500) * dt) % 360;
+  FAN.wind += (WIND[FAN.speed] - FAN.wind) * Math.min(1, dt * 1.6);
+  FAN.angle = (FAN.angle + WIND[FAN.speed] * 1500 * dt) % 360;
   $("#fan .blades").style.transform = "rotate(" + FAN.angle + "deg)";
   windSound();
-}
-function fanBreak() {
-  FAN.broken = true; fanSet(0); fanEl.classList.add("broken", "puff"); $("#fan .lbl").textContent = "overheated"; $("#fanSpeed").textContent = "KAPUT"; sfx("thunk"); sfx("static");
-  lcd("FAN OVERHEATED. TOO MUCH, TOO FAST."); setTimeout(() => fanEl.classList.remove("puff"), 1700);
 }
 /* the fan hums along when the sound is on */
 let windNode = null;
