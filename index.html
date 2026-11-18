@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jacco, a work in progress</title>
+<meta name="description" content="A table, a kilim, a coffee-reading machine and a gold chain. Jacco builds things with AI, writes and makes music. Touch things.">
+<meta name="theme-color" content="#120b08">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jacco, a work in progress">
+<meta property="og:description" content="A table, a kilim, a coffee-reading machine and a gold chain. Touch things.">
+<meta property="og:url" content="https://jakovski.nl/">
+<meta property="og:image" content="https://jakovski.nl/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jakovski.nl/og.jpg">
+<style>
+/* fonts, hosted with the site: no third-party requests */
+@font-face{font-family:'Caveat';font-style:normal;font-display:swap;font-weight:500;src:url(fonts/caveat-cyrillic-ext-500-normal.woff2) format('woff2');unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}
+@font-face{font-family:'Caveat';font-style:normal;font-display:swap;font-weight:500;src:url(fonts/caveat-cyrillic-500-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Caveat';font-style:normal;font-display:swap;font-weight:500;src:url(fonts/caveat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Caveat';font-style:normal;font-display:swap;font-weight:500;src:url(fonts/caveat-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Caveat';font-style:normal;font-display:swap;font-weight:700;src:url(fonts/caveat-cyrillic-ext-700-normal.woff2) format('woff2');unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}
+@font-face{font-family:'Caveat';font-style:normal;font-display:swap;font-weight:700;src:url(fonts/caveat-cyrillic-700-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Caveat';font-style:normal;font-display:swap;font-weight:700;src:url(fonts/caveat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Caveat';font-style:normal;font-display:swap;font-weight:700;src:url(fonts/caveat-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Courier Prime';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/courier-prime-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Courier Prime';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/courier-prime-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Courier Prime';font-style:normal;font-display:swap;font-weight:700;src:url(fonts/courier-prime-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Courier Prime';font-style:normal;font-display:swap;font-weight:700;src:url(fonts/courier-prime-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Dela Gothic One';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/dela-gothic-one-cyrillic-400-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Dela Gothic One';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/dela-gothic-one-greek-400-normal.woff2) format('woff2');unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF}
+@font-face{font-family:'Dela Gothic One';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/dela-gothic-one-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Dela Gothic One';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/dela-gothic-one-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Marck Script';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/marck-script-cyrillic-400-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Marck Script';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/marck-script-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Marck Script';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/marck-script-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Pirata One';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/pirata-one-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Pirata One';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/pirata-one-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'VT323';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/vt323-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'VT323';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/vt323-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+/* Layout idea: one table seen from above. A glitching kilim as tablecloth, and on it
+   a pile of cut-out objects that each do something. Single visual world, by choice. */
+:root{
+  color-scheme:dark;
+  --madder:#96261c; --indigo:#1e2854; --saffron:#dc9e22; --cream:#efe6cf; --soot:#1a110f;
+  --pink:#ff2e88; --acid:#c8ff2e; --gold:#e8b22a;
+  --black:'Pirata One','UnifrakturCook',fantasy;
+  --loud:'Dela Gothic One','Arial Black',Impact,sans-serif;
+  --hand:'Caveat','Marck Script','Comic Sans MS',cursive;
+  --menu:'Marck Script','Caveat',cursive;
+  --lcd:'VT323','Courier New',monospace;
+  --typed:'Courier Prime','Courier New',monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:#120b08;color:var(--cream);font-family:var(--typed);overflow-x:hidden;transition:background .6s;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer;border:0;padding:0;background:none}
+:focus-visible{outline:3px solid var(--acid);outline-offset:3px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#wrap{position:relative;width:100%;overflow:hidden}
+#stage{position:absolute;left:0;top:0;transform-origin:0 0}
+#kilim{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;transition:filter .6s}
+#weave{position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.2) 0 1px,transparent 1px 4px),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 2px,transparent 2px 4px);
+  box-shadow:inset 0 0 160px rgba(0,0,0,.55)}
+#cables{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible}
+.obj{position:absolute;left:calc(var(--x)*1px);top:calc(var(--y)*1px);transform:rotate(calc(var(--r,0)*1deg));z-index:5}
+.m .obj{left:calc(var(--mx)*1px);top:calc(var(--my)*1px);transform-origin:0 0;transform:rotate(calc(var(--mr,var(--r,0))*1deg)) scale(var(--ms,1))}
+.obj[data-drag]{cursor:grab}
+.obj.grab{cursor:grabbing;z-index:40}
+#claim.ping{outline:3px dashed #fff;outline-offset:4px;animation:ping .9s 2}
+.obj.ping{outline:5px dashed var(--acid);outline-offset:10px;animation:ping .9s 2}
+@keyframes ping{50%{outline-offset:22px;outline-color:var(--pink)}}
+.dim{transition:filter .6s}
+body.dark{background:#04030a}
+body.dark #kilim{filter:brightness(.13) saturate(.55)}
+body.dark .dim{filter:brightness(.3) saturate(.6)}
+.hand{font-family:var(--hand);font-weight:700}
+.tapelabel{display:inline-block;background:rgba(240,228,190,.93);color:#2a1a12;padding:1px 12px 2px;font-family:var(--hand);font-weight:700;font-size:24px;line-height:1.1;box-shadow:1px 2px 0 rgba(0,0,0,.35);
+  clip-path:polygon(0 8%,3% 0,97% 4%,100% 0,99% 94%,96% 100%,2% 96%,0 100%)}
+.burst{position:absolute;width:96px;height:96px;display:grid;place-items:center;text-align:center;font:400 12px/1.05 var(--loud);color:#1a110f;background:var(--acid);z-index:3;pointer-events:none;
+  clip-path:polygon(50% 0,61% 12%,75% 4%,79% 19%,95% 18%,91% 34%,100% 45%,89% 56%,96% 71%,81% 74%,79% 90%,64% 86%,53% 100%,42% 87%,27% 93%,22% 78%,6% 77%,10% 61%,0 50%,10% 39%,4% 25%,19% 22%,22% 6%,37% 12%)}
+.burst.pk{background:var(--pink);color:#fff}
+.ph{opacity:.7;font-style:italic}
+
+/* ---------- title ---------- */
+#title{z-index:3;pointer-events:none;width:620px}
+#title h1{margin:0;font:400 212px/.8 var(--black);letter-spacing:-.01em;
+  background:linear-gradient(180deg,#fff7c9 0%,#f6c838 26%,#a56700 50%,#ffe682 58%,#d99c12 78%,#6e4200 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  -webkit-text-stroke:2px #3b2300;filter:drop-shadow(5px 6px 0 #140b08) drop-shadow(0 0 22px rgba(0,0,0,.6));padding:10px 20px 30px 6px}
+#title .tapelabel{margin:-30px 0 0 110px;transform:rotate(3deg);font-size:30px}
+#title .sub{max-width:330px;font:700 25px/1 var(--hand);color:var(--cream);margin:10px 0 0 60px;text-shadow:2px 2px 0 #140b08;transform:rotate(-2deg)}
+body.dark #title h1{background:none;-webkit-text-stroke:3px var(--pink);filter:drop-shadow(0 0 10px var(--pink)) drop-shadow(0 0 34px var(--pink))}
+
+/* ---------- uv notes ---------- */
+.uv{z-index:36;opacity:0;transition:opacity .9s;pointer-events:none;font:700 31px/1.05 var(--hand);color:var(--acid);text-shadow:0 0 10px var(--acid),0 0 26px rgba(200,255,46,.7);max-width:300px}
+.uv.pk{color:var(--pink);text-shadow:0 0 10px var(--pink),0 0 26px rgba(255,46,136,.7)}
+.uv.cy{color:#5ff;text-shadow:0 0 10px #5ff,0 0 26px rgba(80,255,255,.7)}
+body.dark .uv{opacity:1}
+
+/* ---------- tv ---------- */
+#tv{width:460px;height:420px}
+#tv .ant{position:absolute;left:226px;top:-34px;width:5px;height:150px;border-radius:3px;background:linear-gradient(90deg,#8d8d8d,#f4f4f4,#6c6c6c);transform-origin:50% 100%;transform:rotate(-34deg);box-shadow:3px 3px 4px rgba(0,0,0,.4)}
+#tv .ant.b{transform:rotate(27deg);height:128px;top:-12px}
+#tv .case{position:absolute;inset:90px 0 0 0;border-radius:28px 28px 18px 18px;
+  background:repeating-linear-gradient(92deg,rgba(0,0,0,.09) 0 2px,transparent 2px 9px),linear-gradient(180deg,#7a4b28,#55331b 55%,#321c0e);
+  box-shadow:inset 0 0 0 3px #26150a,inset 0 5px 0 3px rgba(255,214,160,.2),0 20px 34px rgba(0,0,0,.6)}
+#tv .screen{position:absolute;left:24px;top:114px;width:316px;height:237px;border-radius:32px/27px;background:#050807;overflow:hidden;
+  box-shadow:0 0 0 8px #140e0a,0 0 0 11px #8b7558,0 0 40px rgba(150,220,255,.12);transition:box-shadow .6s}
+body.dark #tv .screen{box-shadow:0 0 0 8px #050404,0 0 0 11px #2a231b,0 0 90px 20px rgba(120,200,255,.42)}
+.ch{position:absolute;inset:0}
+.ch[hidden]{display:none}
+.ch img{width:100%;height:100%;object-fit:cover;display:block}
+#sing{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+#ch1.sing #sing{display:block}#ch1.sing img{visibility:hidden}
+.tt a{color:#0ff}
+.tt a.go{background:#ff0;color:#000;text-decoration:none;padding:0 5px}
+.tt a.go:hover,.tt a.go:focus-visible{background:#fff}
+.guide{position:absolute;left:44px;top:428px;display:flex;gap:5px;align-items:center;background:#f4ecd6;color:#1a110f;padding:5px 8px;transform:rotate(-1.5deg);box-shadow:1px 3px 0 rgba(0,0,0,.4);font:700 12px/1 var(--typed);white-space:nowrap}
+.guide button{font:400 11px/1 var(--loud);background:#1a110f;color:#fff;padding:8px 6px;border-radius:2px;text-transform:uppercase}
+.guide button[aria-current="true"]{background:var(--pink)}
+.chyron{position:absolute;left:0;right:0;bottom:16px;display:flex;align-items:stretch;font:400 13px/1 var(--loud);text-transform:uppercase}
+.chyron b{background:#e3101c;color:#fff;padding:6px 8px 5px 14px;font-weight:400;flex:none}
+.tick{flex:1;background:#ffe100;color:#111;overflow:hidden;white-space:nowrap;display:flex;align-items:center}
+.tick span{display:inline-block;padding-left:100%;animation:mq 30s linear infinite;will-change:transform;backface-visibility:hidden}
+.warm{position:absolute;left:-9999px;top:0;font:400 12px var(--loud);opacity:0;pointer-events:none}
+@keyframes mq{from{transform:translate3d(0,0,0)}to{transform:translate3d(-100%,0,0)}}
+.bug{position:absolute;right:26px;top:16px;font:400 14px/1 var(--loud);color:#fff;opacity:.85;text-shadow:1px 1px 0 #000}
+.tt{background:#000;color:#fff;font:19px/1 var(--lcd);padding:12px 16px;white-space:pre-wrap;text-transform:uppercase}
+.tt .hd{display:flex;justify-content:space-between;color:#fff;margin-bottom:6px}
+.tt h3{margin:0 0 6px;font:inherit;font-size:19px;background:#0000d8;color:#ff0;padding:3px 6px;transform-origin:0 0}
+.tt .c{color:#0ff}.tt .y{color:#ff0}.tt .g{color:#0f0}.tt .mg{color:#f0f}
+.tt p{margin:0 0 3px}
+#ch5 canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated}
+#ch5 p{position:absolute;left:0;right:0;top:40%;margin:0;text-align:center;font:400 17px/1.25 var(--loud);color:#fff;background:#000;padding:8px 4px}
+#tvsnow{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;opacity:.1;mix-blend-mode:screen;pointer-events:none}
+.roll{position:absolute;left:0;right:0;height:30%;top:-35%;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(255,255,255,.05) 40%,rgba(255,255,255,.13) 50%,rgba(255,255,255,.05) 60%,transparent);animation:roll 6.5s linear infinite}
+@keyframes roll{to{top:115%}}
+#tv .screen.jit .ch{transform:translateX(5px) skewX(-2deg);filter:hue-rotate(25deg) saturate(1.4)}
+.scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px),radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.13),transparent 45%),radial-gradient(ellipse,transparent 55%,rgba(0,0,0,.6))}
+#tv .panel{position:absolute;right:18px;top:114px;width:84px;height:286px;display:flex;flex-direction:column;align-items:center;gap:12px}
+#knob{width:66px;height:66px;border-radius:50%;background:conic-gradient(#d8d8d8,#6f6f6f,#f6f6f6,#777,#e2e2e2,#6a6a6a,#d8d8d8);box-shadow:0 0 0 5px #1a110b,0 5px 8px rgba(0,0,0,.6);position:relative;transition:transform .2s}
+#knob::after{content:"";position:absolute;left:50%;top:5px;width:5px;height:20px;margin-left:-2.5px;background:#c2161f;border-radius:2px}
+.chno{font:28px/1 var(--lcd);color:#ffb300;background:#150c06;padding:1px 9px;border-radius:3px}
+.grille{flex:1;width:66px;background:repeating-linear-gradient(0deg,#1d120a 0 4px,transparent 4px 9px);border-radius:4px}
+#tv .badge{position:absolute;left:112px;top:372px;font:400 12px/1 var(--loud);letter-spacing:.18em;color:#f6d77a;background:#2a180c;padding:5px 12px 4px;border-radius:2px;box-shadow:inset 0 0 0 1px #a8813a}
+#tvDoily{pointer-events:none;position:absolute;left:26px;top:-40px;width:156px;height:156px;clip-path:inset(80% 0 0 0);filter:drop-shadow(0 4px 3px rgba(0,0,0,.45))}
+body.dark #tvDoily{filter:brightness(.3)}
+
+/* ---------- coffee ---------- */
+#coffee{width:440px;height:440px}
+#cupDoily{pointer-events:none;position:absolute;inset:0;width:440px;height:440px;filter:drop-shadow(0 6px 8px rgba(0,0,0,.5))}
+body.dark #cupDoily{filter:brightness(.3)}
+.tray{position:absolute;left:58px;top:58px;width:324px;height:324px;border-radius:50%;
+  background:radial-gradient(circle at 32% 26%,rgba(255,226,190,.6),transparent 30%),repeating-radial-gradient(circle,transparent 0 9px,rgba(60,20,0,.2) 9px 10px),conic-gradient(from 20deg,#b5612c,#eda868,#8a4318,#d98a4a,#74330e,#c9743a,#b5612c);
+  box-shadow:inset 0 0 0 11px rgba(96,42,10,.6),inset 0 0 0 13px rgba(255,205,155,.45),0 12px 22px rgba(0,0,0,.55)}
+.saucer{position:absolute;left:112px;top:118px;width:204px;height:204px;border-radius:50%;background:radial-gradient(circle,#fff 0 36%,#e6dfcc 37% 40%,#fbf8ef 41% 100%);box-shadow:inset 0 0 0 5px #c9a23a,inset 0 0 0 7px #fff,inset 0 0 0 9px #a81f2b,0 7px 12px rgba(0,0,0,.45)}
+#cup{position:absolute;left:144px;top:150px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,#f6f1e4 0 62%,#fff 63% 68%,#d6cdb8 100%);box-shadow:0 9px 14px rgba(0,0,0,.5);transform:rotate(var(--cr,0deg));transition:transform .16s ease-in}
+#cup.sq{transform:rotate(var(--cr,0deg)) scaleX(.03)}
+#cup .handle{position:absolute;right:-36px;top:48px;width:46px;height:44px;border:10px solid #f1ecde;border-left:0;border-radius:0 24px 24px 0;box-shadow:3px 5px 5px rgba(0,0,0,.35)}
+#cup .in{position:absolute;inset:11px;border-radius:50%;overflow:hidden;background:#efe8d6;box-shadow:inset 0 7px 12px rgba(0,0,0,.4)}
+#cup .in canvas{width:100%;height:100%;display:block}
+#cup .coffee{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 36% 30%,#7a5030,#2b160b 55%,#150a04);box-shadow:inset 0 0 0 5px #946a3e;transition:transform 1s cubic-bezier(.6,0,.4,1)}
+#cup.empty .coffee{transform:scale(0)}
+#cup .under{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,#e9e2d0 0 30%,#fbf8ef 31% 34%,#d9d0bb 35% 60%,#f6f1e4 61%);display:grid;place-items:center;font:30px var(--black);color:#a81f2b;opacity:0}
+#cup.over .under{opacity:1}
+.glass{position:absolute;left:300px;top:74px;width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.9),rgba(255,255,255,0) 22%),radial-gradient(circle,rgba(190,225,235,.35) 0 55%,rgba(255,255,255,.75) 58% 64%,rgba(170,205,215,.45) 66%);box-shadow:0 6px 10px rgba(0,0,0,.4)}
+#lokum{position:absolute;left:96px;top:296px;width:36px;height:36px;border-radius:5px;transform:rotate(18deg);background:radial-gradient(circle at 30% 30%,#fff 0 2px,transparent 3px) 0 0/9px 9px,radial-gradient(circle at 70% 60%,#fff 0 1.5px,transparent 2.5px) 0 0/7px 7px,linear-gradient(135deg,#ff9ac2,#e2508c);box-shadow:3px 4px 5px rgba(0,0,0,.45)}
+#lokum.gone{background:none;box-shadow:none;width:auto;height:auto;transform:rotate(-8deg);font:700 18px/1 var(--hand);color:#2a1a12;white-space:nowrap}
+#cupHint{position:absolute;left:150px;top:396px;margin:0;transform:rotate(-3deg)}
+
+/* ---------- hark ---------- */
+#hark{width:270px;height:190px;z-index:8}
+#hark .box{position:absolute;inset:0;border-radius:10px 10px 6px 6px;background:repeating-linear-gradient(90deg,transparent 0 224px,rgba(0,0,0,.25) 224px 227px,transparent 227px 232px) 0 0/100% 100%,linear-gradient(180deg,#e2d7ba,#c4b792);box-shadow:inset 0 0 0 2px #8f8364,inset 0 4px 0 2px rgba(255,255,255,.45),0 14px 22px rgba(0,0,0,.55)}
+#hark .duct{position:absolute;left:-14px;top:92px;width:120px;height:30px;background:linear-gradient(180deg,#b9bcc0,#8d9196);transform:rotate(-24deg);opacity:.95;box-shadow:1px 2px 2px rgba(0,0,0,.3)}
+#hark .tapelabel{position:absolute;left:28px;top:-13px;transform:rotate(-2deg);font-size:21px;white-space:nowrap;z-index:2}
+#lcd{position:absolute;left:18px;top:34px;width:176px;height:64px;background:#14220f;color:#9cf06c;font:21px/1 var(--lcd);padding:8px 8px;border-radius:3px;box-shadow:inset 0 0 0 2px #050805,0 0 16px rgba(140,255,100,.25);text-transform:uppercase;overflow:hidden;white-space:pre-wrap}
+#hark .led{position:absolute;right:28px;top:42px;width:14px;height:14px;border-radius:50%;background:#ff3520;box-shadow:0 0 12px #ff3520;animation:led 2.4s infinite}
+@keyframes led{50%{opacity:.25}}
+#hark .keys{position:absolute;left:16px;right:16px;top:114px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+#hark .keys button{height:54px;border-radius:5px;font:400 11.5px/1.1 var(--loud);color:#1a110f;box-shadow:0 5px 0 rgba(0,0,0,.55),inset 0 2px 0 rgba(255,255,255,.5);text-transform:uppercase}
+#hark .keys button:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.55)}
+#hark .keys .k1{background:#e9412c;color:#fff}#hark .keys .k2{background:#f5c21b}#hark .keys .k3{background:#9aa6a0}
+#hark .stalk{position:absolute;left:-74px;top:58px;width:90px;height:9px;background:repeating-linear-gradient(90deg,#2c2c2c 0 5px,#555 5px 8px);border-radius:4px;transform:rotate(14deg)}
+#hark .lens{position:absolute;left:-112px;top:22px;width:54px;height:54px;border-radius:50%;background:radial-gradient(circle at 36% 32%,#9fd0ff 0 6%,transparent 8%),radial-gradient(circle,#1b0f2e 0 30%,#060606 32% 52%,#3a3a3a 54% 70%,#111 72%);box-shadow:0 6px 9px rgba(0,0,0,.5)}
+#paper{position:absolute;left:20px;top:182px;width:232px;background:#f8f4e9;color:#1a110f;font:13px/1.35 var(--typed);padding:16px 14px 30px;box-shadow:0 8px 16px rgba(0,0,0,.45);
+  -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/14px 100%;mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/14px 100%}
+#paper[hidden]{display:none}
+#paper{cursor:pointer}
+#tearTop{display:block;width:100%;margin:-6px 0 10px;font:700 12px var(--typed);text-align:center;border-bottom:1px dashed #1a110f;padding-bottom:8px;color:#7a2018}
+#paper p{margin:0 0 6px;white-space:pre-wrap}
+#paper .ctr{text-align:center}#paper .b{font-weight:700}
+#paper .rule{border-top:1px dashed #1a110f;margin:6px 0 8px;height:0}
+#paper.torn{animation:torn .7s forwards}
+@keyframes torn{to{transform:translate(40px,260px) rotate(24deg);opacity:0}}
+#tear{display:block;width:100%;margin-top:8px;font:700 12px var(--typed);text-align:center;border-top:1px dashed #1a110f;padding-top:8px;color:#7a2018}
+
+/* ---------- phone ---------- */
+#phone{width:190px;height:404px;z-index:9}
+.m #hark .lens{left:196px;top:-58px}.m #hark .stalk{left:196px;top:-12px;width:50px;transform:rotate(78deg)}
+#phone .leo{position:absolute;inset:0;border-radius:36px;background:var(--leo) 0 0/170px;box-shadow:0 16px 24px rgba(0,0,0,.6),inset 0 0 0 2px rgba(0,0,0,.4)}
+#phone .bodyp{position:absolute;inset:11px;border-radius:27px;background:linear-gradient(160deg,#39456a,#151b30);box-shadow:inset 0 2px 0 rgba(255,255,255,.25)}
+#phone .ear{position:absolute;left:70px;top:24px;width:50px;height:6px;border-radius:3px;background:#070910}
+#plcd{position:absolute;left:28px;top:44px;width:134px;height:158px;background:#a3ba6e;color:#17240a;font:17.5px/1 var(--lcd);padding:7px 7px;border-radius:5px;box-shadow:inset 0 0 0 3px #1b2233,inset 4px 6px 8px rgba(0,0,0,.3);white-space:pre-wrap;word-break:break-word;text-transform:uppercase;overflow:hidden;transition:box-shadow .6s}
+body.dark #plcd{box-shadow:inset 0 0 0 3px #1b2233,0 0 34px rgba(190,255,120,.75)}
+#plcd a{color:inherit}
+#pkeys{position:absolute;left:28px;top:214px;width:134px;display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+#pkeys button{grid-column:span 2;height:29px;border-radius:14px/12px;background:linear-gradient(#e9ecf2,#aab0c0);color:#151b30;font:400 12px/1 var(--loud);box-shadow:0 2px 0 #05070d}
+#pkeys button.w{grid-column:span 3;border-radius:8px}
+#pkeys button.ok{background:linear-gradient(#ffe36a,#d69a12)}
+#pkeys button:active{transform:translateY(2px);box-shadow:none}
+#phone .plab{position:absolute;left:-26px;top:-50px;font-size:18px;line-height:1.05;white-space:nowrap;transform:rotate(-3deg);z-index:2}
+#phone.buzz{animation:buzz .11s 12}
+@keyframes buzz{50%{translate:3px -2px;rotate:1.6deg}}
+
+/* ---------- cassette ---------- */
+#tape{width:340px;height:340px}
+#tape .jcard{position:absolute;left:36px;top:0;width:276px;height:150px;background:repeating-linear-gradient(0deg,transparent 0 25px,rgba(30,40,84,.25) 25px 26px),#f4ecd6;color:#1e2854;transform:rotate(-3deg);padding:8px 14px;font:700 20px/26px var(--hand);box-shadow:2px 4px 8px rgba(0,0,0,.4)}
+#tape .jcard ol{margin:0;padding-left:22px}
+#tape .jcard p{margin:0}#tape .jcard a{color:#96261c}
+#cass{position:absolute;left:0;top:140px;width:340px;height:200px;border-radius:12px;background:linear-gradient(180deg,#34343b,#17171b);box-shadow:inset 0 0 0 2px #050506,inset 0 3px 0 2px rgba(255,255,255,.14),0 14px 22px rgba(0,0,0,.6);text-align:left}
+#cass .lab{position:absolute;left:18px;right:18px;top:14px;height:126px;border-radius:6px;background:linear-gradient(180deg,var(--pink) 0 9px,#ff8a00 9px 18px,#ffe100 18px 27px,#f4ecd6 27px);color:#1a110f;padding:30px 12px 0}
+#cass .lab b{display:block;font:700 23px/.95 var(--hand)}
+#cass .lab small{display:block;font:11px/1.2 var(--typed);margin-top:1px}
+#cass .win{position:absolute;left:84px;top:88px;width:172px;height:46px;border-radius:8px;background:#0b0b0d;box-shadow:inset 0 0 0 2px #55555c;display:flex;justify-content:space-between;align-items:center;padding:0 10px}
+#cass .reel{width:34px;height:34px;border-radius:50%;background:repeating-conic-gradient(#f1f1f1 0 20deg,#0b0b0d 20deg 60deg);box-shadow:inset 0 0 0 5px #f1f1f1,inset 0 0 0 9px #0b0b0d}
+#cass.playing .reel{animation:spin 1.6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#cass .ribbon{flex:1;height:22px;margin:0 6px;background:linear-gradient(90deg,#4a2a14 0 34%,transparent 34% 66%,#4a2a14 66%)}
+#cass .foot{position:absolute;left:62px;right:62px;bottom:0;height:42px;background:#101013;clip-path:polygon(7% 0,93% 0,100% 100%,0 100%);display:flex;justify-content:center;gap:26px;align-items:center}
+#cass .foot i{width:11px;height:11px;border-radius:50%;background:#000;box-shadow:inset 0 0 0 2px #3c3c44}
+#cass .state{position:absolute;right:16px;bottom:10px;font:400 11px/1 var(--loud);color:var(--acid)}
+#flip{position:absolute;right:-18px;top:132px;transform:rotate(7deg);z-index:2}
+#tape .burst{left:-44px;top:88px;transform:rotate(-14deg)}
+
+/* ---------- lottery ---------- */
+#lotto{width:390px;min-height:282px;border-radius:10px;border:7px solid #fff;background:radial-gradient(circle,rgba(255,255,255,.28) 0 2px,transparent 2.5px) 0 0/9px 9px,linear-gradient(135deg,var(--pink),#ff8a00 52%,#ffe100);color:#1a110f;padding:10px 14px;box-shadow:0 14px 22px rgba(0,0,0,.55)}
+#lotto h2{margin:0;font:400 44px/.9 var(--black);color:#fff;text-shadow:3px 3px 0 #1a110f,-1px -1px 0 #1a110f,1px -1px 0 #1a110f,-1px 1px 0 #1a110f}
+#lotto .sub{font:400 11px/1.2 var(--loud);margin:5px 0 8px;text-transform:uppercase}
+#lotto .grid{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+#lotto .cell{height:58px;background:#fff;border-radius:4px;display:grid;place-items:center;text-align:center;font:700 19px/.95 var(--hand);padding:2px 5px}
+#lotto .cell b{font:400 20px/1 var(--loud);display:block;color:#d1126a}
+#scratch{position:absolute;inset:-2px;width:calc(100% + 4px);height:calc(100% + 4px);touch-action:none;cursor:crosshair;border-radius:4px}
+#lotto .foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font:700 13px/1.1 var(--typed)}
+#reveal,#claim{font:400 11px var(--loud);background:#1a110f;color:#fff;padding:7px 9px;border-radius:3px;text-transform:uppercase;text-decoration:none;white-space:nowrap}
+#claim{background:#fff;color:#d1126a;box-shadow:2px 2px 0 #1a110f}
+#lotto .foot{gap:8px}
+#lotto .foot span{white-space:nowrap;font-size:12px}
+#lotto .burst{right:-36px;top:-40px;transform:rotate(12deg)}
+
+/* ---------- postcards ---------- */
+#cards{width:350px;height:260px}
+.card{position:absolute;left:10px;top:10px;width:322px;height:212px;transition:transform .18s ease-in;box-shadow:0 10px 18px rgba(0,0,0,.5);text-align:left;display:block}
+.card .f,.card .bk{position:absolute;inset:0;border:9px solid #fbf7ea;overflow:hidden}
+.card .f{background:var(--bg) center/cover;color:#fff;padding:10px 14px;display:flex;flex-direction:column;justify-content:flex-end}
+.card .f::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(0,0,0,.2) 0 1.2px,transparent 1.7px) 0 0/5px 5px;mix-blend-mode:multiply;pointer-events:none}
+.card .f small{font:400 27px/1 var(--menu);display:block;position:relative;z-index:1;text-shadow:0 1px 4px #000,0 0 2px #000}
+.card .f b{font:400 40px/.95 var(--loud);display:block;text-transform:uppercase;position:relative;z-index:1;word-break:break-word;text-shadow:3px 3px 0 rgba(0,0,0,.8)}
+.card .bk{background:#f4ecd6;color:#1e2854;padding:12px 14px;display:none;font:700 23px/1.05 var(--hand)}
+.card .bk p{margin:0;width:54%}
+.card .bk::before{content:"";position:absolute;left:60%;top:16px;bottom:16px;border-left:2px solid rgba(30,40,84,.5)}
+.card .bk .stamp{position:absolute;right:12px;top:10px;width:62px;height:74px;background:var(--st);border:5px dotted #f4ecd6;outline:1px solid rgba(0,0,0,.25);display:grid;place-items:center;font:400 13px var(--loud);color:#fff}
+.card .bk .pm{position:absolute;right:50px;top:44px;width:74px;height:74px;border-radius:50%;border:2px solid rgba(26,17,15,.6);transform:rotate(-18deg);display:grid;place-items:center;font:11px/1 var(--typed);color:rgba(26,17,15,.7);text-align:center}
+.card .bk .to{position:absolute;right:12px;bottom:22px;width:34%;height:44px;background:repeating-linear-gradient(0deg,transparent 0 20px,rgba(30,40,84,.5) 20px 21px)}
+.card.fl .f{display:none}.card.fl .bk{display:block}
+
+/* ---------- power strip ---------- */
+#strip{width:310px;height:84px;border-radius:14px;background:linear-gradient(180deg,#efe9d6,#cfc7ab);box-shadow:inset 0 0 0 2px #9b9379,0 10px 16px rgba(0,0,0,.5);display:flex;align-items:center;gap:14px;padding:0 16px}
+#strip .sock{width:50px;height:50px;border-radius:50%;background:radial-gradient(circle at 34% 50%,#1a110f 0 4px,transparent 5px),radial-gradient(circle at 66% 50%,#1a110f 0 4px,transparent 5px),#e2dbc4;box-shadow:inset 0 3px 6px rgba(0,0,0,.4)}
+#sound{width:64px;height:46px;border-radius:5px;background:linear-gradient(180deg,#5a0f0a 0 50%,#3a0906 50%);box-shadow:inset 0 0 0 3px #1a110f;margin-left:auto;position:relative}
+#sound[aria-pressed="true"]{background:linear-gradient(180deg,#ff4a2c 0 50%,#b81f10 50%);box-shadow:inset 0 0 0 3px #1a110f,0 0 22px #ff4a2c}
+#strip .tapelabel{position:absolute;right:8px;top:-22px;transform:rotate(4deg);font-size:21px}
+
+/* ---------- menu ---------- */
+#menu{width:300px;border-radius:5px;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.4) 41%,rgba(255,255,255,.08) 50%,transparent 51%),#f4ecd6;color:#1a110f;padding:16px 16px 14px;box-shadow:inset 0 0 0 5px #f4ecd6,inset 0 0 0 7px #96261c,inset 0 0 0 10px #f4ecd6,inset 0 0 0 11px #96261c,0 16px 26px rgba(0,0,0,.55)}
+#menu h2{margin:4px 0 0;text-align:center;font:400 62px/.9 var(--menu);color:#96261c}
+#menu .no{text-align:center;font:11px var(--typed);letter-spacing:.2em;text-transform:uppercase;margin:2px 0 10px}
+#menu .who{font:700 14px/1.3 var(--typed);margin:0 0 8px;text-align:center}
+#menu button{display:flex;width:100%;align-items:baseline;gap:6px;padding:6px 2px;text-align:left;min-height:34px}
+#menu button span:first-child{font:700 14px/1.15 var(--typed)}
+#menu button i{flex:1;border-bottom:2px dotted #96261c;transform:translateY(-3px);min-width:12px}
+#menu button span:last-child{font:700 21px/1 var(--hand);color:#96261c;white-space:nowrap}
+#menu button:hover span:first-child{background:var(--acid)}
+#menu .reach{font:700 12.5px/1.4 var(--typed);text-align:center;margin:8px 0 0}#menu .reach a{color:#96261c}
+#menu .fine{font:11.5px/1.35 var(--typed);margin:10px 0 0;text-align:center;border-top:1px solid #96261c;padding-top:8px}
+
+/* ---------- the novel ---------- */
+#book{width:340px;height:236px}
+#bookBtn{position:absolute;inset:0;text-align:left;transition:transform .16s ease-in}
+#bookBtn.sq{transform:scaleX(.04)}
+#book .cover{position:absolute;left:0;top:0;width:172px;height:236px;border-radius:3px 9px 9px 3px;padding:20px 16px 14px 24px;color:#1a110f;
+  background:repeating-radial-gradient(circle at 78% 82%,transparent 0 7px,rgba(60,20,0,.28) 7px 8.5px),linear-gradient(120deg,#b5612c,#eda868 38%,#8a4318 62%,#c9743a);
+  box-shadow:inset 9px 0 0 rgba(0,0,0,.28),inset 11px 0 0 rgba(255,220,180,.25),0 12px 20px rgba(0,0,0,.55);display:flex;flex-direction:column}
+#book .cover small{font:700 12px/1 var(--typed);letter-spacing:.12em;text-transform:uppercase}
+#book .cover b{font:400 41px/.86 var(--black);margin-top:14px;color:#1a110f;text-shadow:1px 1px 0 rgba(255,220,180,.5)}
+#book .cover i{margin-top:auto;font:italic 12px/1.2 var(--typed)}
+#book .spread{position:absolute;inset:0;display:none;background:linear-gradient(90deg,#efe6d0 0 46%,#cfc4a8 50%,#efe6d0 54%);border-radius:4px;box-shadow:0 12px 20px rgba(0,0,0,.55),inset 0 0 0 1px #b7ab8c;color:#1a110f}
+#book.open .spread{display:grid;grid-template-columns:1fr 1fr}
+#book.open .cover{display:none}
+#book .pg{padding:18px 18px 12px 16px;font:italic 16.5px/1.28 Georgia,'Times New Roman',serif;display:flex;flex-direction:column}
+#book .pg.r{padding-left:22px;font-style:normal;font-size:11px;line-height:1.5;color:rgba(26,17,15,.32);overflow:hidden}
+#book .pg em{margin-top:auto;font:11px var(--typed);font-style:normal;color:rgba(26,17,15,.6)}
+#book .tapelabel{position:absolute;left:150px;top:-18px;transform:rotate(3deg);font-size:20px;white-space:nowrap;z-index:2;pointer-events:none}
+.draft #menu,.draft #paper,.draft .card,.draft .jcard,.draft #lotto,.draft #book,.draft #draftNote{animation:flut .42s 4}
+@keyframes flut{25%{rotate:2.6deg;translate:7px -4px}75%{rotate:-2.2deg;translate:-5px 3px}}
+
+#book .cover{background:radial-gradient(circle at 30% 18%,#4a2f1a,#120b08 70%);color:#e8c66a;box-shadow:inset 0 0 0 6px #120b08,inset 0 0 0 8px #c9a23a,inset 14px 0 0 rgba(0,0,0,.35),0 12px 20px rgba(0,0,0,.55)}
+#book .cover small{font-size:11px;letter-spacing:.06em;line-height:1.25}
+#book .cover b{font-size:43px;margin-top:26px;background:linear-gradient(180deg,#fff7c9,#f6c838 40%,#a56700 60%,#ffe682);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;-webkit-text-stroke:1px #3b2300}
+#book .cover i{font-size:11px;color:#e8c66a}
+#plcd canvas{display:block;width:120px;height:88px;image-rendering:pixelated;outline:2px solid #17240a;margin-bottom:5px}
+
+/* ---------- small things ---------- */
+#shades{width:120px;height:44px;z-index:30;cursor:grab;touch-action:none;filter:drop-shadow(0 0 0 #fff) drop-shadow(2px 4px 3px rgba(0,0,0,.5))}
+#shades svg{display:block;width:100%;height:100%}
+#shadesNote{z-index:4;pointer-events:none}
+#seeds{width:240px;height:150px;z-index:4}
+.seed{position:absolute;width:19px;height:10px;border-radius:70% 30% 30% 70%/50%;background:linear-gradient(180deg,#111 0 30%,#ddd 30% 42%,#111 42% 60%,#ccc 60% 70%,#111 70%);box-shadow:1px 2px 2px rgba(0,0,0,.5)}
+.seed.x{background:linear-gradient(180deg,#d9cfb4 0 44%,transparent 44% 58%,#cfc4a6 58%);width:21px;height:13px;box-shadow:none}
+#fly{position:absolute;left:0;top:0;width:11px;height:8px;z-index:45;pointer-events:none;border-radius:50%;background:#0a0808}
+#fly::before,#fly::after{content:"";position:absolute;top:-4px;width:8px;height:6px;border-radius:50%;background:rgba(220,235,255,.55)}
+#fly::before{left:-2px;transform:rotate(-25deg)}#fly::after{right:-2px;transform:rotate(25deg)}
+#sig{z-index:3;font:700 24px/1.1 var(--hand);color:var(--cream);text-shadow:2px 2px 0 #140b08;pointer-events:none;width:380px}
+#chainCv{position:fixed;top:0;z-index:50;pointer-events:none}
+#pull{position:fixed;z-index:51;width:52px;height:52px;border-radius:50%;cursor:grab;touch-action:none}
+#lamp{position:fixed;inset:0;background:#04030a;pointer-events:none;z-index:60;opacity:0;animation:flick 1.5s steps(1) 1}
+@keyframes flick{0%{opacity:.96}18%{opacity:.25}24%{opacity:.9}40%{opacity:.1}46%{opacity:.75}52%{opacity:0}66%{opacity:.4}70%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.draft *,#phone.buzz,.roll,#lamp,.tick span,#hark .led,#cass.playing .reel{animation:none}.tick span{padding-left:8px}*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="wrap"><main id="stage">
+  <canvas id="kilim" class="vhx" aria-hidden="true"></canvas><div id="weave" aria-hidden="true"></div>
+  <svg id="cables" aria-hidden="true"></svg>
+
+  <header class="obj" id="title" style="--x:30;--y:34;--r:-5;--mx:8;--my:70;--mr:-5;--ms:.7">
+    <h1>Jacco</h1>
+    <span class="tapelabel">a work in progress</span>
+    <p class="sub">somewhere between yesterday and tomorrow</p>
+  </header>
+
+  <p class="obj uv" style="--x:56;--y:322;--r:-6;--mx:20;--my:252;--mr:-4">you turned off the light. good.<br>now we can talk.</p>
+  <p class="obj uv pk" style="--x:250;--y:868;--r:4;--mx:30;--my:1674;--mr:3">the future has been tried before. parts of it worked.</p>
+  <p class="obj uv cy" style="--x:800;--y:946;--r:-3;--mx:30;--my:2374;--mr:-3">dial 1996 on the phone ↗</p>
+  <p class="obj uv" style="--x:690;--y:536;--r:-2;--mx:150;--my:1248;--mr:-2">a draft? knock on wood. ×3</p>
+  <p class="obj uv" style="--x:566;--y:1196;--r:-4;--mx:70;--my:2776;--mr:-3">side B is for after midnight</p>
+  <p class="obj uv pk" style="--x:60;--y:1548;--r:2;--mx:40;--my:3872;--mr:2">don't tell my whole story.</p>
+  <p class="obj uv cy" style="--x:640;--y:22;--r:4;--mx:236;--my:276;--mr:6">ψιτ! channel 5.</p>
+  <span class="obj tapelabel dim" id="draftNote" style="--x:1030;--y:52;--r:-3;--mx:210;--my:1262;--mr:-3;font-size:20px;z-index:6">scroll slowly. promaja.</span>
+
+  <!-- TV -->
+  <section class="obj" id="tv" data-drag aria-label="Television" style="--x:478;--y:76;--r:-1.5;--mx:14;--my:320;--mr:-1;--ms:.85">
+    <i class="ant dim"></i><i class="ant b dim"></i>
+    <div class="case dim"></div>
+    <div class="screen">
+      <div class="ch" id="ch1">
+        <img src="operator.gif" alt="Jacco on television: long reddish hair, greying beard, round glasses, gold chain. He winks.">
+        <canvas id="sing" width="600" height="600" aria-hidden="true"></canvas>
+        <span class="bug" id="bug">JTV</span>
+        <div class="chyron"><b>Live</b><div class="tick"><span id="ticker"></span></div></div>
+      </div>
+      <div class="ch tt" id="ch2" hidden></div>
+      <div class="ch tt" id="ch3" hidden></div>
+      <div class="ch tt" id="ch4" hidden></div>
+      <div class="ch" id="ch5" hidden><canvas id="testcard" width="79" height="59"></canvas><p id="ch4txt">НЕМАЄ СИГНАЛУ<br>no signal. try the dark.</p></div>
+      <canvas id="tvsnow" width="79" height="59" aria-hidden="true"></canvas>
+      <div class="roll" aria-hidden="true"></div>
+      <div class="scan"></div>
+    </div>
+    <div class="panel dim">
+      <button id="knob" type="button" aria-label="Change channel"></button>
+      <span class="chno" id="chno" aria-live="polite">1</span>
+      <span class="grille"></span>
+    </div>
+    <span class="badge dim">JUTRO-96</span>
+    <div class="guide dim" id="guide" role="group" aria-label="TV guide"><span>tv guide</span><button type="button" data-ch="1">1 me</button><button type="button" data-ch="2">2 films</button><button type="button" data-ch="3">3 music</button><button type="button" data-ch="4">4 archive</button><button type="button" data-ch="5">5 ?</button></div>
+    <canvas id="tvDoily" width="340" height="340" aria-hidden="true"></canvas>
+    <span class="burst dim" style="left:-46px;top:350px;transform:rotate(-12deg)">100%<br>ECHT<br>GEZICHT</span>
+  </section>
+
+  <!-- menu -->
+  <nav class="obj dim" id="menu" data-drag aria-label="Menu" style="--x:968;--y:84;--r:3;--mx:60;--my:716;--mr:2">
+    <h2>Menu</h2>
+    <p class="no">table no. 1996</p>
+    <p class="who">Jacco. Builds things with AI.<br>Writes. Makes music. Watches films.</p>
+    <button type="button" data-go="coffee"><span>Coffee, read by a machine</span><i></i><span>free</span></button>
+    <button type="button" data-go="hark"><span>What I build</span><i></i><span>ask Hark</span></button>
+    <button type="button" data-go="tape"><span>Music, home-made</span><i></i><span>side A</span></button>
+    <button type="button" data-go="tv" data-ch="2"><span>Films</span><i></i><span>tv 2</span></button>
+    <button type="button" data-go="tv" data-ch="3"><span>Playlists</span><i></i><span>tv 3</span></button>
+    <button type="button" data-go="cards"><span>Places</span><i></i><span>by post</span></button>
+    <button type="button" data-go="phone" data-scr="home"><span>What I did in&hellip;</span><i></i><span>dial a year</span></button>
+    <button type="button" data-go="phone" data-scr="contact"><span>Contact</span><i></i><span>phone, OK</span></button>
+    <p class="reach"><a id="mMail"></a><br><a id="mIn" target="_blank" rel="noopener">LinkedIn</a></p>
+    <p class="fine">Nothing on this table is for sale.<br>Pull the gold chain. Some things only show in the dark.</p>
+  </nav>
+
+  <!-- coffee -->
+  <section class="obj" id="coffee" data-drag aria-label="Coffee" style="--x:36;--y:430;--mx:12;--my:1302;--ms:.9">
+    <canvas id="cupDoily" width="660" height="660" aria-hidden="true"></canvas>
+    <div class="tray dim"></div>
+    <div class="saucer dim"></div>
+    <div class="glass dim"></div>
+    <button class="dim" id="cup" type="button" aria-label="Drink the coffee and turn the cup over">
+      <span class="handle"></span>
+      <span class="in"><canvas id="grounds" width="150" height="150"></canvas><span class="coffee"></span></span>
+      <span class="under">J</span>
+    </button>
+    <button class="dim" id="lokum" type="button" aria-label="Eat the lokum"></button>
+    <p class="tapelabel dim" id="cupHint">drink · turn · ask Hark</p>
+  </section>
+
+  <!-- hark -->
+  <section class="obj" id="hark" data-drag aria-label="Hark, a machine Jacco built" style="--x:520;--y:566;--r:3;--mx:22;--my:1762;--mr:2">
+    <span class="stalk dim"></span><span class="lens dim"></span>
+    <div class="box dim"></div><span class="duct dim"></span>
+    <span class="tapelabel dim">HARK mk.III · do not unplug</span>
+    <div id="lcd">IDLE. MOSTLY.</div>
+    <span class="led"></span>
+    <div class="keys">
+      <button class="k1 dim" type="button" id="hkCup">Read cup</button>
+      <button class="k2 dim" type="button" id="hkThought">A thought</button>
+      <button class="k3 dim" type="button" id="hkWho">Who are you?</button>
+    </div>
+    <div id="paper" class="dim" hidden title="Tear off"><button type="button" id="tearTop">✂ tap the paper to tear it off</button><div id="paperBody"></div><button type="button" id="tear">- - - tear here - - -</button></div>
+  </section>
+
+  <div class="obj" id="seeds" aria-hidden="true" style="--x:780;--y:600;--mx:170;--my:1672"></div>
+
+  <!-- phone -->
+  <section class="obj" id="phone" data-drag aria-label="Telephone" style="--x:1044;--y:684;--r:-7;--mx:246;--my:1992;--mr:-5;--ms:.92">
+    <div class="leo dim"></div><div class="bodyp dim"></div><span class="ear"></span>
+    <div id="plcd" aria-live="polite"></div>
+    <div id="pkeys" class="dim"></div>
+    <span class="tapelabel dim plab">dial a year<br>OK = write me &middot; # = snake</span>
+  </section>
+
+  <!-- lottery -->
+  <section class="obj dim" id="lotto" data-drag aria-label="Lottery of the past" style="--x:56;--y:960;--r:-3;--mx:14;--my:2812;--mr:-2">
+    <h2>Lottery of the Past</h2>
+    <p class="sub">Every ticket wins something that already happened</p>
+    <div class="grid" id="lgrid"><canvas id="scratch" width="352" height="127" aria-label="Scratch here"></canvas></div>
+    <div class="foot"><span>3× anything<br>= a conversation</span><a id="claim">Claim: mail Jacco</a><button type="button" id="reveal">Reveal</button></div>
+    <span class="burst">OP<br>=<br>OP</span>
+  </section>
+
+  <!-- cassette -->
+  <section class="obj" id="tape" data-drag aria-label="Cassette" style="--x:850;--y:1104;--r:5;--mx:44;--my:2442;--mr:3">
+    <div class="jcard dim">lately on the deck:<ol id="deck"></ol><p id="spot"></p></div>
+    <button id="cass" class="dim" type="button" aria-pressed="false" aria-label="Play the cassette">
+      <span class="lab"><b id="trackTitle"></b><small id="sideTxt"></small></span>
+      <span class="win"><i class="reel"></i><i class="ribbon"></i><i class="reel"></i></span>
+      <span class="foot"><i></i><i></i><i></i></span>
+      <span class="state" id="cassState">▶ PRESS</span>
+    </button>
+    <button class="tapelabel dim" id="flip" type="button">flip → B</button>
+    <span class="burst pk dim">НОВИНКА!</span>
+  </section>
+
+  <!-- postcards -->
+  <section class="obj dim" id="cards" data-drag aria-label="Postcards" style="--x:470;--y:1250;--r:2;--mx:34;--my:3142;--mr:1"></section>
+
+  <!-- wisdom -->
+  <section class="obj dim" id="book" data-drag aria-label="A book called Wisdom" style="--x:70;--y:1296;--r:-4;--mx:36;--my:3448;--mr:-3">
+    <button type="button" id="bookBtn" aria-label="Open Wisdom at a random page">
+      <span class="cover"><small>collected, not written, by Jacco</small><b>Wisdom</b><i id="bkWho"></i></span>
+      <span class="spread"><span class="pg" id="pgL"></span><span class="pg r" id="pgR" aria-hidden="true"></span></span>
+    </button>
+    <span class="tapelabel">open it anywhere. it answers.</span>
+  </section>
+
+  <!-- power -->
+  <section class="obj dim" id="strip" data-drag aria-label="Power strip" style="--x:900;--y:1462;--r:-2;--mx:54;--my:3728;--mr:-2">
+    <span class="sock"></span><span class="sock"></span><span class="sock"></span>
+    <button id="sound" type="button" aria-pressed="true" aria-label="Sound"></button>
+    <span class="tapelabel">sound</span>
+  </section>
+
+  <div class="obj" id="shades" role="img" aria-label="Tiny sunglasses. Drag them anywhere." style="--x:330;--y:338;--r:-8;--mx:262;--my:232;--mr:-8">
+    <svg viewBox="0 0 120 44"><path d="M4 12h112v5H4z" fill="#111"/><ellipse cx="34" cy="24" rx="27" ry="15" fill="#0a0a0a"/><ellipse cx="86" cy="24" rx="27" ry="15" fill="#0a0a0a"/><path d="M16 18q14-8 28-3" stroke="#555" stroke-width="3" fill="none"/><path d="M68 18q14-8 28-3" stroke="#555" stroke-width="3" fill="none"/></svg>
+  </div>
+  <span class="obj tapelabel dim" id="shadesNote" style="--x:300;--y:386;--r:4;--mx:300;--my:282;--mr:4;font-size:19px">optional</span>
+
+  <p class="obj dim" id="sig" style="--x:430;--y:1534;--r:-1;--mx:24;--my:3952">Built by Jacco, with AI. Obviously.</p>
+
+  <div id="fly" aria-hidden="true"></div>
+  <span class="warm" aria-hidden="true">Запасной ключ ПОЗДРАВ ОД ПРИВІТ ІЗ НОВИНКА</span>
+</main></div>
+
+<canvas id="chainCv" width="220" height="470" aria-hidden="true"></canvas>
+<button id="pull" type="button" aria-pressed="false" aria-label="Pull the gold chain: lights off"></button>
+<div id="lamp" aria-hidden="true"></div>
+<div class="vh" id="announce" aria-live="polite"></div>
+
+<noscript><div style="padding:24px;color:#efe6cf"><h1>Jacco, a work in progress</h1><p>This table needs JavaScript. Short version: Jacco has worked with technology since 1996, builds with AI (agents, a second brain, an assistant called Hark), writes fiction and makes music as The Mariupol Greek Groove Kompania.</p></div></noscript>
+
+<script>
+/* =====================================================================
+   CONTENT — the only part you need to edit.
+   null = not filled in yet; the site prints a [bracketed] placeholder.
+   Later this object can be loaded from a file or an API instead.
+   ===================================================================== */
+const CONTENT = {
+  since: 1996,
+  contact: { email: "jaccodeboer@gmail.com", linkedin: "https://www.linkedin.com/in/jacco-de-boer-53472744a/" },
+  links: { letterboxd: "https://letterboxd.com/Jakkovski/" },
+  now: { listening: "Stelios Kazantzidis", bench: "Harlinger taal" },   // the TV news ticker; the film comes from lately[0]
+  deck: ["Stelios Kazantzidis — Sinnefiasmeni Kiriaki", "Umm Kulthum — Arouh Le Meen", "Hamdi, P Money — Skanka"],   // card behind the cassette
+  tracks: [                                        // the cassette. Files sit next to this page.
+    { file: "side-a.mp3", title: "Zou sti Mariúpoli", note: "side A · The Mariupol Greek Groove Kompania" },
+    { file: "side-b.mp3", title: "Запасной ключ", note: "side B · after midnight" }
+  ],
+  favourites: ["Nights of Cabiria", "Pépé le Moko", "Brazil", "Children of Men"],   // tv 2, from Letterboxd
+  /* LETTERBOXD-START: a weekly scheduled task replaces the lately array below with the three newest diary entries */
+  lately: [
+    { title: "The Voice of Grass", stars: 4 },
+    { title: "GROTESQQQUE", stars: 3 },
+    { title: "Gunsmith Cats", stars: 4 }
+  ],
+  /* LETTERBOXD-END */
+  playlists: [                                     // tv 3
+    { name: "Echoes of Love", who: "Umm Kulthum", url: "https://open.spotify.com/playlist/3EHMppnKRnGYxUH6lBIVBE" },
+    { name: "Deep Elafroloika", who: "Kazantzidis", url: "https://open.spotify.com/playlist/0ym6UuZuxAIguIHGbAi59c" },
+    { name: "Hittos Frittos 2026", who: "Lvbel C5", url: "https://open.spotify.com/playlist/5vKeAvH8iRpeGG7hkjZ7L4" },
+    { name: "D J I P", who: "Hamdi, P Money", url: "https://open.spotify.com/playlist/7lSjSzNycBitLlkamoCeZv" }
+  ],
+  archive: [                                       // tv 4. Add url + link when there is something to watch.
+    { name: "Iepen Up Live", when: "2016-2019", what: "40 live talk shows. Host.", url: "https://www.youtube.com/results?search_query=iepen+up", link: "YouTube" },
+    { name: "Froeks.TV", when: "2006-2011", what: "youth channel of Friesland. Founder.", url: null, link: null },
+    { name: "De Tale Kanaäns", when: "since 2012", what: "dub poetry. Founder.", url: "https://www.youtube.com/watch?v=Us_OypTiORk", link: "YouTube" },
+    { name: "Snackbuffet Het Vliet", when: "2014", what: "literary festival.", url: "https://youtu.be/p7euuURhy6g", link: "YouTube" }
+  ],
+  builds: [                                        // printed by Hark. Add url when something goes live.
+    { name: "Harlinger taal", note: "a language platform for a town that talks its own way. Nearly live." },
+    { name: "Beeldarchief Harlingen", note: "the town's picture archive, searchable. Nearly live." },
+    { name: "A social map", note: "that starts from the resident, not from the org chart. Demo ready." },
+    { name: "An information tool", note: "built with AI for a government department. They actually use it." },
+    { name: "Hark", note: "a second brain for mail, calendar and notes. It asks before it does anything outside." },
+    { name: "Agents", note: "several. Each has one job and strong opinions about it." },
+    { name: "A coffee-reading machine", note: "nobody asked for it. It works." },
+    { name: "This table", note: "you are sitting at it." }
+  ],
+  wisdom: [                                        // the book. Other people's sentences, kept short.
+    { q: "In a world which really is topsy-turvy, the true is a moment of the false.", by: "Guy Debord", src: "The Society of the Spectacle" },
+    { q: "We feel free because we lack the very language to articulate our unfreedom.", by: "Slavoj Žižek", src: "Welcome to the Desert of the Real" },
+    { q: "Every man takes the limits of his own field of vision for the limits of the world.", by: "Arthur Schopenhauer" },
+    { q: "Talent hits a target no one else can hit; genius hits a target no one else can see.", by: "Arthur Schopenhauer" },
+    { q: "…the good guys have won every single time. What are the odds?", by: "Norm Macdonald", src: "on history books" }
+  ],
+  fragments: [                                     // Hark prints these as "a thought"
+    { text: "The technology is the easy part. Then people arrive." },
+    { text: "I treat work as a puzzle. The good part is finding out why it got stuck." },
+    { text: "Every archive is a machine for unexpected connections." },
+    { text: "Literature goes well with bitterballen. Tested in a snackbar, 2014." }
+  ],
+  past: [                                         // scratch tickets, one set per ticket; "New ticket" moves to the next. The last one is the jackpot.
+    [["1996", "Planet.nl, early web"], ["Froeks.TV", "founder"], ["Fryske Cash", "Johnny Cash in Frisian"], ["100 films", "old post office, sold out"], ["LF2018", "bid book + 250 projects"], ["vinyl", "first podcast on it"]],
+    [["Het Vliet", "literature in a snackbar"], ["Tale Kanaäns", "dub poetry, founder"], ["city artist", "Leeuwarden, a real title"], ["Jailbreak", "tattoos in a prison"], ["2005", "best music blog"], ["40 shows", "Iepen Up Live, host"]],
+    [["Ascona", "guerrilla cinema"], ["6 formats", "TV, sold"], ["first apps", "for a newspaper"], ["4000", "visitors, all volunteers"], ["3×", "nominated, radio"], ["0", "subsidy, Fryske Cash"]],
+    [["☕", "a conversation"], ["☕", "a conversation"], ["☕", "a conversation"], ["☕", "a conversation"], ["☕", "a conversation"], ["☕", "a conversation"]]
+  ],
+  years: {                                         // the phone: dial a year
+    1996: ["KPN / Planet. The web arrives. So do I.", "Worked on the first online coin of the Netherlands."],
+    2005: ["Dutch Bloggie: best music weblog of the year."],
+    2006: ["Froeks.TV: founded a digital youth channel for Friesland.", "PS Produkties: six TV formats sold."],
+    2008: ["Cinema Ascona, co-founder. Guerrilla film screenings."],
+    2009: ["Arcadia begins. About 250 projects will follow."],
+    2010: ["Fryske Cash: Johnny Cash in Frisian. 40 artists. No subsidy.", "The first iOS apps of the Leeuwarder Courant."],
+    2011: ["Fryske Cash on CD and vinyl. 6000 visitors."],
+    2012: ["Notfall Filmfestival: 100 films in the old post office. Sold out.", "Founded De Tale Kanaäns: dub poetry.", "City artist of Leeuwarden. A real title."],
+    2013: ["Bid book for Leeuwarden 2018, co-author. We won."],
+    2014: ["A literary festival in snackbar Het Vliet. Literature with bitterballen."],
+    2015: ["Jailbreak: a tattoo festival in an old prison. I did the PR."],
+    2016: ["Iepen Up Live starts: a weekly live talk show."],
+    2017: ["The literary festival in the snackbar, again."],
+    2018: ["Leeuwarden-Fryslân 2018. The year itself."],
+    2019: ["Iepen Up Live: forty shows done."],
+    2022: ["De Baren: community art about a terp."],
+    2023: ["De Baren box set: the first podcast on vinyl, anywhere."],
+    2025: ["Arcadia wraps up, about 250 projects later."],
+    2026: ["Harlingen. AI tools. This table."]
+  },
+  cards: [                                         // img = a photo file, draw = a picture the page paints itself
+    { word: "Nanterre", hello: "bons baisers de", back: "Lived here. Not the Paris of the postcards. Some of it never left.", img: "card-nanterre.jpg", st: "#31456b" },
+    { word: "Fryslân", hello: "groetnis út", back: "Everyday life. Flat, windy, quietly stubborn. Look closer: even here, a Bosporus.", img: "card-fryslan.jpg", st: "#1f6b4c" },
+    { word: "Балкан", hello: "поздрав од", back: "Family history. Nobody leaves the table hungry. Nobody leaves the table.", img: "card-balkan.jpg", st: "#b3261a" },
+    { word: "Запоріжжя", hello: "привіт із", back: "A novel is set around here. I write it. It argues back.", draw: "dusk", st: "#4a4f57" }
+  ],
+  facts: [                                         // what the coffee reveals, one per cup
+    "He has worked with computers since 1996. He still likes them. Mostly.",
+    "He builds with AI: agents, small apps, strange websites. I am one of the things he built.",
+    "He once organised a literary festival in a snackbar. Literature with bitterballen. Proper writers came.",
+    "He makes music as The Mariupol Greek Groove Kompania. Press the cassette. Watch the television.",
+    "He put Johnny Cash into Frisian. Forty artists, six thousand visitors, no subsidy.",
+    "He lived in France. Nanterre, not the postcard part.",
+    "He helped make the first podcast ever pressed on vinyl. It is about a hill.",
+    "His family history runs through the Balkans. It explains the table.",
+    "A hundred films in an old post office, four nights, sold out, volunteers only. His idea of a quiet week.",
+    "He founded a dub-poetry band, De Tale Kanaäns, in 2012. He is still in it.",
+    "He co-wrote the bid book that made Leeuwarden a European Capital of Culture. Then about 250 projects.",
+    "He was city artist of Leeuwarden. It is a real title.",
+    "He writes novels. They are not on this table. Yet.",
+    "In 2005 he had the best music weblog in the Netherlands. Blogs were a thing.",
+    "He founded Froeks.TV and hosted forty live talk shows. Television 4 remembers.",
+    "In the nineties he ran editors at Planet.nl and wrote safety rules for the first online communities. With the police.",
+    "His second brain handles mail, calendar and notes. It asks before it acts outside. So do I.",
+    "He volunteers: refugees, a walk-in house, a meal project. He does not bring it up.",
+    "He is more curious about people than about machines. Do not tell the machines.",
+    "He can be reached. Phone, then OK."
+  ]
+};
+
+/* ============================ the machine ============================ */
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
+const br = (v, hint) => v || "[" + hint + "]";
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const rndm = a => { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; };
+const stage = $("#stage"), wrap = $("#wrap");
+let SC = 1, MOB = null;
+const say = t => { $("#announce").textContent = t; };
+
+/* ---------- textures ---------- */
+function kilim(cv, C, R, T) {
+  cv.width = C; cv.height = R; const g = cv.getContext("2d"), im = g.createImageData(C, R), d = im.data, rnd = rndm(11);
+  const P = { r: [150, 38, 28], r2: [116, 27, 26], i: [30, 40, 84], s: [220, 158, 34], c: [233, 222, 196], k: [26, 17, 15], g: [28, 92, 80], p: [255, 46, 136], y: [60, 225, 235] };
+  const gl = new Map();
+  for (let k = 0; k < Math.max(5, R / 34); k++) { const r0 = 18 + Math.floor(rnd() * (R - 36)), h = 1 + Math.floor(rnd() * 3), sh = (4 + Math.floor(rnd() * 12)) * (rnd() < .5 ? -1 : 1), x0 = Math.floor(rnd() * C * .7), w = Math.floor(C * (.15 + rnd() * .5)); for (let j = 0; j < h; j++) gl.set(r0 + j, [sh, x0, x0 + w]); }
+  const base = (x, y) => {
+    const ex = Math.min(x, C - 1 - x), ey = Math.min(y, R - 1 - y), e = Math.min(ex, ey), al = ex < ey ? y : x;
+    if (e < 2) return P.k; if (e < 4) return P.c;
+    if (e < 10) { const t = al % 10, tri = t < 5 ? t : 9 - t; return e - 4 <= tri ? P.i : P.s; }
+    if (e < 11) return P.k; if (e < 14) return ((al + e) >> 1) % 3 ? P.r2 : P.c; if (e < 15) return P.k;
+    const fx = x - 15, fy = y - 15, row = Math.floor(fy / T), u = ((fx + (row % 2 ? T / 2 : 0)) % T) - T / 2, v = (fy % T) - T / 2, a = Math.abs(u), b = Math.abs(v), m = a + b, alt = row % 3 === 1;
+    if (m < 2) return P.k; if (m < 5) return alt ? P.s : P.c; if (m < 8) return alt ? P.g : P.i; if (m < 10) return alt ? P.c : P.s;
+    if (m < 13) return (Math.floor(a / 2) % 2) ? P.k : (alt ? P.i : P.g);
+    if (m >= 15 && m < 16) return P.k;
+    if ((a > T / 2 - 2 && b < 5) || (a > T / 2 - 5 && b < 2)) return P.s;
+    if (b > T / 2 - 2 && a < 3) return P.c;
+    return row % 2 ? P.r : P.r2;
+  };
+  for (let y = 0; y < R; y++) { const G = gl.get(y), ab = .88 + .16 * (.5 + .5 * Math.sin(y * .21 + Math.sin(y * .047) * 3));
+    for (let x = 0; x < C; x++) { let c = base(x, y);
+      if (G && x >= G[1] && x < G[2]) { c = base(Math.max(0, Math.min(C - 1, x + G[0])), y); c = c === P.r || c === P.r2 ? P.p : c === P.i ? P.y : c === P.k ? P.c : c; }
+      const j = (.96 + rnd() * .08) * ab, o = (y * C + x) * 4; d[o] = c[0] * j; d[o + 1] = c[1] * j; d[o + 2] = c[2] * j; d[o + 3] = 255; } }
+  g.putImageData(im, 0, 0);
+}
+function doily(cv) {
+  const S = cv.width, g = cv.getContext("2d"), c = S / 2, R = c * .86; g.clearRect(0, 0, S, S);
+  g.fillStyle = "#f1e9d4"; g.beginPath(); g.arc(c, c, R, 0, 7); g.fill();
+  const n = 26; for (let i = 0; i < n; i++) { const a = i / n * 6.2832; g.beginPath(); g.arc(c + Math.cos(a) * R, c + Math.sin(a) * R, R * .13, 0, 7); g.fill(); }
+  g.globalCompositeOperation = "destination-out";
+  const ring = (r, k, rx, ry, off) => { for (let i = 0; i < k; i++) { const a = (i + (off || 0)) / k * 6.2832; g.beginPath(); g.ellipse(c + Math.cos(a) * R * r, c + Math.sin(a) * R * r, R * rx, R * ry, a, 0, 7); g.fill(); } };
+  ring(1, n, .05, .05); ring(.87, 52, .028, .028); ring(.75, 26, .075, .04, .5); ring(.6, 20, .085, .04); ring(.45, 16, .07, .035, .5); ring(.31, 12, .055, .03); ring(.19, 8, .04, .025, .5);
+  g.lineWidth = R * .012; [.82, .68, .53, .38, .25].forEach(r => { g.beginPath(); g.arc(c, c, R * r, 0, 7); g.stroke(); });
+  g.globalCompositeOperation = "source-atop"; const sh = g.createRadialGradient(c * .8, c * .7, 0, c, c, R * 1.15); sh.addColorStop(0, "rgba(255,255,255,.25)"); sh.addColorStop(1, "rgba(120,90,40,.3)"); g.fillStyle = sh; g.fillRect(0, 0, S, S);
+  g.globalCompositeOperation = "source-over";
+}
+function leopard() {
+  const cv = el("canvas"); cv.width = cv.height = 256; const g = cv.getContext("2d"), r = rndm(5);
+  g.fillStyle = "#cf9440"; g.fillRect(0, 0, 256, 256);
+  for (let i = 0; i < 500; i++) { g.fillStyle = "rgba(" + (r() < .5 ? "255,220,150" : "120,70,10") + ",.14)"; g.beginPath(); g.arc(r() * 256, r() * 256, 4 + r() * 16, 0, 7); g.fill(); }
+  const pts = []; let tries = 0;
+  while (pts.length < 34 && tries++ < 900) { const x = r() * 256, y = r() * 256; if (pts.every(p => { const dx = Math.min(Math.abs(p[0] - x), 256 - Math.abs(p[0] - x)), dy = Math.min(Math.abs(p[1] - y), 256 - Math.abs(p[1] - y)); return dx * dx + dy * dy > 1400; })) pts.push([x, y]); }
+  g.lineCap = "round";
+  for (const [x0, y0] of pts) for (const ox of [-256, 0, 256]) for (const oy of [-256, 0, 256]) {
+    const x = x0 + ox, y = y0 + oy, rr = rndm(Math.floor(x0 * 31 + y0 * 7)); if (x < -30 || x > 286 || y < -30 || y > 286) continue;
+    const s = 9 + rr() * 7, rot = rr() * 6.28;
+    g.fillStyle = "#93601c"; g.beginPath(); g.ellipse(x, y, s * .8, s * .62, rot, 0, 7); g.fill();
+    g.strokeStyle = "#140c06"; const k = 2 + Math.floor(rr() * 2); let a = rr() * 6.28;
+    for (let j = 0; j < k; j++) { const len = 1.1 + rr() * 1.2; g.lineWidth = 4.5 + rr() * 3.5; g.beginPath(); g.ellipse(x, y, s, s * .8, rot, a, a + len); g.stroke(); a += len + .5 + rr() * .6; }
+  }
+  document.documentElement.style.setProperty("--leo", "url(" + cv.toDataURL() + ")");
+}
+function grounds(cv, seed) {
+  const S = cv.width, g = cv.getContext("2d"), im = g.createImageData(S, S), d = im.data, r = rndm(seed), bl = [], dr = [];
+  for (let i = 0, n = 8 + r() * 7; i < n; i++) { const a = r() * 6.28, q = Math.sqrt(r()) * .42; bl.push([.5 + Math.cos(a) * q, .5 + Math.sin(a) * q, .03 + r() * .1]); }
+  for (let i = 0, n = 3 + r() * 4; i < n; i++) dr.push([r() * 6.28 - 3.14, .05 + r() * .1, .12 + r() * .25]);
+  const ph1 = r() * 9, ph2 = r() * 9, q4 = [0, 0, 0, 0]; let dark = 0, tot = 0, ctr = 0, ctrN = 0;
+  for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) {
+    const nx = x / S, ny = y / S, dx = nx - .5, dy = ny - .5, rad = Math.hypot(dx, dy), o = (y * S + x) * 4; if (rad > .5) { d[o + 3] = 0; continue; }
+    let f = 0; for (const b of bl) { const ex = nx - b[0], ey = ny - b[1]; f += b[2] * b[2] / (ex * ex + ey * ey + .0009) * .42; }
+    f += Math.max(0, (rad - .37) / .13) * 1.1; const an = Math.atan2(dy, dx);
+    for (const q of dr) { let da = Math.abs(an - q[0]); if (da > 3.1416) da = 6.2832 - da; if (da < q[1] && rad > q[2]) f += (1 - da / q[1]) * .75; }
+    f += (Math.sin(nx * 23 + ph1) * Math.cos(ny * 19 + ph2) + Math.sin((nx + ny) * 41 + ph1) * .5) * .16;
+    tot++; if (f > .86) { dark++; q4[an > -.785 && an <= .785 ? 0 : an > .785 && an <= 2.356 ? 1 : an > -2.356 && an <= -.785 ? 3 : 2]++; }
+    if (rad < .14) { ctrN++; if (f > .86) ctr++; }
+    let c = f > 1.15 ? [34, 19, 9] : f > .86 ? [78, 46, 22] : f > .62 ? [160, 122, 80] : [241, 233, 214];
+    if (f > .5 && f < .9 && r() < .1) c = [40, 22, 10];
+    const s = 1 - rad * .35; d[o] = c[0] * s; d[o + 1] = c[1] * s; d[o + 2] = c[2] * s; d[o + 3] = 255;
+  }
+  g.putImageData(im, 0, 0);
+  const big = bl.reduce((a, b) => b[2] > a[2] ? b : a);
+  return { dark: dark / tot, q: q4, centre: ctr / ctrN, drips: dr.length, blobs: bl.length, bigA: Math.atan2(big[1] - .5, big[0] - .5), bigR: Math.hypot(big[0] - .5, big[1] - .5) };
+}
+function snowOn(cv, a) { const g = cv.getContext("2d"), im = g.createImageData(cv.width, cv.height), d = im.data; for (let i = 0; i < d.length; i += 4) { const v = Math.random() * 255 | 0; d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = a; } g.putImageData(im, 0, 0); }
+
+/* ---------- layout ---------- */
+function layout() {
+  const vw = document.documentElement.clientWidth, m = vw < 900, W = m ? 420 : 1280, H = m ? 4046 : 1620;
+  SC = Math.min(vw / W, m ? 1.7 : 1.4);
+  stage.classList.toggle("m", m); stage.style.width = W + "px"; stage.style.height = H + "px";
+  stage.style.transform = "translateX(" + ((vw - W * SC) / 2) + "px) scale(" + SC + ")"; wrap.style.height = H * SC + "px";
+  if (m !== MOB) { MOB = m; m ? kilim($("#kilim"), 70, 674, 26) : kilim($("#kilim"), 160, 203, 36); chainInit(); }
+  chain.ax = (vw - W * SC) / 2 + SC * (m ? 366 : 952); $("#chainCv").style.left = (chain.ax - 110) + "px";
+  cables();
+}
+const box = id => { const e = $(id), s = MOB ? (parseFloat(getComputedStyle(e).getPropertyValue("--ms")) || 1) : 1; return [e.offsetLeft, e.offsetTop, e.offsetWidth * s, e.offsetHeight * s]; };
+function cables() {
+  const s = box("#strip"), t = box("#tv"), h = box("#hark"), W = stage.offsetWidth;
+  const run = (a, b, col, w) => { const sag = 70 + Math.hypot(a[0] - b[0], a[1] - b[1]) * .16, p = "M" + a + " C" + a[0] + "," + (a[1] + sag) + " " + b[0] + "," + (b[1] + sag) + " " + b;
+    return '<path d="' + p + '" fill="none" stroke="rgba(0,0,0,.45)" stroke-width="' + (w + 4) + '" transform="translate(3,6)"/><path d="' + p + '" fill="none" stroke="' + col + '" stroke-width="' + w + '" stroke-linecap="round"/>'; };
+  $("#cables").innerHTML = run([s[0] + 40, s[1] + 40], [t[0] + t[2] * .86, t[1] + t[3] - 10], "#15100e", 7)
+    + run([s[0] + 100, s[1] + 40], [h[0] + h[2] - 12, h[1] + h[3] * .5], "#e9e2cf", 6)
+    + run([s[0] + s[2] - 8, s[1] + 44], [W + 30, s[1] - 120], "#ff7a00", 8);
+}
+
+/* ---------- dragging things around ---------- */
+let stopClick = false;
+addEventListener("click", e => { if (stopClick) { e.stopPropagation(); e.preventDefault(); stopClick = false; } }, true);
+$$(".obj[data-drag], #shades").forEach(o => {
+  let sx, sy, ox, oy, on = false, moved = false;
+  o.addEventListener("pointerdown", e => {
+    if (o.id !== "shades" && (MOB || e.pointerType === "touch")) return;
+    if (e.target.closest("#scratch,#pkeys,input,a")) return;
+    on = true; moved = false; stopClick = false; sx = e.clientX; sy = e.clientY; const cs = getComputedStyle(o);
+    ox = parseFloat(cs.getPropertyValue(MOB ? "--mx" : "--x")); oy = parseFloat(cs.getPropertyValue(MOB ? "--my" : "--y"));
+  });
+  addEventListener("pointermove", e => { if (!on) return; const dx = (e.clientX - sx) / SC, dy = (e.clientY - sy) / SC;
+    if (!moved && Math.hypot(dx, dy) < 5) return; moved = true; o.classList.add("grab");
+    o.style.setProperty(MOB ? "--mx" : "--x", ox + dx); o.style.setProperty(MOB ? "--my" : "--y", oy + dy); if (o.id === "tv" || o.id === "hark" || o.id === "strip") cables(); });
+  addEventListener("pointerup", () => { if (!on) return; on = false; o.classList.remove("grab"); if (moved) { stopClick = true; setTimeout(() => stopClick = false, 60); } });
+});
+
+/* ---------- sound: two real tracks on the cassette ---------- */
+const A = { on: true, play: false, side: 0 };   // sound is on from the start; browsers only let it out after the first tap or key
+const player = new Audio(); player.preload = "none";
+function audioInit() {
+  const C = window.AudioContext || window.webkitAudioContext; if (!C) return; const c = A.ctx = new C();
+  A.master = c.createGain(); A.master.gain.value = .85; A.master.connect(c.destination);
+  const len = c.sampleRate * 2, buf = c.createBuffer(1, len, c.sampleRate), d = buf.getChannelData(0); for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1; A.noise = buf;
+}
+/* The music plays through a plain audio element. For the playback face the same file is decoded once
+   and reduced to a loudness curve of the voice band; if that fails the jaw just improvises. */
+A.env = {};
+function loadEnv(side) {
+  if (A.env[side] !== undefined || !A.ctx || !window.fetch) return; A.env[side] = null;
+  fetch(CONTENT.tracks[side].file).then(r => r.arrayBuffer()).then(b => A.ctx.decodeAudioData(b)).then(buf => {
+    const x = buf.getChannelData(0), hop = 512, n = Math.floor(x.length / hop), e = new Float32Array(n), a1 = 1 - Math.exp(-6.2832 * 260 / buf.sampleRate), a2 = 1 - Math.exp(-6.2832 * 2800 / buf.sampleRate);
+    let lo = 0, band = 0, mx = 0; for (let i = 0; i < n; i++) { let t = 0; for (let j = 0, o = i * hop; j < hop; j++) { const v = x[o + j]; lo += (v - lo) * a1; band += ((v - lo) - band) * a2; t += band < 0 ? -band : band; } e[i] = t / hop; if (e[i] > mx) mx = e[i]; }
+    A.env[side] = { e, dt: hop / buf.sampleRate, mx: mx || 1 };
+  }).catch(() => {});
+}
+function hit(t, fr, q, v, dur, type) { const c = A.ctx, s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain(); s.buffer = A.noise; f.type = type; f.frequency.value = fr; f.Q.value = q; g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.001, t + dur); s.connect(f).connect(g).connect(A.master); s.start(t, Math.random()); s.stop(t + dur + .02); }
+function sfx(k) {
+  if (!A.ctx || !A.on) return; const c = A.ctx, t = c.currentTime;
+  if (k === "tick") hit(t, 3200, 2, .12, .02, "bandpass");
+  else if (k === "click") hit(t, 2200, 1, .5, .03, "highpass");
+  else if (k === "static") hit(t, 1500, .3, .28, .22, "bandpass");
+  else if (k === "scr") hit(t, 4800, .6, .08, .05, "highpass");
+  else if (k === "whoosh") hit(t, 420, .4, .7, 1.1, "lowpass");
+  else { const o = c.createOscillator(), g = c.createGain(); o.type = "sine"; const f = k === "ding" ? 1320 : 110; o.frequency.setValueAtTime(f, t); if (k !== "ding") o.frequency.exponentialRampToValueAtTime(48, t + .1);
+    g.gain.setValueAtTime(k === "ding" ? .18 : .6, t); g.gain.exponentialRampToValueAtTime(.001, t + (k === "ding" ? .7 : .14)); o.connect(g).connect(A.master); o.start(t); o.stop(t + .75); }
+}
+function setSound(v) {
+  if (v && !A.ctx) audioInit(); A.on = v;
+  if (A.ctx) { if (v) A.ctx.resume().catch(() => {}); A.master.gain.setTargetAtTime(v ? .85 : 0, A.ctx.currentTime, .03); }
+  player.muted = !v; $("#sound").setAttribute("aria-pressed", v); if (!v) setPlay(false); else sfx("click");
+}
+function tapeLabel() { const t = CONTENT.tracks[A.side]; $("#trackTitle").textContent = t.title; $("#sideTxt").textContent = t.note; $("#flip").textContent = A.side ? "flip → A" : "flip → B"; }
+function setPlay(v) {
+  if (v) { const t = CONTENT.tracks[A.side]; if (player.dataset.side !== String(A.side)) { player.src = t.file; player.dataset.side = String(A.side); } if (!VOX[A.side]) loadEnv(A.side);
+    player.play().catch(() => { lcd("TAPE JAMMED. PRESS AGAIN."); setPlay(false); }); if (chan !== 1) setChan(1); lcd("HE IS MIMING. DO NOT TELL HIM."); }
+  else player.pause();
+  A.play = v; $("#cass").classList.toggle("playing", v); $("#cass").setAttribute("aria-pressed", v); $("#cassState").textContent = v ? "■ PLAYING" : "▶ PRESS";
+  $("#ch1").classList.toggle("sing", v); $("#bug").textContent = v ? "JTV · PLAYBACK" : "JTV"; setTicker();
+}
+player.addEventListener("ended", () => { setPlay(false); lcd("TAPE ENDED. FLIP IT."); });
+const wake = () => { if (A.on && !A.ctx) audioInit(); if (A.on && A.ctx) A.ctx.resume().catch(() => {}); };
+addEventListener("pointerdown", wake, true); addEventListener("keydown", wake, true);
+$("#sound").addEventListener("click", () => setSound(!A.on));
+$("#cass").addEventListener("click", () => { if (!A.play && !A.on) setSound(true); setPlay(A.on && !A.play); sfx("thunk"); });
+$("#flip").addEventListener("click", () => { if (A.play) player.pause(); A.side = 1 - A.side; tapeLabel(); if (!A.on) setSound(true); sfx("thunk"); setPlay(true); });   // flipping starts the other side straight away
+CONTENT.deck.forEach(t => $("#deck").append(el("li", t ? "" : "ph", br(t, "to be taped"))));
+(function () { const b = el("button", "", "all playlists: tv, channel 3 →"); b.type = "button"; b.style.cssText = "font:inherit;color:#96261c;text-decoration:underline"; b.addEventListener("click", () => { setChan(3); $("#tv").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" }); dLast = performance.now() - 17000; }); $("#spot").append(b); })();
+tapeLabel();
+
+/* ---------- television ---------- */
+let chan = 1;
+const tt = (no, title, rows) => '<div class="hd"><span>P' + no + '</span><span class="y">JACCOTEXT</span><span class="clock"></span></div><h3>' + title + '</h3>' + rows.map(r => "<p>" + r + "</p>").join("");
+const esc = s => String(s).replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+const stars = n => "*".repeat(Math.floor(n)) + (n % 1 ? "½" : "");
+const ttLink = (url, label) => url ? '<a class="go" href="' + esc(url) + '" target="_blank" rel="noopener">▶ ' + esc(label) + '</a>' : '';
+function renderKino() { $("#ch2").innerHTML = tt(101, "KINO", ['<span class="c">All-time</span> ' + esc(CONTENT.favourites.join(" · ")), '<span class="g">Lately</span>'].concat(CONTENT.lately.map(f => esc(f.title) + ' <span class="y">' + stars(f.stars) + '</span>'), [ttLink(CONTENT.links.letterboxd, "open my Letterboxd")])); }
+renderKino();
+$("#ch3").innerHTML = tt(202, "MUZIEK", ['<span class="g">Four playlists. Press one.</span>'].concat(CONTENT.playlists.map(p => ttLink(p.url, p.name) + ' <span class="c">' + esc(p.who) + '</span>'), ['<span>also: the cassette on the table.</span>']));
+$("#ch4").innerHTML = tt(303, "ARCHIVE", CONTENT.archive.map(a => '<span class="y">' + esc(a.name) + '</span> <span class="g">' + esc(a.when) + '</span>\n' + esc(a.what) + (a.url ? " " + ttLink(a.url, a.link) : "")));
+function setTicker() {
+  const n = CONTENT.now, t = CONTENT.tracks[A.side], tk = $("#ticker");
+  const txt = (A.play ? ["Now miming: " + t.title, "Lips may not match the words", "He does know the words", "Experts confirm: face is real"]
+    : ["Jacco remains a work in progress", "On the turntable: " + br(n.listening, "awaiting signal"), "Last film: " + (CONTENT.lately[0] ? CONTENT.lately[0].title : "none on file"), "On the bench: " + br(n.bench, "awaiting signal"), "Experts confirm: face is real", "Weather: wind"]).join("  +++  ") + "  +++";
+  if (tk.textContent !== txt) tk.textContent = txt;
+}
+setTicker();
+/* On your own server, letterboxd.php returns the newest diary entries; here (claude.ai) it does not exist and nothing changes. */
+if (location.protocol.startsWith("http") && !/claude|anthropic/.test(location.hostname)) fetch("letterboxd.php", { cache: "no-store" }).then(r => r.ok ? r.json() : []).then(f => {
+  if (!Array.isArray(f) || !f.length) return; CONTENT.lately = f.slice(0, 3).map(x => ({ title: String(x.title), stars: +x.stars || 0 })); renderKino(); setTicker();
+}).catch(() => {});
+/* the playback face: a still of the portrait with a jaw that follows the voice.
+   VOX holds, per side, the loudness of the isolated vocal (36 levels, one character per 23 ms),
+   and b the vowel brightness (narrow or wide mouth), both made offline with a vocal separator. A new track without such a curve falls back to the whole mix. */
+const VOX = [{"dt": 0.011609977324263039, "s": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007ehijilqsttrnnooonmlkkkkjiihd8agntwvutstsrsqmga800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007acdeeeedba97766000000000000000000000000000079aabbbbaa9987777778889aaabcccccbbbba870000000000000000000000000000000000000000000000000068aaa988887600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000adehklnopqqpooorwzzzzzzzzzzyyyyxyxyyyyvrmllhdfiijkjjihgea99chjmrsstttsrpnmmmllkjjuzxwwvvuvvuuuvuttsldikloqrstttttttrqqoopooryzzzzzzzzzzztojdbaa9668878aeluzzzzzzyxxwxxvngghhhggffijkklmmjc887789bbccca98760000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000068bdfhhhijkklovzzzzzxzywzzzxvuusqomotwvrqolkkljdaaacdefffffeb86679gsyzyxwvrlb500445567779bjrxzzzzzyzzzzzxvwzyvvwyzzzxsopqpnnlmquxyxxwroqrrssqpooqngba999bccdddda9a988999768hrwvrmjkkjkjkmmllkkkllkkkjjkihfddefghfeghiigda98656000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000078899aaaaabbcefggggghikmmottzzzzzzzzzzzzxvuutvxwrnljgcbcceffffecaacefgggfeca9776405bhklnopqsssrplheeeefggggda87664000006dlprtvwxwwwwwwwwwuuttrrqponoruutsttsrqpstsrqle96000000000006668dhiigfghhghhhggffffeeddccccdbaa99abba98789aaabddddddeedddddccccccbaa99abbaabbaabcbaaaa9999aa9865666788899aaaaaaabbbbccddcb987789abcdfghjkkklllllmmnnmmkjjjjklmmmmmnnnnooopoonnoooonmnoopqrstuuutttuvvwyywxxvurlhdaeijkjiihghhhfeccccbccba99765557886566766665600000000000000000000bgilpqrttxzxzzzzxvuvtqrrsspic87666787gpwyyyunhgiicafihgghhiihhggijnqsuvupiffgilnprtrpprsuvwxxwvvusrrpnnmlnnljhiijjkjkklnoppomida600000000chklkmnmmonnoonnnligfdddefhhijjklklnnklqsromlkiiihhhfddddeedeedddcba8600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009gjpxzvuxyywtstsrolkigjmmmoqpnjgknqrrrppmea97000000000068guzxwxxwxunffhiihgggfdb8000000006bffffedca765569dgijklmnnptzzvwwvsqtsqlghjkllklllkjikomnqrvwvwvrrrpoomigfecaaa988877779aaaaabaaa99866558acee00000000000000000000000000008dqwvtrommnnnmmmkklmnmkkkkjkjedejnqqqppolkhda7666677679fjnqpponnnnmmlkjigdaaceedeefeegijhgimppokhhijjgcaa866659gmkbbfhffklllighhijkmnmmnopoqttqnopqsutuxwwxxvvyxwvvutqmjfdcb9998776888887655550000000000000000000000000000000000afimswvrqqrtttssrqponmmnonlkighkoqsutqrrleba7544466669fpyzzzzzzzzyxxwywuxwstwwurqsqkcabcegikklnqqruvvvuuuttutuvunfefjoqqstuutokiiilmmmnnnoppmmruzzzzzzzzzzzzzxyyumhjlmlkigffdb86666655566666655drvxyqghmorttyzzzzywutvwutsrqonoponqwzzzzzzzzzyxyyxxzxqfba998999aajuzzzzzzzzxwzzzzzzzzzzzzzxpfcccbbaa9aaaa9a98788889bfmrsssssrrqpqssrsttstsojhnqstuuuvuusrqpqrqqqqoppnkjihgfecbcbbbbbbhnqssstussqkb97655568aaflopqrrqqrststvwwutsrrpkcbbbbbchijjiklmlkkjjihgggffdcccccddcdfeccddeeeefeefffgiigfda999acdefghhhgffeeffghhijihggghhhiijkjjlmjhgdcfgghjjga789889aabceefgeefghihikkkje9789abdffghhikkkkkkkjlllmnmidfghjjiikllklllmmlmonnopppqpooqrqqstsrttrrttsrqqruxxxxumcacgkmnptvvwwsoljlmoomlmnlihhhiklkkjjklkkkjijigeffeeedca9975688755677779bdeffgghiihhgghfb600000000000000000000000000000000006668bccabaa8700000000000000000000000000000009egijlmmmmmllkkifdb77000000000000000adhkmnnnmlllkjihfc8558a9755556677777789behjjjigeddcbbbcegjjhfhlprsplkmoonnjdcdc80000000000000000000000067777777acddcadfghhggffggea678aaeknonlmllmonjhifb9acfeb99abbbbabbbaa976555666789acgknprogba9bdeeefeeddhknonlg800000000000000000000000000000000000000666afiihhhhhhggfec8000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006789aa988dfegghmnqsqnptstusrrqrroprompldbbaabdedffaabbaeghhhjjifa9eqxzzwvwvqprpnuzzzzvspqplknmffcaa89aa98766600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000qxwxvrwzzzzxvurka0000000068878dglwzzzzzzzzzzzzzzrgfggpxxwxzzzywvtssmfgijjkkihiiiijiilkfbacglqtuvxyyzzyxwxzzyzzzzzwnedehjmrvwwuxyxwwwwyyzzzzyxwtsrssrsssttuwvwxwyywuutpmlkighhhhijklllkkliea9cghltxwwsiabb9988899aabaaababbbaaaaacjqstwzzzzzzzzzzzzxxwvwyzzyxtleghc9elrvxyzzzzzzzzwoa777887agovyzzzzzzzzzzyywvuuuusuvqhaaacgklllnqrqmfcceghhhhhhgfb87778aglpstuuuuttssrqpponmjhhhhhghiiihhiiheedbba97689970000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007cfilnoomllkgfgiknstuxzzzzzzzzzzzynbbbbaaaaccdeffegqwzzzzzzzzzzzzzzzzvqppppruuuwxywuuvvttvvuspnh99bdglopruvwwwwwxxxyzxxwttsqlfggiihiiiiiihhkstqpqvzzzzzyqptwxyzyyzyyyyzzzzzzzzzzzzzzzzzzzyyzzzzzzzzzxvxxwzzzzzynddefjnqqquyyyzzzxzzzzzzzzzwohfeflpqrtwyyzzzzzzzzzzyzzyuptuvyzzzyxyyxzzzzzzzzvvxxzyvutqquxywsprxzzzzvvyyxyyvtqme878abgjllkkiimomlmmmoponlijmomieba988887788870000000000000000000000000065556777akszzxtrrstspmprqnmnnnmmprrrrrqmgbbehhebegdjprvxwwwwuuvuvxxrgdb9bcdeeeffhqtquzzzzzzzzzytonmnqtvyzyvssrjdfggijihhhhgfffedb9766000000059kvzzzzxuofbcdgjjknoomlia77668ckqtuvvuuttutronoqppssqqrrqqpolkje60000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006667777760000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006899aaabbbbccddeefggghiigfedceeefefefhhhkklllmmmkiikkklmnpooppppommnnprsssrrssrrqqrqqqqqqrrqqrqoprrrpqrqlfdfhjjkmoooprssssstuuttsqlfdcddehjklmmlhb77dgfccbccdefebacgjigkmnmllkjihgffgijheeddccddeffffinqne60000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006diloqrrtttutttttuuuwxvtpkihffffggdcehjlligedfioqqpponlihhhggeeeefgfffeddedddddddcbccaaa988766788999988889aa8666667ajswyzzxyzzyyyyxvttssuvwvxxvvvvwwwuvutrponnmkjklhb98769cfimooppooppnooonoonllkiiiijiijjihhhhggghghhggggfecba9988889aaaaaaaabbbbccdedca98888999aaaaa998899aaa987788889abcdeeeeeeddddeeeeeeeeedddeefffffffffedbccdefgggfeca8789bcccddeeeeddefgghhhiihfeddddffggiiiiiihhijjkkkklkkihggghiijjjjiihfegijkkkkllllkjjkkkklmmnnnnnmlkkjkkjjjigc999cfhjklmnnnnmmllmnponnonlfeehkklmopppponllnpqrssrqpmjfddgjklmlnppqqooppoprrqpppmjlkjjkklllllllkjkkjkmmnooolf9650000000066666666600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007beghihgfgghiklkieefggghiiihc9bcca9987777777766667679964445655666660000000000000000000000000000000000000000000000000000000007dmrtutrrqomkkje600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007cekkkmlklnmkkkjoonsrjfihfgdeebaa9aa9889a9a99addbcdefgecbdhjsxurqptvusqssutptyvmligedcbaaaba876689997578768a86600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000csyzzzzxxuuzzzvnd97666655667bddgntxzzzzzyzzzzzzvngffhikvzzzzzzzywutsrqmigffeeeefghiiihdabfikkjklmoqstuuuuvvvvvvwvsmihjlnopopsuuutuvvwywussssqligfipspoooomlmmljjjkkjjijiedegfghggggec75558ckpsstuuuvuoiec966adegijiihiiiiihhhglsuvzzzzzzzzzzzyzzzzzzzzzzysmieceinrtvvwwwwtqmfcbacfhheegltzzyyyxvvwzzzzzzytrstvvvwxywqkhhjkjfaabcdddffefffffmvzzyrkifghhjkmoppqssssrrpponlkigfda7445570000004400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007658adjopoqqmkkloqrtvwxyzzzzzzxwvupf8665600000000006fsxzzzxzzzzzzxyzywvuvzzzzxvuvwxxyyyxwxxwxxvodffhlpuwwwwyyyxvwxzzzzyvqljhgfdddeeeeeedgszzzyyzzzzzzzzxvvtuyzzzzzzzzzzzzzzzzzzzzzzzzyzywvxzzyyzywtqllqtuuuwxskiiknqstutuwvvvwxwuuxzyyzzztmkkmoqtvxyyyxvuuwxxyyzzzzzzspxzwxzzzywvxzzzzzzzzzzzzzzzzxxzzzzyxyywvvvuuuuuvyzzzzzwojlnqruwwxyzzzytnfdddcbeedbfpzzzzzzzzzzzzzzzzzzzzzzzywvwwvwuutrssrrplknmlkihiheghedddbabb99a998798788766776776660000000000000000000000007irwyyxxyvuvuwxvvxyuqqrqoprtsqstsssssspgioqrsuxzzzzzzzzzzzzzzxuqnkijlllllkjihjptuvvxzzzzzxvuursttttsngddefijjjhhhghgca77776776777admtttuwyxxyyxwxxvtroookb67666677777dkmlkiiihfeddcbccbbbbbaaa9a99988777788888999888888999aaaaaaaaaaaaaaaaaaaabaa9aaaaaaaaaa99999aaabbbbbbabbbbbbbbbbbbaaaabbbbbbccccccccccccdddddcccdeeddddeeeeeeeffeeeffffgggggfffggfffggggghhhhhhhhhiijkjhhijjjjjkklllllmmnnnnnmmmnnoomnnnoooooprsrssuvvuvuuuvvxxtttvvsvyzzzzzztppppuzzzzzzzzzzzzzzzzzzzzzzzzwutssrstttpnnnmlkilmjkjkmkgefghhhknlhkpoklmlkigffeddddcb99aaa966660000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000cimopqqqppqqpppppqqpnhcdda60000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000068999a9987679ceefgfddddeca998888888999aaa97789bbb9789887600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006654047dghiiggfcddcagjfb9aacdb9876667700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006459hmpqstsrvxvsuwvuuuuuusqnmpqlhijkijkkkjjjigdcca9999877986666777876766777789abcdedbbfmtwwvvxwvwzytwzyxxwxyxvxytmihjkllllkkkjhfffgfedddcba876677700000000000000000000000069cfknnpstttuuusponnoopokgfgklmnpsvxyyxurruvwusrlmuyth860000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006bdeddgiilnpqonnnnliea6676000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008dhknqqppnmptwzzzzzzzzzzzzzzzyxxvtsrpnmkigggeda776000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006bgjkmooponkgdbbeggggghhhhhijigfffffedcbccbb999aa98777667600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", "b": "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii833454332224576544322232211111111234556776431000iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii0000000000000000iiiiiiiiiiiiiiiiiiiiiiiiiiii000000000000000000000000000000000000000iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii000000000001iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii4112cjttvwyzwvplb6000126bedba98877654211246cglnqpooljed889ddeceeefgjljfb99cefhgea8adfgijjkkllllmmicbcgiknooponlkkjgda869ceeiotvxxyyyyyyupjjpqttwwvxsrrsog9412346aehie99djlkigdcbdfiihhge9a9aafhgfedeghigfbiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiilvxzzzzzzzzwqh8436cluyzzzzzxwvwuuupe4027bdcdjpttttwxuropqutuwyzyunebdkmnllhikriispmnqsrokllibbisxzzzzzzzzzzzzyvrnllmoplfa8659ejjjkklkmqvyyyxwvrldeirttuvyyxwxwxxzzyxwwyyxrj9411488659hmprstuvwwwtqonlkiklmmmkd87997555677adhd8iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii245568abcefhfdaaa88acdda8310111101246789989accdba752100011222128iotuyyvvstpjb6546i5568778bdeda7427flpqvyzzzzzzzzzwiiiiigd42234555555555554311111001259a97789cfhjkkligioriiiiiiiiiiipkdbcdeccdeec98898975444333211000011112221000000000000000000000000000000000000000000000000000000001111001110000000000011111211001333111211111111112222232200000122212222221222222111222222221110000112221001110011111222111110000000111000000011100000000000111000iiiiiiiiiiiiiiiiiiiia5798779bccceijhdcb99887779fikecdiookgc98bgmonjfaegkfc8644457999875555422456432111136887655556666579bbcccba9998655443210000000024iiiiiiii7653222210000000134667776654456775210000000000000000000000000000000000iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii00000000000000000013cimjjjlmigdhknkjiigb757chiiiiiiiiiikhcabinrpnkighimpuxzzzzxusiiiiiiiigghjnnf87ckptvsrnmmmoopooiecglorrqqpppqplihhhigfeiopstwtssvwxxvusqnlmolhfilnonmnssstxzxuuuusrqpruyxwupjb4110iiiiiiiiiiiiiiiiiiiiiiiiiiii70000000000000124568cddddca84347accddbbbb856djkjmponnrtronoommoquuussrsstpiddgjknpvxwpf89dfd879iqupkfheb49bddjoja46beeddhmnlheb876779abbbbcc857beeefhkosvvwvvvwwvvuusqnlljkjkjhgdcfkopqrrnkmrqiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiikd720000000000000001244436aeghijjheeeda998759adeda446aehjknrtqib8bhntwwuqkdaacfhheeiklknoonnnpqsqnjhgghjkmomkhed9agpvromoprssstutqomlnpqrsuuuvwxyzzzzzzzzzzzyxunhfmuyxxyzyvtstsuwzzzzzxwwyzzyvnd76899731100112457afjnopmjggfc976668fmpooponmmnoqqoib8cigfgllihinmgbccfjmkknswyyyzzzzzzzzzxrlhhgfinopmmjmlppssqmkkkkga54467bdfhjjjggefjlmkgfhjihklkjjmnmlkieccccba988666cfllopttvtqmoic67768bdc97458fkmkgeba998bdgijkiihhfb74458abcca9bbcdlorrqjd99chmqrtvvurmhecefjllfa6537diigedcca864322344466afif97789aaabcddcbbbbcddefgfdb99bdec85344326eknmkjjkmqnigggelonhda9dgijlnomjgebdgjnrxzyvsqpqrrqpomkjiiijloruvsnklmmmlmnnnmllnoqppqssrpoopqqqppppprsuvuutsnga7665789bglnonia535675belpvxxvvvxywsrsusssrqqtwxurokhilppsqpheceghhhkpturppoia98a876543221111110001iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiia99a53002356ciiiiiiiiiiiiiiiiiiiiiiiiiiiiiii000000000111211000000iiiiiiiiiiiiiii02358dillmmmllkigdgiic88bbbcefecbbdefgjouxzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzziiiiiiiiiiiiiiiiiiiiiiizzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzyxwxxzzzzzzzzzzzzsh7468accb8aeknpqppiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii68a7435789aa999aehliiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzzzzyvtrnhfjhd789bgeb5699754455644323566998333458a8a9844dimgb8bcd655afimqtursplc5268daca974544337985aggeab6iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzzzzzzzzzzzzzyviiiiiiiizzzzwmffpxyrg6124556dmupkdcehnqrrrqpnnoolifdbbefedfilkjfbegf73248elqtuvvvvuutsrrsttuwxxxvsstwtqqrtuuvvwwvvvvtuuwvvvuuuuutrpnmnnmopqqtvwurnllhdba77cmswvxyzzyyyzzzyxwupicabcflsuvwzzzzzzzzzzzzzzzzzxwwyzwpnoph9534699989abbdfikjifgklkfcabcdflqtuwwwwwxwuqkghjljnkkgilorsssuvwyytlfdhmquwyzzzzzzzzzzzzzzxtnjjgijrvxsmmptustruvumb411110000000000000111011113332224465434679a84000iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii00000000038gmsvyyzzzzzzzzzzzzzzxtpprvwxyzzzzzzzzzwrqnkgiotwyzzzzywsnkmswyzxvrppqrrrqrsuttuvvsrstojfgikjjijjjijjlmnnqstttspljlotrttwssuxupmlkhgeda84211246766653234678878765321111111111135542110111122234432101244444333321121122211122233345554322211111111211013455788765333455566531111258bb954568bcbaaaba6212445aipsrmgcbbccb867bglkjdb87522369ba765444446cgc73244425886iiiiiiiiiiiiiiiiiiiiiiiiii22347889ehfacluyzwustplhkmoprqppqrqoliecaaba97binqommlnliggggfec742135789cddcaba965bikd61000002479cefgjmpokd733245543cgh966ejomg9445aiiiiiiillhbcegghfccdfdfghghfc99egnqxxqh86679bdgikkjihggefglkghjmkjhgb63dniiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzzzzzzziiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii433332221100000001234555432211000011233433444443210124455566665666776545544458ab97679bba88acccccbbbaaabb989aabcbbcdeba9ccba999abdfea555444555667864126dghhjlosvvpieb74354567788887765310000011111000000027diiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii6624665443322111111358ac9644221100028fotuqia3100000000000000000000000000112222211000000000001368cfdcbgikortpkghmqtqmc73699966665321122222358bcaaabccdeeda6322358adffdaaab95200112345667889998765300000000000000000000001121122221110000000000000000000000000000000000000000000002321000000000000000000000000000000000000000000000000000000179831123211000000000011344421245555555555543234577889852145544567777765433344344432110122467888764222210000124677643345555432011222357776888789ba87765553333478777899adgfb867554556666777777777778999bdeeeedefeeddedeedddefccfjmiiiiiiiiwvuvwyzzziiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii2259deda767aejorssrqmgb9887779djortutsqmjgedddefhjkkhfc87bhlkifccbaiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii4236acddfhkljfaahiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiywokjolidghjidd9c994agkjihgdhjkjlkicedheedeeda7bcgefgffkkooqmigihhd88aba77765125abeafcgfd94457985357a9658975bfeiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzyvqh93158b9779acemrvsqnmpvyzzzyxxwvvvusqonnpuwyzzyxxxyywofeijfcdgikmnooooprstttuvvvutuvwwwutuvwxxxwvvvwwvuuuvsnhbeluwvtssokgb842223345aba6blvyyzzzzxxwyxwwxqjb99abb9756cjrtqrtxxwtomoqomjkopnfcabec95456887669ba7656565439ghc558gouvvvuuwvtnf87bc9433479b98667agmplfcciqwzzzzzzzzzzzzzzxtkdcfknuyyvrnjghmqple844agljgb852100000000000000000000015aggc5iiiiii8aiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii0000000015emuxzzzzzzzzzzzzzzzzzwpgdjsyytliiiiiiiiiismjhgdflsuttuvxwrnknqtttomiifhjlmnopoppqqrtspmoqqmlnqssttsqomnoponmihlqutuvvslosxrjflnkegjjgb75567642112455544555544333334333344345665443222333369a744566557888766545556677788777775445788665543224589a8765432344565435654689986432222333456789a975456567adedba88acfgfca843344445555556778acca976457cgllhcciqwzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzyyyzzzzzzzzzzzzzyxxxyyzzzzzzzzzzyxxwyyyyyyzxiiiiiiiiiiiiiiiiiiiiiiiipe68ekruvvvusqmkjhdglqrpnnpqqpppqponnoqrrrqrrqsstqmgegklnqtutqliillmosuwyxxupfacfd7310012579fijihfc868abbelpsqlhhmoic7968bcc9a74256779ab98644569chlkf84149cjkia64335430000001221111000000000011100000000111111111111111111111112233334445444433333577555544432223566655666777888888788abba999987788899888999999aacddcbbccdefhijiiiihhggffghhhhggggghijjjjjihhijjjiiiklnoooomkhhjlmoooonnnmmmmmmmmmmmmmmmlkjhfeefc98addddca99aa999aabaabhloruxyzzyvqmmllkotyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzyyyzzzzzzzzzzzzzzzzzzzyyyzwwvxxvtplkiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzzzzzzzzzzzzzzzzzyod2014biiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiyzzzzzzzzzywvqoilknjgfhnmjeeghjkkfb9779ccb886422466668eloiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzxirrsoolnmkhjjica84258b861113232433iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiivqllpvyzzzzzzyvutuspomkhda779egfa757aa854245657fnrpqsuursqrsuyyzzzzzzvvvyywxxzzxuuwwusnf536clnke96854000000000000000000012212235bimmjhgea779bb8545iiiiiiiiiiiiiiiiiiiiiiiiihlnmf95554321000000000000111112210000000000000000000001iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii20000000000000000000000000iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzzzzzzztk9344544554211235664310000000000269ccec9iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiyyzzzzzzzzzzwske855576654568874321110000001145556889emqqoniiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"}, {"dt": 0.011609977324263039, "s": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000dfbehlnlihijigbacgilopomid700000057isvohovxwwwwusqpolhfdca850006cc77bilkkjihggfeda70000000000000000000000000007beeefggggehlnnmmlg700000078gnponmljgcdhjkjihfa00bntsrrqonmlkjigb000000000ed658gklkjhhijjhggfec96000000000000079acdddcbaa987760000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000068aaacgjjlmlmljhd967dklkkiihfeca8766888888888dnssssrngadjorsrppqrssssrrqpomg8059dfggffffeca70000000000000068abcdeedca96400000ahmpqsuuuvvvvutsssssrrqqqppqqpnlllmmlkigecabccba700000000000000000000000000000000000000000000000000000000000000000000000000000000008cgjlmmnmh7000dhebowzzwttrnjihhhintwwvwwwvuuuutrpnnoonopprrqrstuttsrrstvwvrqqpnkgeeghijlljjfc869chlopqpomihggiouuuwxvutoe650004477htxrhglnnmljiihgfda7468cghhhhikljiijjigc7cilljiffgjkjiihd7ajquwyywvwvututstrleemqqpomkjkkkjjiggfeca67dedda600000000000000000000000007999aaaba9888760000000000006ef8bjsurssrrtuuttttssssplhc655400aaakpqrrrrpmjhjnnjjiimsusrqqqppqqqppqooqrttsrqqqqqqonnmlkkllnqrqqommmmlkjklmjfc9bcdegggggfdb96558abaaacddbcb97769eilnonlmwzxsrsrrqponnmmmkjmpponnmlkjiihd844000gjd5bdb9000000000000bgkmonmnnmmmllkjhhhhijlllkjjjihfdbaa970000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009eilmnnnpqokhd600000000008pvutrqponlid98bfhijjjigc800000000000000000000000000000000000000000000000000000000000000000000000000000000000000068dhhgda860000000000000hia8656akqrqpomlkihgfeeec90000000000000000000000000000000000000000000000000000000000000000000689999998876400004htyzzzzzvromnnnlhblzzzzzzzzyyxyxxvqia44bdszzzzzyvne865558ijcabelqrpppoonmlkihhhhhiigea58dea6400005abdhjiigda7007bhjiijklkjhhf9400000fje78jonkic40000000746iojgnponnnmlkjie9cgijjlnomlllkjjjjhc40000006bc9eptrpnkjhgfeecbba99988888760000000000000000000000689aabccbbbbbaa750000009qzzxzzyysj9404cijmvzvuvxzzzzzzyxwuuvvvwwwyzzzzzui78achjkkihhgdcbalwzzzzyvtstwxwxxxyyvpjhgfdgjlnruwvvvuuwxxxxwvrnqvxyyyzzzzzyyzyxwurld54569a9879a8656cghgfebba80000000000000000000000000000000000000000000000000000bffffdba97540000677889afptuvtqoortsttqqomiikjlllnmlljihfeefgghhfec9dhklnnnlgb60008bba8765556789888775455468acdeeeeehloomnomlkjhggfeca776650579bdeefgiijijkllkjigeb878bdfgjjhd00000000000006567567778999a9888888887765449dhi000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009jlhgiiikllnpquvtttsqolhc75554449a99emqqomjffnrromjg97ckosvvutsrqpponljhb500000djica9chknpsvwurpnmlkjihfda6000000000000006acbbbbb998700000000000000000000000678aejmooooppnjb79cimrrpnlifecbb9867777999999abflqssqomjgda9988889986557chnnookmlkjhcbb96000000000006bfhjmnlmnmlkkif9559fijhfda9700000000000000000000008fjmnnmjhigfgjjhihgiljgiijlifd9764000000000000fgb9luwtnlg467binrsrqolhhjkmppnlkhea0000bcjqpfaehgmrttqppoonmmmllklmnooonooppqqrsttuuvwyyzzzyxwwvwwwwvwwxxxxwxxwwwwvvuuuttstssuvvwurrqomjhd800000000000000000000000000007ltsqomjd600000000000000bbgswwuspmieca99ceeeedb999999abba86788886000000000000007abcdeeefggggfffeeddc80000000000dhffqwusrqssssqqqqqpmihjklmnoppnjfdpzzzzyxwvwwvvvuutsssssrrqqqponoppprrrturlhhihghiijloqqrsrqonnlkhc7049gkllkjjkkhda7itzzzzwqtxwxxxxwwwwvvvvvvvvutsrokkjiihgfdb987600000000000000000000000000000000000000000000000000000000000000000000000000000000000000006bgjmnnomjgecqzzzzvqmigeb865445adgjmmllkihfedbafxzzzzzzzzzzzzzzzzzzwsrsuuuvwwvsrttuxzzzzwqe8655ijbwzzzvvzzzxxzzwurnjihggfffdehhiljjnmlommnmlllosxxttuvvtsqnjecba9999aa997787776660000000000000000000000000000000000007889aaaa9888887766660000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009hsvwzzwwzzzzzzyxtrsrrrutkqzzzzzzxvusnjilnnonmllmlmooonmjfhpsstsuvtttttutuuttsrrqpooonmllkkjjihhhiiijklmlkjiihgfeedca970000000000000000000004agsyxwvwzxvtsqqxyxzzxyzyzzxvuutrqoljhgfec96568999aabbcddddefgd00005eisxqiiijmmnoonnnoooi9dfcabcgrxwvxzzzzzzywusrlb600ff799biihiijrxzzzzwrnmpqqpoopponmlmmkfb8czzzzzzzzzyyzzzzyxxxxxxxyyzzywrkc76789ababaa9999999a9a9800000000079fnppppoonmllllkiihgeda78behmonnmllmmlmkihfc98ipsrrqpoppoppooooonnnolieb860000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009cdfikklmnmlllmnqsvwwwwwxxxumb5007luyzzzzzzzzvokmponmkfmvzzzzzzzzzzzzzzzzsd77bgihjtzzzzzzzzzzzzzzzzzyxvuspmkhfc855600000004569abbadffghhhhggfedcba99abdegjmnnoonoooonmjfkuvvzzzzzzzzzyvsojfeeeefggfdjquwwwwwwwvtqlmrofggnoknsslgilnmkklkjhggfecb97000000009dgijlmmmnnnnmmlljfbjrtsrolifba86600000000000000000000000000000000006789abcccdddca700eosneqxyzzyvyzzzzzzzzte8dmxzxtmgehjlljjnqpopoonnoonnooooommmnkdckmmqsuuuvusrojc8fihdca9eijlmjfbejlkijklljeiprqpqrnjkh9449cqyzywsoopqrtvskbcipspopomib6enssqpnlg944008fjlmmnnmljf87ioqqleabcdfihgijiiowywtsvxxxvvvwwxyytlijlifhotvurqrqonpsuusqnliiijlqrqnkijihjkmprttrqokgimptyzsc546fovwvuogffeegie0004akqwzzywvvwxxxxvttttuutrokhhjllmnooooopnhbaa98756cntvwwxxxwsmknooooonnnmlkkgc6000068dghhgfggefecbbbbcdegfeb60000000000000006667888877888760000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008cfhjkmljgabb88999eghjlnnooljihjjjqzzzzzyyzyxyyyyyxxxwvtqnkfcba987655459dinpnmpsrtyzzvrnhc9cksuutttttttuuttttttuvvtsrponmkhfdba800000000000000000000000000000000000000000000000000000000006bgknnmnomlkkgbcehjklnnoqpponppnnmlllklkkkjihhhgghhjlprsuvvvuvvutsrrnjgghjlnmkiefhotuutrqponnnnmmmmmlkjkkjjjjiihhhhhhhhiijjjjiiiijjiiiiiiihhhggghhhhhiihhhiiiiiijje99bddcbcffcbcdeeddbba99765776545578778bcdhjhdb978fjkkjhgfffffghijkkjkklllmmlmmmmmmmmmmlllkjhfedcccba975445565677887788877778876000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007bjkkookkpqnsyzzvroptvxxxwtvzzzzzzzzzzzzzzzzzzzzzzzzzxvuuvvvutpnprtuusrqppmg878xzzzzzzzzzzzzzzzyxwuod40000jokgeeghhottsqonmljhgfdddddehjllmnmke0008egc766666000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000079acdefe9008npglmemqprqqrttuusommnptvwwvwxxwwwyzzzzzzzzvuzzzzzzzzzzyropowzzwttromkigfdb8766458ekoqqvvrutpmh94409ccioppppppoonnnnnnnmmmmlllkjihfecba9876000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fkiyzzzzzzzzzywvsqnljhgffhhghjkmqtwzzzzzzzzzzzzzspuxxxwutqooppqrrrqppnib59kqqnhelollqsrpja04400058oyzwvtsrqqqqrqrtuuuvwxyyxyyyxxwvsomnprtuvvvwwwxwwwwxxwxzzzzzzzzzzzzzzzyurrqosusrrqqolhc88fnqsuxzzzywuqpnlkjiiijjkkifccddeffdb869bddeeca7nxzzzyxvrnoquwwwuutsrqqqqpppqrqqpnmlljfhvzzzzxvutttssrsqomkjjiihghhhhhhheb640gomgmsvuvxuj850004dwzzzywwvwvwvvvvvvvvvvqjtyxxxxxwwxxxyzzvroqtuuuttuutsrqqpmlorrsrqpnkjlnponnrzzzyyxwwwxxyyyyyzyzzxvtrrrttssssrqppolihhjkklllnqqqponjlvzzzzyyyzyyyyzzzzzzzzwuttsrrrsssstsqommoppppopqsvxxyyxwvwwwwuuuuusqqrrrsrqqrrrrqqrrrsrsssssssssstssttsstrrrrrrrstsssssstuuuuuttsqqrsttttuvuvvspoprrsttsqoopqrtwxtnnpttqpppprrqrrmjmoryzzxutuvttuutsrrqqponmmmlllkkjihggfdb9768ab988987888behikosssttssqj700cd50005erqffdfhiie9chlnoolgaqrkmqrpoononmlgbcgijigfeb74689adgikkkkkkkjhdajppponmjhhjnnllkjgb6000000000000000efbjligfeca86500568adeeeeeddccdc8000000000000000000000000000000000000000000000000000000006bgiiihghijjigc5000000ekjeghhuzzzzzzzzzzzzzzzzyxwvutssqolgelnmmmnoooonmlkgb7459dfggecdeggedcbaaa9875005djl000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ilgfkkijnrsrqqqpnjchzzzzzzzzzzzzzzzzzzywutsrpnlkihgffec9adikiijkkmpqponnonnnmjgb987776000000000000000000000000000000000000000000000000000000000000679fhiimnihie6500006lpidb8gihihedcbbbba9abbchiedhgehjjihiigghiihfedb8begjlmljlkhea600000000068bdeggfggffeeeb8600000000000000000000000000000000000000000000000000000000000000000000000000bpuqqsqmf86000000000000899abb974000000aca988bdcccffcba8666000000000075667777654445500000000000000078877768bejmnljlomhd60009bb86666660000000000000000000006788898777760000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007999defgiijjnwzzywuqnnmkihfd9500000079blstromrtrqomhb8aajzzzzyxvsoigjlmljf9400000ekmljfdcdglnnooonmlkigfedca860000000000669dgjllkhda600000000000000000000009cehmpqqrrrqppokffjmoooppnnnllljigfgggghihhjkmqsttsrqpoonkfdeddefedddb98cfgghjjhededcbaa98640000059dfiklmmmllllmnnmlhccfgfedccba9870000000000000000afilnnonnmjfa658cdehhgklmlhheddbbbfga50000000000dhiszzzwrkecbcgnsuyzzwqmoonnoooomkf94008fozzzqluvnnuxxxwuttttttsttssrqpopokjmnpqrsttuvwwxyyzzzzzyzzzzyzzzzzzxxxxyyzzzzzzzyxxvrpryzzzzzvxwsqolha4000fha5657fh00000000000089cqyxqke000000000000000ejgabiuzzxvtrpooonmlmnmjjlkihfedccdccca8677000000000000000000000000000000000lpmmszzzzyurnkigdcba9988887778begmrtssttqkiuzzzzyxvvvuvvvutsrqpppoppooonnnnnoqqpqsvwxyyzyxusrqmjkorsstsrqppnkf9006goqrrrqrrpqqnjihzzzzzzzzzzzzzzzzzzzzzzzzzxwvtrpnnnmmmnljhhgedcba8679abbba98760000000000000000000000000000000000000000000000000000000clrtuvtmehxzzzzyxyywvvwwxxwwwwwwwvuuuutssttuutuvvvwxyzzzzth54aiorsqqqoljgoxzzzzzzzzzzwuwyzzzyyvpoqtwzzzzzzunfb76cfdrzwotzzzyyxxzzvuusrpomkjihgffedefffgggiiijkkkmponnopqqrssrqomkihhihijkjhggfeeeeddcbccb9876788889989999999876000000000006689998888999899888877776000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008dnrprxzzzzzzyvsstwxtklsvusstsrpnlikoqqpqqqrqpooppppomlkf987bhnqqooonnmmllkkjiiiiihiiihiihhhhhhhgffffgggghhhhiiiiijjjkllllmmmnnnnnnnmmlie9400000ekkgec96guzzzzzzzzzzzzzzzzzzzywvtsstttutspkeabdfgghiiiiijjjjjf700000bdgkkjjijnnopppoonnmmjdfkidpxxzzzzzzzzzzzvmb444aeeb99cdcbcceggiiijlmnooonnmkie87afhiklorrrtvwutssssrrrrqppoooonljfb9aabdeffffffffeeeb5000000898dnstrpomljigfdbaaabceeefffggffffda609ltxxxxxwvvvuutsrqnid7000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006aejlnpppomhilmprtutrtuwyywvtnd86667oyzzzzzzzyyyvoknpooponmqzzzzxxwxzyyxvvvwyzywnb8flmzzzzxwwyzzzzzzzzzzzzzzzzzzzzzzzyxxwtqoooooolf56emqssqojdb99889dhmpqqqppqrqpqqqqpplgqxwwxxxwxxxxyyxvrmhffhhjkhmzzzzzzzzzzzzzwuvqmzzxyzzzuooqpnnnpsutssuuvtsrrrk9657eikmnnnooonmoqpppoomicozzzwtpmjihgffggfiid989989abbcdeedb98776678876666665555777899agieffhoqnmuyzzzzzzzzzzzzzzzzzzzzofdnyzzzzzvqnopqrrppqqqpqrqpppprspmmtxustvxzzzzzzzzzytjelkggecehlorsrqojlsxyvrooprpmptutssqoja8egwzzzzzzzxyzzzzzxmdhosttsrpomkhcszzzzzzzyumb66elrrqqrssrpkhmruvusplgcbbbeghghlszzxxzzzzzzzzzzujhjkjjryzyvtrpligfgiihgfffgggfeefghihhhhgfdeillmmmnnomg000gipzzztg88adefge900045hrvtqrsrrrrrrsstttuvwxzzzywvusqojiklnqqrsqpolfdefhiigeqzzzzzzzzzzzvpmnoooonpollllmmlligc80000addmsrqonmlllmllkihgeca88876778999888888988766000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000bioqrtttsofafheaaaacjopqrtsplgfgkruuuuuuvvuuutsssssqoieffffdb9877766655555569gknvwttqrsrplfblqstttttttssssssssssrppooonllmlljihiihebbccccbbbaa99a999aaaaaaa9998887760000000000000000000000006bgkmnooonqqqpmhb54acdfggjlmkjklkjihhggfffffffeedccbbcfkqxzzzzzzzzyxwutqnkihhkkjgfhilmmlllllnljjiihgeddeeeeefffffffffeeeeffghijllmnoppqqrqooopolnsuutrrqrstssstttssqlf668879ccbbcfgggfdcbbdddca8999abccb97400ddbbaa9acfhmponnnnmmmnmmnnnnmmmnnooonnooooonnmmmlkigd978ba8667777766666600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", "b": "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiffa8432223335bmvzzzzzzzzzxsiiiiiilmh9479a467865666abdcefdbaciiihnrvsi94555443221137iiiiiiiiiiiiiiiiiiiiiiiiiiib21248bb977998998334iiiiiiome54555557gqwwvutqjeii1000000000000001iiiiiiiiioonqj900001100000000001iiiiiiiiiiiiizzzzzzzzzzzzzzzziiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzzyyyzzzzzzzzzzzqg65433445668cjqvyyzzzzzzzyqg75567dnvrh74331012468999886546iiquxxxyyyzzzyyiiiiiiiiiiiiiizyyxxyzzzyxwwxiiiiie51112232211112234333333223455456767aefhijhgfecdjiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiyzzzzzzzzxxiiivyrg634577632111110011223333444444322222223333221111112221111223221112356786766764112332100001011234443322237iii35bc8201222111111111134bkuyzzzzzzzzzzzyxxyyync1000015fottsqpjc30012344556655544346641111112222111000017ityzzzzyiiiiiiiiiiiiiiiiiiiiiiiiixxxzzzzzzzzzzzziiiiiiiiiiiinpvpi832211000000111112211112333iipxne667753111122110012345677788888863100001134433210000000000000000000001100000011110000000018grwzzzzzzzzzzzzzzsg4000006661233332223321000000000110000000010iiimvrjb554iiiiiiiiiiii83222211111000000000000001000000000111iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzzzzzzzzzyxvuiiiiiiiiiig7111110111149glnnprstttvwiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiivnd9bfhntxiiiiiiiiiiiiieegghmme411111110000000000iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzzzzzzzzzzxiiiic825bimke957gpwwyuj8100138dghhfeca85679glia45555665322222dmxwwslc98abceghilpple9779856gmj947bhiiiittla211212aciityyzzzzzzzzzzzzwiiiiitvvvpe321136iiiiiiiuti9222234444443223dlrmkhfdddfgghijjieb7iiiiiigkpfa11100000000011011111111124iiiiiiiiiiiiiiiiiiiiiizzzzzzzzzzzzzzzzxiiiiiijf78bdgiljeejitwzsh6332234433322222221111000000018iswzzzzzzzzzzzync222222222211233322221001248753223455577776532100000000000011111000023dnxzywttrmhfc7000000001iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzywvuxwxxyiiiizzzzzzxnb20001110000116bimorttpnlkgda9753201123443100000000001iiimxzzzzyxunga7544337cggjihc98878665454423333333221229juvwvika4210000000000000000003cnwyyxspkeiiiiiiiiiiiiixxyyyyyyyyxwwxxxxxxyxxvtrporvzzzziiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiik911345545553369dhnswxwslifklqqssuvwqjb998ahryzzyxvoh8400001111111111012adiiiiipwwwxulb42110000000000000000iiiiiiiiiiiiiivxzzzzzzzzzziiiiiiiiiiiiiiiiiiiiiiizzzzzzyyyzyyyxpgaab9cglnmklnprtvvwxyzzzzzzzywvqi9666665435677cdc7466843000000000000001111iiiiiiiiiiihpwyyyzzzzzzzyywqle9311122135iiiiiiiiiiiiiiiiiiiiiiyzzzyywvrqlf8445425677adddfimnlmosiiiiiiiiiiiiszyod45642238bc8421110027gmrtvvuurmeiiiimmc22dff5457889abceedcbaa9764321100000000000001100000123233466665667667788765433233468bdedc863211018iiiiiiiiiiiiiiiiiiiiiiiiiiiia311110011iiiiiiiiiiiiiikk910000000000000000000000000000000000000iiiiiiiiiiiiiizzzzzzzzzzzzzzzzzzzzzziiiiiiiiiiyzzwqjfgihhged9998655fpyzzwqg831078821122211111011111122223345789a99888754321111233443200000000001112ieoyzzzzzzzzzzyod2000013578acccba98765443311111111223455665435iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzzzzzzzzzzoc0000000000000000137djorvxzzzzzzzymb0000011111111111124689abdeec841006bjknklfc888hqxne8867adddedb87543111111100000000000111224579fjmlieb9764211122222111111111111111iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzzzzzzzzzzzzzzzzzziiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiea7cinmjhfededca9acca88ddgdeca8899843cnxzzzzzzzzzzzzzzzzpe34677789aabbcccccbbbbaa998877654443211111111123333433233448biiiiiiiiiiiiiiiiiiiii20000001244322333466433332211110000000000005enuxyzzzzzyyyzzyyyxiiiiokf54566756553211111146689da821000000000000000000iipzzzwne987554322228juyyyxxxyyyzzzzzyxvrh700000000111111000000000000000029kuzzzzzzzzzzzzzzzzzzzzziiiiiiiiiuod2111123333333344322137hpuvwvvvwwxyzzzzwrh9210000000000000000000000000001iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzzzzzzzyqf4358cddaa9abba98dghiifd99aceghggec9bhoqolg93001358abaa9abcdffb9eowyyypf42211100000111123332100000001111iiiiiii665469gjiecegjknoqrqpnqtunfbcfda879abbabbcdffc646djosuvwwwvtrompuzzzzzzzyof9ceghihgfec976568b854331110000000000000010011iiiiiiiibhosuvvwwwwvvxxxwvnd41233332333233iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiwwxyzzzzzzzxwvtiicachhe7535aegkqxzyvrmiecaglomkkhe964229gmorvxxxwvwvvtuuvusrrrqlc42355667877555ccb22359bcddedd9644432111007juzzzzzxsja548ba88aba8643221101cozzzzzzzzzsh500000000000ii6ciknprokhgc842111233324431000122468abceec86678987410024566778aeiic621000011111000000000000000000000112333210011aaeadec858gpuxxuiiigdc9a87dnvxwwvvusqnjea7433321001246654211alwzzyyti700001111002cntuuvvuwwxwxurieiiiijhb78bfikkmonpmpprmg96348giiiiiiiiiiiiiiizzzzzzzzzzzzzzziiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzzzzzzzytjead873211111000000008cd7567789998876544444433321236agntxyzzzzzzzzzzzzzzzzzzzzynb100000000000000000000000000000000000iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiuzzzzzzzzzzzzvlb3222111236cca422111000000000000000000000000000000000000000000000566000000000000000000000000000000000000000000000000000000000000000000000000000000008bd8874211135bdegnolggfggf831000000008hjb336afgfbbbba9bbcaa988888775454445443222222212222211001233458ckpuwxzzzzzzzzzzzzzzzzzzzziiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiskheebekmjhedccc9875459gmjc200000011222110000000000111112233222359bdefggda648fe80000000000000112221101iiiioyyyyyxxnd1100111112359fnuyzzzzzzzzzziiiqvzyzzzzzziiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiyzzzzzzzziistunfghib86544433222333444444344432111112235553222222111000555000000000000001135cjqrnnqvxuqnnic5201ilvne5555444443332222222234455678adffggkliiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijpha211111110000000000000000000000000000000111122211000000011101000000111airtxxmb3doyzzzwri75iiib642111111111110000000000111111110000011111111111110000000000000000000000027afjoqqmjda6ahmg8000000111111100011100000000000000015bimqrtvwsh7011111113cmvvuwxzzzzzzzzzzzzzzzzzzzzzwla21112233333333221100000000000000112ijsof879cfb7445iii887322457899aaa987554555678999999abb97666665443333446777532101123334321111100000037diklmmmmmmllmmmljfc8779bcba876665enxyzzzzzzzzzzyod200000049dedeghijjkkkhca9aaabba864321111111122222223443223456654433333333334444445566666667666666779accba8654457accccdda74457bfhfdccca877aejlkiiiiihhgc8777654421011235acb6321101335443567533322222222111112111100111111122332112332556544211000000244211iihjbiiiaa4654100000bee300000chi8434444432219ce742223336eovyzzzzzzzzzzzzzzpd2111111111122322113iiiiiiiiiiiiiiikg521111111114iitvsrppqruuvvuomgciiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii4687311111111223iiiiiipyxxxwla100000000000000000000000000124ajsupjhggginruuqjeefeaccc965445578875444iicjqsiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiivxrjbbdhnuxyxyxxwsi70000011111111111111112222222233337akryzzzzzyyyvog864444468bgijhgiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizxtjjmnh7521125iiiiqwwxzyof69abdikmknnmjed9fba222246bhkliifea9667897gpzzzzzzzzzzzzziiiiiiiiizzzzzzzzzzzzzzzzzziiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiij700000389diiiiiiiiiiiiemrspigfdiiiiiiqyxwwxxvssrrlkkpqrsuiiiiiiiiiipljimnqrtuuvuvuiiiiiiiiiiiiiiiyyyyxyzzzzzzzzzzzzzzziiixvvwyyyzzziiiiiiiiiiiiiiiiiiiiizzzzzzzzzzzziiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiid631157eggea95469cgkmoopquvxxxiiiiiiippoidcdipvyyyyxrlid8001134458eeb5311124iiiiixzzzzzyrg6222333323578654557ciiiiiiiiiigpvzzzzzzzzzziiiiiiiiiiiiiiiiiiiiiiwyzxvuvxyyyzyyyxtpllnqstuvwxyzzzzzzzzzzzzzzzwqieeffffffecdjqvvwrlloskc310000000234444679ejkgiiiiicglosruvyyyxyxyyzzvmgdedddefgilptviiiiiiiiiiiiiiiizzyxxxxyyxwslc7339ceedc779ehhdccedb89aiiiiiiiiiipsj8468986467766641100247cjpsuvtsrolfiiqqg512667333346665568999aabccdfgfc74211111222222222221111234445689a998777889999abb975469bb864321000000135iiifdd844fqziiiiiiiiiiiiknf300001iiiiiiiiiiiiiiilvvlb20000000000000000000000000000000000000iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiivzytkc777689adipuvvwyzzzyxvtolkklopng92005662111111111111111122222333444445776678766688642124554422111000111234iimxzzzzzzzzzzzzzsg4000001233333333333321111222333333344445542110001232100000000iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiyzzzzzzzsg50000000000000000000000000000000000000000000000011238gjnnstwtla41111111123579bcddddd951016agfhhhf954aluype549beed9532211111111111111111100000000000000011111111100000011111111111111000111111000011111110000000000000iiiiiiiiiiigmquwxxxxyyzzzzzzzzzzzzzziiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiioojihjgffgdb76445679cfgfeda7677657gqxzzzzzzzzzzzzzzzzzzzzzxnf77767898666779abbbbccdddcccccbcbaaba877999988666764333332222211111111111100011iiiiimvxyxvlb200000000000111110000000000000000017beefhjmpqsvxyzzyti7iiiiinpe4445433211011000001676544100000000000000001bnyzzwrnlke9444545agouxxwxwvtttng6300148ba74200000000000000111111139kuzzzzzzzzzzzzzzzzzxiiiiiiiqsla3332233343322111244679bdkpttrogcai4000000000000000000000iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiituvwwvvuspkd645669bcca9abba8668bdgkgc66669cfhgecb987aeeccb830002579abbceghiklkhcacluwnc323211111111112234432211111000000000122221001345ajqvrka533469b85268842235664334555469ceeeeffghiihghmtyzzzzzvngeghhhhhhiihfebbcddeec965310011137chklnprsrojea546787bffgghedbdeijljhfgd95456acjpwxwutssuuusqkhhlnonljhfgjlkfffjkjklmljkiiklkihkloopsuvofaceife69chfd977cgjjkkkkjjiigea78897875444678632112469cdfggjnpnhc863111122211111111001322111122112344332211257863107ityxvspkd76ba835789875321100004fovwyyyyyzzwla00000000012446eihda97aab75456653333443210006aa5345555655445542123323433222333210000000000000000000000000000000000013iiimmc221147ckrvqld7iii36899afloomkihhgfdca864321111111111001235677656fovwyzzymb0000122110000259bbbcgiheb97779aa85iiiigmjdbdeffgfgijkkjhgfffjpwyzzzzzzzzzzzzzzzzzzzziiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiizzzzzzzzyzxneaiprplljihhghgd76eig86abb87777766678acglnkhc8456bdfdcccbcdfhlqvyzzzzzzzzzzzzzxma11100001111111111111121110111000000000000000110000111110000001000111112iiiiiiiiiiiiiiiiiiiiiiiijqonnmlmpsuvvwwxyula32368ba975432112111110000000001333100000000000000000000000007hje65432222111111000000000000000000000000000000000000000000000000000000000000000000009fqrqf5126acfhknswwwxyyyxxyyxxxsia7chiiole7b9cbccaeilmkiggihgddcddba8866654333333222233333226873258dkqwyzzzzzzziiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"}];
+
+const sing = { cv: $("#sing"), img: new Image(), eyes: new Image(), jaw: null, d: 0, fast: 0, slow: 0, w: 1, blink: -1, nextBlink: 0 };
+sing.eyes.src = "blink.png";   // six frames of the blink, cut from the portrait
+sing.img.onload = () => { const j = el("canvas"); j.width = j.height = 600; const g = j.getContext("2d");
+  g.save(); g.beginPath(); g.moveTo(232, 288); g.quadraticCurveTo(302, 306, 372, 288); g.lineTo(396, 450); g.lineTo(208, 450); g.closePath(); g.clip(); g.drawImage(sing.img, 0, 0, 600, 600); g.restore();
+  g.globalCompositeOperation = "destination-in"; const m = g.createRadialGradient(302, 342, 48, 302, 348, 104); m.addColorStop(0, "#000"); m.addColorStop(1, "rgba(0,0,0,0)"); g.fillStyle = m; g.fillRect(0, 0, 600, 600);
+  sing.jaw = j; singDraw(0); };
+sing.img.src = "operator-still.jpg";
+function singDraw(d, w) {
+  if (!sing.jaw) return; const g = sing.cv.getContext("2d"); g.drawImage(sing.img, 0, 0, 600, 600); if (w == null) w = 1;
+  if (sing.blink >= 0 && sing.eyes.complete && sing.eyes.naturalWidth) g.drawImage(sing.eyes, Math.min(5, Math.floor(sing.blink)) * 140, 0, 140, 30, 236, 198, 140, 30);
+  if (d < .7) return;
+  const hw = 30 + 18 * w, t = .5 - hw / 96, ye = 291 + 26 * t * (1 - t), cy = 595 - ye;      // narrow mouth for dark vowels, wide for bright ones
+  g.fillStyle = "#1b0606"; g.beginPath(); g.moveTo(302 - hw, ye); g.quadraticCurveTo(302, cy, 302 + hw, ye); g.quadraticCurveTo(302, cy + d * 2.1, 302 - hw, ye); g.fill();
+  g.save(); g.clip(); g.fillStyle = "#e6dccb"; g.fillRect(302 - hw + 8, 295, hw * 2 - 16, Math.min(6, d * .4) * (.25 + .75 * w)); g.restore();
+  g.drawImage(sing.jaw, 0, d);
+}
+function singStep(now) {
+  if (!A.play) return; let lvl, open; const V = VOX[A.side], E = A.env[A.side];
+  if (V) { const i = Math.floor((player.currentTime + .07) / V.dt); lvl = parseInt(V.s[i] || "0", 36) / 35; const br = parseInt((V.b && V.b[i]) || "h", 36) / 35;
+    sing.fast += (lvl - sing.fast) * (lvl > sing.fast ? .8 : .42); sing.w += (br - sing.w) * .4; open = Math.min(1, Math.pow(sing.fast, .8) * 1.1); }
+  else { if (E) lvl = Math.min(1, (E.e[Math.floor((player.currentTime + .03) / E.dt)] || 0) / (E.mx * .5)); else lvl = .35 + .3 * Math.sin(now / 95) * Math.sin(now / 410);
+    sing.fast += (lvl - sing.fast) * .6; sing.slow += (lvl - sing.slow) * .03; sing.w = 1; open = Math.max(0, Math.min(1, (sing.fast - sing.slow) * 4.5 + sing.fast * .3)); }
+  sing.d += (open * 21 * (1.08 - .22 * sing.w) - sing.d) * .6;
+  if (sing.blink < 0 && now > sing.nextBlink) sing.blink = 0;
+  if (sing.blink >= 0) { sing.blink += .42; if (sing.blink >= 6) { sing.blink = -1; sing.nextBlink = now + 2200 + Math.random() * 3800; } }
+  singDraw(reduced ? 0 : sing.d, sing.w);
+}
+/* knock on wood: three knocks on the television lifts a jinx */
+let knocks = 0, knockT = 0, cursed = false;
+$("#tv .case").addEventListener("click", () => { const n = performance.now(); knocks = n - knockT < 1300 ? knocks + 1 : 1; knockT = n; sfx("thunk");
+  if (knocks >= 3) { knocks = 0; lcd(cursed ? "KNOCKED ON WOOD ×3. JINX LIFTED." : "KNOCKED ON WOOD ×3. JUST IN CASE."); cursed = false; sfx("ding"); say("Knocked on wood three times."); } });
+(function card() { const cv = $("#testcard"), g = cv.getContext("2d"), cols = ["#e9dec4", "#dc9e22", "#3ce1eb", "#1c5c50", "#ff2e88", "#96261c", "#1e2854"]; cols.forEach((c, i) => { g.fillStyle = c; g.fillRect(Math.floor(i * 79 / 7), 0, 12, 59); });
+  for (let y = 0; y < 59; y++) for (let x = 0; x < 79; x++) { const m = Math.abs((x % 20) - 10) + Math.abs((y % 20) - 10); if (m < 3) { g.fillStyle = "#1a110f"; g.fillRect(x, y, 1, 1); } else if (m === 6) { g.fillStyle = "#efe6cf"; g.fillRect(x, y, 1, 1); } } })();
+function setChan(n) {
+  chan = n; for (let i = 1; i <= 5; i++) $("#ch" + i).hidden = i !== n; $$("#guide button").forEach(b => b.setAttribute("aria-current", +b.dataset.ch === n)); $("#chno").textContent = n; $("#knob").style.transform = "rotate(" + (n - 1) * 70 + "deg)";
+  const s = $("#tvsnow"); snowOn(s, 255); s.style.opacity = 1; setTimeout(() => s.style.opacity = "", reduced ? 0 : 230); sfx("static");
+  say(["", "Channel 1. Jacco, live.", "Channel 2. Films, with a link to Letterboxd.", "Channel 3. Playlists, with links to Spotify.", "Channel 4. Archive: earlier television and stage work.", "Channel 5. No signal."][n]);
+}
+$("#knob").addEventListener("click", () => setChan(chan % 5 + 1));
+$$("#guide button").forEach(b => b.addEventListener("click", () => setChan(+b.dataset.ch)));
+$$("#guide button")[0].setAttribute("aria-current", "true");
+setInterval(() => { const d = new Date(), t = d.toTimeString().slice(0, 8); $$(".clock").forEach(c => c.textContent = t); }, 1000);
+
+/* ---------- hark, the coffee and the receipt ---------- */
+const lcd = t => { $("#lcd").textContent = t; };
+let printing = null, printNo = 0;
+function print(lines, done) {
+  clearInterval(printing); const body = $("#paperBody"), p = $("#paper"); body.replaceChildren(); p.classList.remove("torn"); p.hidden = false; lcd("PRINTING…");
+  const d = new Date(), head = [["*** HARK ***", "ctr b"], [d.toLocaleDateString("en-GB") + "  " + d.toTimeString().slice(0, 5) + "  #" + String(++printNo).padStart(4, "0"), "ctr"], ["", "rule"]];
+  const all = head.concat(lines, [["", "rule"], ["accuracy not guaranteed", "ctr"], ["THANK YOU · ДЯКУЮ · DANK", "ctr b"]]); let i = 0;
+  const step = () => { if (i >= all.length) { clearInterval(printing); lcd(done || "DONE. TEAR HERE."); say(all.map(l => l[0]).filter(Boolean).join(". ")); return; } const [t, c] = all[i++]; body.append(el(c === "rule" ? "div" : "p", c || "", t)); sfx("tick"); };
+  if (reduced) { while (i < all.length) step(); step(); } else printing = setInterval(step, 110);
+}
+$("#paper").addEventListener("click", () => { const p = $("#paper"); if (p.classList.contains("torn")) return; p.classList.add("torn"); sfx("scr"); lcd("LITTERING IS ALSO A CHOICE."); setTimeout(() => { p.hidden = true; p.classList.remove("torn"); }, reduced ? 0 : 700); });
+
+/* what Hark says about a cup. It measures the actual grounds, then improvises. */
+const RD = {
+  open: ["I see", "There is", "The grounds show", "Clearly:", "Hm.", "Unmistakably,", "If I squint:", "My sensor says:", "Do not be alarmed:", "As expected,"],
+  shape: ["a bird", "a ladder", "a fish with opinions", "a bridge", "a spare key in a sugar bowl", "a dog, or a small horse", "a road that forks", "a satellite dish", "a tram", "an eye", "a suitcase tied with rope", "a clock that is wrong on purpose", "a staircase going sideways", "a copper wire", "a whale, or an island", "a man counting rivets", "a balcony with laundry", "a rooster on a car", "a tower with round windows", "a boat that is also a terrace", "two chairs and nobody", "a kiosk", "a wedding, far away", "a goat on a roof", "a telephone ringing in 1996", "a moustache", "a gold chain", "an accordion", "a cat that pays no rent", "the letter J", "a border post without a border", "a cloud shaped like a cloud", "a bouzouki", "a queue", "a plug that fits nothing", "a fly. No, that is a real fly"],
+  pos: ["on the handle side", "at the bottom, toward you", "opposite the handle", "at the top, away from you"],
+  drip: { 3: ["Three roads leave the cup. One is a detour. Take that one.", "Three lines run to the rim: a plan, a backup, and what will happen."], 4: ["Four roads out. Too many. Stay for another coffee.", "Four streaks to the rim. Four people are thinking of you. Two kindly."], 5: ["Five roads leave the cup. You are popular, or lost.", "Five lines reach the rim. A busy month. Charge your phone."], 6: ["Six roads. This cup is a roundabout.", "Six streaks. The future could not decide either."] },
+  heavy: ["A heavy cup. You think too much, or stir too little.", "Dark all over. Good. Light cups have nothing to say."],
+  light: ["A pale cup. Somebody did not finish.", "Mostly porcelain. The future is keeping its distance."],
+  when: ["Before Thursday", "Within three coffees", "When the wind turns", "After the next software update", "On a Tuesday, unannounced", "Sooner than is polite", "Not this year", "Tonight, but late", "At the next full moon, weather permitting", "In 1996, which is odd", "The day you stop checking", "After lunch", "Tomorrow. Always tomorrow", "Once the fly leaves"],
+  subj: ["a letter", "an old friend", "a machine", "a stranger with good shoes", "a relative", "some money", "a song", "a door", "a cat that is not yours", "a password", "a train", "an invitation", "a neighbour", "an idea you already had"],
+  ev: ["arrives late", "comes back", "breaks, then works better", "asks you a question", "changes its mind", "is closer than you think", "turns out to be free", "needs a second look", "was right all along", "knocks twice", "goes missing for a day", "brings a friend", "speaks another language", "should not get the keys"],
+  twist: ["Say yes.", "Sign nothing.", "Bring your own chair.", "It was never about the money.", "Blame the draft.", "Tell no one. Or everyone.", "Eat first.", "Wear the good shoes.", "Do not explain yourself.", "Take the long way.", "Write it down.", "Call your mother.", "Let it ring.", "Answer in another language.", "Keep the receipt.", "Dance anyway."],
+  dir: ["east", "the kitchen", "wherever the music comes from", "away from the draft", "downhill", "Friesland, roughly", "the nearest exit, then past it"]
+};
+const pick = (r, a) => a[Math.floor(r() * a.length)];
+function reading(st, r) {
+  const L = [["COFFEE READING", "b"]], k = st.bigA, side = st.bigR < .1 ? "dead centre" : RD.pos[k > -.785 && k <= .785 ? 0 : k > .785 && k <= 2.356 ? 1 : k > -2.356 && k <= -.785 ? 3 : 2];
+  L.push([pick(r, RD.open) + " " + pick(r, RD.shape) + ", " + side + "."]);
+  const heavy = st.q.indexOf(Math.max.apply(null, st.q)), opts = [pick(r, RD.drip[Math.min(6, st.drips)])];
+  opts.push(st.dark > .52 ? pick(r, RD.heavy) : st.dark < .36 ? pick(r, RD.light) : "The weight sits " + RD.pos[heavy] + ". That is where the week will lean.");
+  if (st.centre < .12) opts.push("The heart of the cup is clean. Nothing to hide, or well hidden."); else if (st.centre > .75) opts.push("The heart of the cup is black. Excellent. That means appetite.");
+  L.push([pick(r, opts)]);
+  L.push([pick(r, RD.when) + ": " + pick(r, RD.subj) + " " + pick(r, RD.ev) + ". " + pick(r, RD.twist)]);
+  const ctx = []; const hr = new Date().getHours();
+  if (cursed) ctx.push("Note: there was a draft. This reading is 8% cursed. Knock on wood, three times. The television is wood.");
+  if (document.body.classList.contains("dark")) ctx.push("Read in the dark. More accurate, less polite.");
+  if (A.play) ctx.push("The cup is humming along. Readings with music run optimistic.");
+  if (hr < 5) ctx.push("Coffee after midnight. I approve.");
+  if (cupN >= 3) ctx.push("Cup number " + cupN + ". Your heartbeat is now a personality.");
+  if ($("#lokum").classList.contains("gone")) ctx.push("You ate the lokum first. The sweetness is already spent.");
+  ctx.push("Lucky number: " + (st.blobs + st.drips) + ". Lucky direction: " + pick(r, RD.dir) + ".");
+  L.push([cursed ? ctx[0] : pick(r, ctx)]);
+  L.push([r() < .55 ? "A good cup. Ptu, ptu, ptu. So the evil eye does not hear." : "A complicated cup. Not bad. Complicated."]);
+  return L;
+}
+let fragI = 0, factI = 0, cupState = "full", cupBusy = false, cupN = 0;
+function readCup() {
+  if (cupBusy) return; const cup = $("#cup");
+  if (cupState === "read") { cup.classList.remove("empty"); cupState = "full"; cup.setAttribute("aria-label", "Drink the coffee and turn the cup over"); lcd("REFILLED. KAFA. КАВА. ΚΑΦΕΣ."); sfx("thunk"); return; }
+  cupBusy = true; lcd("DRINKING…"); cup.classList.add("empty"); const T = reduced ? 0 : 1; cupN++;
+  const flip = cb => { cup.classList.add("sq"); setTimeout(() => { cb(); cup.classList.remove("sq"); sfx("thunk"); }, 170 * T); };
+  setTimeout(() => flip(() => { cup.classList.add("over"); cup.style.setProperty("--cr", (cupN * 47 % 60 - 30) + "deg"); lcd("WAIT. THE FUTURE NEEDS TO DRY."); }), 1050 * T);
+  setTimeout(() => { const seed = (Date.now() % 1000000) + cupN * 977, st = grounds($("#grounds"), seed), r = rndm(seed ^ 0x5bd1e995);
+    flip(() => { cup.classList.remove("over"); });
+    const n = CONTENT.facts.length, fact = CONTENT.facts[factI++ % n];
+    setTimeout(() => { print(reading(st, r).concat([["", "rule"], ["ABOUT THE OWNER OF THIS TABLE", "b"], [fact], ["(" + ((factI - 1) % n + 1) + " of " + n + ". Drink again.)"]]), "READ. TAP CUP FOR REFILL.");
+      sfx("ding"); cupState = "read"; cupBusy = false; cup.setAttribute("aria-label", "Refill the cup"); }, 400 * T);
+  }, 2700 * T);
+}
+$("#cup").addEventListener("click", readCup);
+$("#hkCup").addEventListener("click", () => { if (cupState === "read" && !cupBusy) { readCup(); setTimeout(readCup, reduced ? 0 : 1100); } else readCup(); });
+$("#hkThought").addEventListener("click", () => { const f = CONTENT.fragments[fragI++ % CONTENT.fragments.length]; print([["A THOUGHT", "b"], [br(f.text, f.hint)], ["(" + ((fragI - 1) % CONTENT.fragments.length + 1) + " of " + CONTENT.fragments.length + ")"]]); });
+function who() { print([["WHO ARE YOU?", "b"], ["I am Hark. Jacco built me. Normally I run his second brain: notes, agents, errands."], ["Here I only read coffee. It is my day off."], ["", "rule"], ["WHAT HE BUILDS", "b"], ["Things people end up using. Some of them:"]].concat(CONTENT.builds.map(b => [(b.name || "[going live soon]").toUpperCase() + (b.note ? "\n" + b.note : "") + (b.url ? "\n" + b.url : "")])), "THAT IS ALL I MAY SAY."); }
+$("#hkWho").addEventListener("click", who);
+$("#lokum").addEventListener("click", e => { const b = e.currentTarget; if (b.classList.contains("gone")) return; b.classList.add("gone"); b.textContent = "that was the last one."; b.setAttribute("aria-label", "The lokum is gone"); sfx("click"); });
+
+/* ---------- wisdom: open it anywhere ---------- */
+(function () {
+  const W = CONTENT.wisdom, order = W.map((_, i) => i).sort(() => Math.random() - .5); let i = 0;
+  $("#bkWho").textContent = [...new Set(W.map(q => q.by.split(" ").pop()))].join(" · ");
+  $("#pgR").textContent = "· ".repeat(170);
+  $("#bookBtn").addEventListener("click", () => { const b = $("#bookBtn"); b.classList.add("sq"); sfx("click");
+    setTimeout(() => { const q = W[order[i++ % order.length]]; $("#pgL").replaceChildren(document.createTextNode("“" + q.q + "”"), el("em", "", q.by + (q.src ? ", " + q.src : "")));
+      $("#book").classList.add("open"); b.classList.remove("sq"); b.setAttribute("aria-label", "Open Wisdom at another page"); say(q.q + " " + q.by); }, reduced ? 0 : 170); });
+})();
+
+/* ---------- promaja: scroll too fast and there is a draft ---------- */
+let dAcc = 0, dY = scrollY, dT = performance.now(), dLast = -1e5;
+function promaja() {
+  cursed = true; lcd("PROMAJA! WHO OPENED A WINDOW?"); sfx("whoosh"); chain.wind = 110; say("A draft crosses the table. Promaja. Knock on wood three times.");
+  if (!reduced) { stage.classList.add("draft"); setTimeout(() => stage.classList.remove("draft"), 1750); }
+}
+addEventListener("scroll", () => { const n = performance.now(), dt = Math.max(1, n - dT); dAcc = dAcc * Math.exp(-dt / 250) + Math.abs(scrollY - dY); dY = scrollY; dT = n;
+  if (dAcc > innerHeight * (MOB ? 1.5 : 1) && n - dLast > 20000) { dLast = n; dAcc = 0; promaja(); } }, { passive: true });
+
+/* ---------- phone: dial a year, write me, snake ---------- */
+let pScreen = "home", pBuf = "", pYear = 0, pIdx = 0;
+const NOW_Y = new Date().getFullYear(), plcd = $("#plcd"), SN = { on: false }, SW = 15, SH = 11, SQ = 8;
+const pText = t => plcd.replaceChildren(document.createTextNode(t));
+const isDark = () => document.body.classList.contains("dark");
+function pShow() {
+  if (SN.on) return;
+  if (pBuf) return pText("DIAL A YEAR:\n\n    " + pBuf + "_".repeat(4 - pBuf.length) + "\n\n\n\nC = BACK");
+  if (pScreen === "year") { const list = CONTENT.years[pYear];
+    const t = pYear < CONTENT.since ? "BEFORE THE INTERNET. NO RECORDS KEPT." : pYear > NOW_Y ? "NOT YET. CALL BACK LATER." : list ? list[pIdx % list.length] : "NOTHING ON FILE. PROBABLY BUSY.";
+    return pText(pYear + (list && list.length > 1 ? "  " + (pIdx % list.length + 1) + "/" + list.length : "") + "\n" + t + "\n" + (list && list.length > 1 ? "OK=MORE " : "") + "C=BACK"); }
+  if (pScreen === "contact") { const m = el("a", "", CONTENT.contact.email), l = el("a", "", "LINKEDIN >"); m.href = "mailto:" + CONTENT.contact.email; l.href = CONTENT.contact.linkedin; l.target = "_blank"; l.rel = "noopener";
+    return plcd.replaceChildren("WRITE ME:\n", m, "\n\n", l, "\n\nC = BACK"); }
+  if (pScreen === "ring") return pText("\n1 NEW MESSAGE\n\nFROM: 1996\n\n\nOK = READ");
+  if (pScreen === "msg") return pText("FROM: 1996\n\nIt gets stranger.\nYou will like it.\nKeep the hair.\n\nC = BACK");
+  pText("JACCO GSM  ▂▄▆\nDIAL A YEAR\n" + CONTENT.since + "-" + NOW_Y + ":\nsee what I did\n\nOK = WRITE ME\n#  = SNAKE");
+}
+function pKey(t) {
+  sfx("tick");
+  if (SN.on) { if (t === "C") snakeStop(); else if (t === "#") snakeStart(); else { const d = { 2: [0, -1], 8: [0, 1], 4: [-1, 0], 6: [1, 0] }[t]; if (d && !SN.over) snakeTurn(d[0], d[1]); } return; }
+  if (t === "#") return snakeStart();
+  if (t === "C") { pBuf = ""; pScreen = "home"; }
+  else if (t === "OK") { const list = CONTENT.years[pYear];
+    if (pBuf) pBuf = ""; else if (pScreen === "year" && list && list.length > 1 && pIdx % list.length < list.length - 1) pIdx++; else if (pScreen === "ring") pScreen = "msg"; else pScreen = pScreen === "contact" ? "home" : "contact"; }
+  else if (/\d/.test(t)) { if (pScreen !== "home" && !pBuf) pScreen = "home"; pBuf += t; if (pBuf.length === 4) { pYear = +pBuf; pBuf = ""; pIdx = 0; pScreen = "year"; if (CONTENT.years[pYear]) sfx("ding"); } }
+  pShow();
+}
+[["C", "w"], ["OK", "w ok"], "1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"].forEach(k => { const [t, c] = Array.isArray(k) ? k : [k, ""]; const b = el("button", c, t); b.type = "button"; b.addEventListener("click", () => pKey(t)); $("#pkeys").append(b); });
+function phoneDark(d) { if (SN.on) return; pBuf = ""; pScreen = d ? "ring" : "home"; pShow(); if (d) { const p = $("#phone"); p.classList.remove("buzz"); void p.offsetWidth; p.classList.add("buzz"); setTimeout(() => p.classList.remove("buzz"), 1500); sfx("ding"); } }
+/* snake: arrow keys, or 2 4 6 8 on the phone itself */
+function snakeStart() { pBuf = ""; SN.on = true; SN.over = false; SN.cells = [[6, 5], [5, 5], [4, 5]]; SN.dir = SN.next = [1, 0]; SN.score = 0; snakeFood();
+  SN.cv = el("canvas"); SN.cv.width = SW * SQ; SN.cv.height = SH * SQ; SN.txt = el("span"); plcd.replaceChildren(SN.cv, SN.txt); clearInterval(SN.t); SN.t = setInterval(snakeTick, 150); snakeDraw(); }
+function snakeStop() { clearInterval(SN.t); SN.on = false; pScreen = isDark() ? "ring" : "home"; pShow(); }
+function snakeFood() { do { SN.food = [Math.floor(Math.random() * SW), Math.floor(Math.random() * SH)]; } while (SN.cells.some(c => c[0] === SN.food[0] && c[1] === SN.food[1])); }
+function snakeTurn(dx, dy) { if (dx === -SN.dir[0] && dy === -SN.dir[1]) return; SN.next = [dx, dy]; }
+function snakeTick() { SN.dir = SN.next; const h = SN.cells[0], n = [(h[0] + SN.dir[0] + SW) % SW, (h[1] + SN.dir[1] + SH) % SH];
+  if (SN.cells.some(c => c[0] === n[0] && c[1] === n[1])) { SN.over = true; clearInterval(SN.t); sfx("thunk"); return snakeDraw(); }
+  SN.cells.unshift(n); if (n[0] === SN.food[0] && n[1] === SN.food[1]) { SN.score++; sfx("tick"); snakeFood(); } else SN.cells.pop(); snakeDraw(); }
+function snakeDraw() { const g = SN.cv.getContext("2d"); g.clearRect(0, 0, SN.cv.width, SN.cv.height); g.fillStyle = "#17240a"; SN.cells.forEach(c => g.fillRect(c[0] * SQ + 1, c[1] * SQ + 1, SQ - 2, SQ - 2));
+  g.fillRect(SN.food[0] * SQ + 3, SN.food[1] * SQ + 1, 2, 6); g.fillRect(SN.food[0] * SQ + 1, SN.food[1] * SQ + 3, 6, 2);
+  SN.txt.textContent = SN.over ? "GAME OVER  " + SN.score + "\n# AGAIN  C QUIT" : "SCORE " + SN.score + "\nARROWS/2468 C=QUIT"; }
+addEventListener("keydown", e => { if (!SN.on || SN.over) return; const d = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] }[e.key]; if (d) { e.preventDefault(); snakeTurn(d[0], d[1]); } });
+pShow();
+$("#claim").href = "mailto:" + CONTENT.contact.email + "?subject=" + encodeURIComponent("I won a conversation");
+$("#mMail").textContent = CONTENT.contact.email; $("#mMail").href = "mailto:" + CONTENT.contact.email; $("#mIn").href = CONTENT.contact.linkedin;
+
+/* ---------- lottery ---------- */
+let ticket = 0;
+function jackpot() { if (ticket % CONTENT.past.length !== CONTENT.past.length - 1) return; sfx("ding"); lcd("JACKPOT. CLAIM IT: MAIL JACCO."); $("#claim").classList.remove("ping"); void $("#claim").offsetWidth; $("#claim").classList.add("ping"); setTimeout(() => $("#claim").classList.remove("ping"), 2000); }
+function fillTicket() { $$("#lgrid .cell").forEach(c => c.remove()); CONTENT.past[ticket % CONTENT.past.length].forEach(([big, small]) => { const c = el("div", "cell"), d = el("div"); const bb = el("b", "", big); if (String(big).length > 7) bb.style.fontSize = "13px"; d.append(bb, small); c.append(d); $("#lgrid").insertBefore(c, $("#scratch")); }); }
+fillTicket();
+(function () {
+  const cv = $("#scratch"), g = cv.getContext("2d"); let down = false;
+  const coat = () => { g.globalCompositeOperation = "source-over"; const gr = g.createLinearGradient(0, 0, cv.width, cv.height); gr.addColorStop(0, "#b9bcc2"); gr.addColorStop(.5, "#e3e5e8"); gr.addColorStop(1, "#9a9da4"); g.fillStyle = gr; g.fillRect(0, 0, cv.width, cv.height);
+    g.fillStyle = "rgba(60,60,70,.55)"; g.font = "bold 13px sans-serif"; for (let y = 16; y < cv.height; y += 22) for (let x = (y % 44 ? 4 : -40); x < cv.width; x += 132) g.fillText("KRAS · SCRATCH", x, y); };
+  coat();
+  const at = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height]; };
+  const rub = e => { const [x, y] = at(e); g.globalCompositeOperation = "destination-out"; g.beginPath(); g.arc(x, y, 15, 0, 7); g.fill(); if (Math.random() < .3) sfx("scr"); };
+  cv.addEventListener("pointerdown", e => { down = true; cv.setPointerCapture(e.pointerId); rub(e); });
+  cv.addEventListener("pointermove", e => { if (down) rub(e); });
+  cv.addEventListener("pointerup", () => { down = false; const d = g.getImageData(0, 0, cv.width, cv.height).data; let clear = 0; for (let i = 3; i < d.length; i += 64) if (!d[i]) clear++; if (clear / (d.length / 64) > .55) { $("#reveal").textContent = "New ticket"; cv.hidden = true; jackpot(); } }); cv.addEventListener("pointercancel", () => down = false);
+  $("#reveal").addEventListener("click", e => { if (cv.hidden) { ticket++; fillTicket(); cv.hidden = false; coat(); e.currentTarget.textContent = "Reveal"; } else { cv.hidden = true; e.currentTarget.textContent = "New ticket"; jackpot(); say(CONTENT.past[ticket % CONTENT.past.length].map(p => p[0] + " " + p[1]).join(". ")); } });
+})();
+
+/* ---------- postcards ---------- */
+const PAINT = {
+  dusk(g, W, H) {
+    const hz = H * .56, sky = g.createLinearGradient(0, 0, 0, hz); sky.addColorStop(0, "#1d222e"); sky.addColorStop(.55, "#4b3a44"); sky.addColorStop(1, "#c7773f"); g.fillStyle = sky; g.fillRect(0, 0, W, hz);
+    for (let i = 0; i < 40; i++) { g.fillStyle = "rgba(255,240,210," + (.2 + (i % 5) * .12) + ")"; g.fillRect((i * 173) % W, (i * 67) % (hz * .6), 2, 2); }
+    g.fillStyle = "#15181d"; g.beginPath(); g.moveTo(120, hz); g.quadraticCurveTo(300, hz - 34, 520, hz - 8); g.lineTo(560, hz); g.fill();
+    const w = g.createLinearGradient(0, hz, 0, H); w.addColorStop(0, "#8a5a44"); w.addColorStop(.25, "#27323c"); w.addColorStop(1, "#11161c"); g.fillStyle = w; g.fillRect(0, hz, W, H - hz);
+    for (let k = 0; k < 12; k++) { g.fillStyle = "rgba(241,180,120," + (.4 - k * .03) + ")"; g.fillRect(40 + (k * 97) % 520, hz + 6 + k * 11, 90 - k * 5, 2); }
+    g.strokeStyle = "#0b0d10"; g.lineWidth = 3; const py = [[60, 300, 150], [330, 320, 120], [590, 296, 160]];
+    py.forEach(([x, y, h]) => { g.beginPath(); g.moveTo(x - 20, y + h); g.lineTo(x, y); g.lineTo(x + 20, y + h); g.moveTo(x - 34, y + 22); g.lineTo(x + 34, y + 22); g.moveTo(x - 24, y + 52); g.lineTo(x + 24, y + 52); g.moveTo(x - 12, y + h * .5); g.lineTo(x + 14, y + h * .78); g.moveTo(x + 12, y + h * .5); g.lineTo(x - 14, y + h * .78); g.stroke(); });
+    g.strokeStyle = "#b5612c"; g.lineWidth = 1.6; for (const dy of [22, 52]) for (let i = 0; i < 2; i++) { const a = py[i], b = py[i + 1]; for (const sx of [-1, 1]) { g.beginPath(); g.moveTo(a[0] + sx * (dy === 22 ? 34 : 24), a[1] + dy); g.quadraticCurveTo((a[0] + b[0]) / 2, (a[1] + b[1]) / 2 + dy + 46, b[0] + sx * (dy === 22 ? 34 : 24), b[1] + dy); g.stroke(); } }
+    g.fillStyle = "#ffd27a"; g.fillRect(238, hz - 22, 5, 4);
+    g.fillStyle = "#0b0d10"; for (let x = 0; x < W; x += 5) { const h = 8 + ((x * 37) % 23); g.fillRect(x, H - h, 2, h); }
+  }
+};
+(function () {
+  const host = $("#cards"), order = []; const POSE = ["rotate(-2deg)", "translate(14px,12px) rotate(4deg)", "translate(-8px,20px) rotate(-6deg)", "translate(20px,28px) rotate(8deg)"];
+  const pose = () => order.forEach((c, i) => { c.style.transform = POSE[i]; c.style.zIndex = 10 - i; c.tabIndex = i ? -1 : 0; });
+  CONTENT.cards.forEach(k => { const c = el("button", "card"); c.type = "button"; c.style.cssText = "--bg:" + k.st + ";--st:" + k.st; c.setAttribute("aria-label", "Postcard: " + k.word + ". Turn it over.");
+    const f = el("span", "f"); let src = k.img;
+    if (k.draw && PAINT[k.draw]) { const cv = el("canvas"); cv.width = 644; cv.height = 424; try { PAINT[k.draw](cv.getContext("2d"), 644, 424); src = cv.toDataURL("image/jpeg", .86); } catch (e) {} }
+    if (src) f.style.backgroundImage = "linear-gradient(180deg,transparent 38%,rgba(0,0,0,.66)),url(" + src + ")";
+    const wd = el("b", "", k.word); if (k.word.length > 7) wd.style.fontSize = k.word.length > 8 ? "28px" : "33px"; f.append(el("small", "", k.hello), wd);
+    const b = el("span", "bk"); b.append(el("p", "", k.back), el("span", "stamp", "1996"), el("span", "pm", "between\nyesterday\n& tomorrow"), el("span", "to")); c.append(f, b);
+    c.addEventListener("click", () => { sfx("click"); const top = order[0];
+      if (c !== top) { order.splice(order.indexOf(c), 1); order.unshift(c); pose(); return; }
+      if (!c.classList.contains("fl")) { c.style.transform = POSE[0] + " scaleX(.03)"; setTimeout(() => { c.classList.add("fl"); pose(); say(k.back); }, reduced ? 0 : 180); }
+      else { c.classList.remove("fl"); order.push(order.shift()); pose(); order[0].focus({ preventScroll: true }); } });
+    order.push(c); host.append(c); });
+  pose();
+})();
+
+/* ---------- menu ---------- */
+$$("#menu button").forEach(b => b.addEventListener("click", () => { const id = b.dataset.go, o = $("#" + id); dLast = performance.now() - 17000; o.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" }); o.classList.remove("ping"); void o.offsetWidth; o.classList.add("ping"); setTimeout(() => o.classList.remove("ping"), 2000);
+  if (id === "hark") who(); if (id === "tv") setChan(+b.dataset.ch || 2); if (id === "phone") { if (SN.on) snakeStop(); pBuf = ""; pScreen = b.dataset.scr || "home"; pShow(); } }));
+
+/* ---------- seeds and the fly ---------- */
+(function () { const r = rndm(3), host = $("#seeds"); for (let i = 0; i < 13; i++) { const s = el("i", "seed"); s.style.left = r() * 215 + "px"; s.style.top = r() * 130 + "px"; s.style.transform = "rotate(" + r() * 360 + "deg)"; s.addEventListener("click", () => { s.classList.add("x"); sfx("click"); }); host.append(s); } })();
+const fly = { x: 700, y: 420, tx: 700, ty: 420, st: "sit", t: 2, a: 0 };
+addEventListener("pointermove", e => { const r = stage.getBoundingClientRect(), x = (e.clientX - r.left) / SC, y = (e.clientY - r.top) / SC; if (Math.hypot(x - fly.x, y - fly.y) < 80 && fly.st !== "flee") { fly.st = "flee"; fly.tx = 60 + Math.random() * (stage.offsetWidth - 120); fly.ty = Math.max(40, Math.min(stage.offsetHeight - 40, fly.y + (Math.random() - .5) * 900)); } });
+
+/* ---------- the gold chain ---------- */
+const chain = { pts: [], ax: 600, seg: 15, drag: false, fired: false, moved: 0, px: 0, py: 0, wind: 0 };
+function chainInit() { const n = MOB ? 9 : 14; chain.pts = []; for (let i = 0; i < n; i++) chain.pts.push({ x: 110, y: -6 + i * chain.seg, ox: 110, oy: -6 + i * chain.seg }); chain.len = (n - 1) * chain.seg; }
+function toggleLight() { const d = document.body.classList.toggle("dark"); $("#pull").setAttribute("aria-pressed", d); $("#pull").setAttribute("aria-label", "Pull the gold chain: lights " + (d ? "on" : "off")); sfx("click");
+  lcd(d ? "NIGHT MODE. I SEE BETTER NOW." : "IDLE. MOSTLY."); phoneDark(d); $("#ch4txt").innerHTML = d ? "ти знайшов це.<br>you found it. say hi: the phone." : "НЕМАЄ СИГНАЛУ<br>no signal. try the dark."; say(d ? "The lights are off. Hidden notes glow on the table." : "The lights are on."); }
+const pull = $("#pull");
+pull.addEventListener("pointerdown", e => { chain.drag = true; chain.fired = false; chain.moved = 0; chain.px = e.clientX; chain.py = e.clientY; pull.setPointerCapture(e.pointerId); e.preventDefault(); });
+pull.addEventListener("pointermove", e => { if (!chain.drag) return; chain.moved += Math.abs(e.clientX - chain.px) + Math.abs(e.clientY - chain.py); chain.px = e.clientX; chain.py = e.clientY; });
+const letGo = () => { if (!chain.drag) return; chain.drag = false; if (!chain.fired && chain.moved < 6) toggleLight(); };
+pull.addEventListener("pointerup", letGo); pull.addEventListener("pointercancel", letGo);
+pull.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleLight(); } });
+function chainStep() {
+  const P = chain.pts, n = P.length, last = P[n - 1];
+  if (!reduced) {
+    for (let i = 1; i < n; i++) { const p = P[i], vx = (p.x - p.ox) * .985, vy = (p.y - p.oy) * .985; p.ox = p.x; p.oy = p.y; p.x += vx + (Math.random() - .5) * .02; p.y += vy + .55; }
+    if (chain.wind > 0) { chain.wind--; for (let i = 1; i < n; i++) P[i].x += 1.3 * i / n * (.5 + Math.sin(chain.wind / 7)); }
+    if (chain.drag) { let tx = chain.px - (chain.ax - 110), ty = chain.py, dx = tx - 110, dy = ty + 6, d = Math.hypot(dx, dy), mx = chain.len * 1.3; if (d > mx) { tx = 110 + dx / d * mx; ty = -6 + dy / d * mx; }
+      last.x = tx; last.y = ty; if (!chain.fired && d > chain.len * 1.13) { chain.fired = true; toggleLight(); } }
+    for (let k = 0; k < 10; k++) { P[0].x = 110; P[0].y = -6; for (let i = 1; i < n; i++) { const a = P[i - 1], b = P[i], dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1, f = (d - chain.seg) / d * .5; if (i > 1) { a.x += dx * f; a.y += dy * f; b.x -= dx * f; b.y -= dy * f; } else { b.x -= dx * f * 2; b.y -= dy * f * 2; } }
+      if (chain.drag) { const dx = last.x - 110, dy = last.y + 6, d = Math.hypot(dx, dy); if (d > chain.len * 1.3) { last.x = 110 + dx / d * chain.len * 1.3; last.y = -6 + dy / d * chain.len * 1.3; } } }
+  }
+  const cv = $("#chainCv"), g = cv.getContext("2d"); g.clearRect(0, 0, cv.width, cv.height);
+  for (let i = 1; i < n; i++) { const a = P[i - 1], b = P[i], an = Math.atan2(b.y - a.y, b.x - a.x); g.save(); g.translate((a.x + b.x) / 2, (a.y + b.y) / 2); g.rotate(an);
+    g.lineWidth = 3.4; g.strokeStyle = "#5e3b00"; g.beginPath(); g.ellipse(0, 1.5, chain.seg * .62, i % 2 ? 5 : 2.4, 0, 0, 7); g.stroke();
+    g.strokeStyle = i % 2 ? "#f0bb2c" : "#c98f12"; g.lineWidth = 2.8; g.beginPath(); g.ellipse(0, 0, chain.seg * .62, i % 2 ? 5 : 2.4, 0, 0, 7); g.stroke();
+    g.strokeStyle = "#fff4bd"; g.lineWidth = 1; g.beginPath(); g.ellipse(0, 0, chain.seg * .62, i % 2 ? 5 : 2.4, 0, 3.5, 4.9); g.stroke(); g.restore(); }
+  const gr = g.createRadialGradient(last.x - 5, last.y + 9, 2, last.x, last.y + 14, 17); gr.addColorStop(0, "#fff6c2"); gr.addColorStop(.45, "#f0bb2c"); gr.addColorStop(1, "#7a4a00");
+  g.fillStyle = gr; g.beginPath(); g.arc(last.x, last.y + 14, 16, 0, 7); g.fill(); g.strokeStyle = "#4a2d00"; g.lineWidth = 1.5; g.stroke();
+  g.fillStyle = "#4a2d00"; g.font = "22px 'Pirata One',serif"; g.textAlign = "center"; g.fillText("J", last.x, last.y + 22);
+  pull.style.left = (chain.ax - 110 + last.x - 26) + "px"; pull.style.top = (last.y + 14 - 26) + "px";
+}
+
+/* ---------- main loop ---------- */
+let prev = performance.now(), tvT = 0, tvJit = prev + 6000; const tvSnow = $("#tvsnow");
+function loop(now) {
+  const dt = Math.min(.05, (now - prev) / 1000); prev = now; chainStep(); singStep(now);
+  if (!reduced && now - tvT > 85) { tvT = now; snowOn(tvSnow, 255); if (now > tvJit) { const sc = $("#tv .screen"); sc.classList.add("jit"); setTimeout(() => sc.classList.remove("jit"), 110); tvJit = now + 5000 + Math.random() * 9000; } }
+  if (!reduced) { const f = fly; if (f.st === "sit") { f.t -= dt; if (f.t < 0) { f.st = "walk"; f.tx = Math.max(30, Math.min(stage.offsetWidth - 30, f.x + (Math.random() - .5) * 220)); f.ty = Math.max(30, Math.min(stage.offsetHeight - 30, f.y + (Math.random() - .5) * 220)); } }
+    else { const sp = f.st === "flee" ? 1300 : 70, dx = f.tx - f.x, dy = f.ty - f.y, d = Math.hypot(dx, dy); if (d < 4) { f.st = "sit"; f.t = 1 + Math.random() * 5; } else { f.a = Math.atan2(dy, dx) + (f.st === "walk" ? Math.sin(now / 90) * .5 : 0); f.x += Math.cos(f.a) * sp * dt; f.y += Math.sin(f.a) * sp * dt; } }
+    $("#fly").style.transform = "translate(" + f.x + "px," + f.y + "px) rotate(" + (f.a + 1.57) + "rad)"; }
+  requestAnimationFrame(loop);
+}
+
+leopard(); doily($("#cupDoily")); doily($("#tvDoily")); grounds($("#grounds"), 1996);
+chainInit(); layout(); addEventListener("resize", layout);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(cables);
+$("#fly").style.transform = "translate(700px,420px)";
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
