@@ -923,7 +923,7 @@ function drawPhotos(g, now) {
   const dt = Math.min(.05, (now - (windLast || now)) / 1000); windLast = now; const st = HAIR.state, T = now - HAIR.t0;
   if (st === "on") {
     const want = FAN.broken ? 0 : FAN.speed;
-    if (want !== WIN.cur) { WIN.prev = WIN.cur; WIN.cur = want; WIN.t = now; const v = WV[want]; if (v) { v.preload = "auto"; v.play().catch(() => {}); } }
+    if (want !== WIN.cur) { WIN.prev = WIN.cur; WIN.cur = want; WIN.t = now; const v = WV[want]; if (v) { v.preload = "auto"; if (want === 6) try { v.currentTime = 1.9; } catch (e) {} v.play().catch(() => {}); } }
     WV.forEach((v, k) => { if (v && k !== WIN.cur && k !== WIN.prev && !v.paused) v.pause(); });
     const layer = k => { const v = WV[k]; return k && v && v.readyState >= 2 ? v : sing.img; };
     const f = Math.min(1, (now - WIN.t) / 450);
@@ -1046,9 +1046,9 @@ fanEl.addEventListener("click", () => { sfx("click"); if (chan !== 1) setChan(1)
   fanSet((FAN.speed + 1) % 7); });
 function fanStep(now, dt) {
   const lt = WV[6].currentTime;
-  if (FAN.speed === 6 && !FAN.broken && HAIR.state === "on" && ok(HAIR.bald) && WIN.cur === 6 && now - FAN.maxT > 2000 && lt > 3.1 && lt < 3.45) {
+  if (FAN.speed === 6 && !FAN.broken && HAIR.state === "on" && ok(HAIR.bald) && WIN.cur === 6 && now - FAN.maxT > 900 && lt > 3.1 && lt < 3.45) {
     HAIR.t0 = now; sfx("whoosh"); lcd("THERE GOES THE HAIR.");
-    vid.currentTime = Math.max(0, lt - 3.2); vid.muted = !A.on || A.play;
+    vid.currentTime = Math.max(0, lt - 3.2); vid.muted = !A.on || A.play; vid.playbackRate = 1.35;
     const p = vid.play(); HAIR.state = "video";
     if (p && p.catch) p.catch(() => { vid.muted = true; vid.play().catch(() => { HAIR.state = "flying"; HAIR.t0 = performance.now(); }); });
   }
