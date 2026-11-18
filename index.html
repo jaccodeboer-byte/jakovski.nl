@@ -233,7 +233,7 @@ body.dark #plcd{box-shadow:inset 0 0 0 3px #1b2233,0 0 34px rgba(190,255,120,.75
 #cass .ribbon{flex:1;height:22px;margin:0 6px;background:linear-gradient(90deg,#4a2a14 0 34%,transparent 34% 66%,#4a2a14 66%)}
 #cass .foot{position:absolute;left:62px;right:62px;bottom:0;height:42px;background:#101013;clip-path:polygon(7% 0,93% 0,100% 100%,0 100%);display:flex;justify-content:center;gap:26px;align-items:center}
 #cass .foot i{width:11px;height:11px;border-radius:50%;background:#000;box-shadow:inset 0 0 0 2px #3c3c44}
-#cass .state{position:absolute;right:16px;bottom:10px;font:400 11px/1 var(--loud);color:var(--acid)}
+#cass .state{position:absolute;left:16px;bottom:10px;font:400 11px/1 var(--loud);color:var(--acid)}
 #flip{position:absolute;right:-18px;top:132px;transform:rotate(7deg);z-index:2}
 #tape .burst{left:-44px;top:88px;transform:rotate(-14deg)}
 
@@ -270,7 +270,10 @@ body.dark #plcd{box-shadow:inset 0 0 0 3px #1b2233,0 0 34px rgba(190,255,120,.75
 
 /* ---------- power strip ---------- */
 #strip{width:310px;height:84px;border-radius:14px;background:linear-gradient(180deg,#efe9d6,#cfc7ab);box-shadow:inset 0 0 0 2px #9b9379,0 10px 16px rgba(0,0,0,.5);display:flex;align-items:center;gap:14px;padding:0 16px}
-#strip .sock{width:50px;height:50px;border-radius:50%;background:radial-gradient(circle at 34% 50%,#1a110f 0 4px,transparent 5px),radial-gradient(circle at 66% 50%,#1a110f 0 4px,transparent 5px),#e2dbc4;box-shadow:inset 0 3px 6px rgba(0,0,0,.4)}
+#strip .sock{position:relative;width:50px;height:50px;border-radius:50%;background:radial-gradient(circle at 34% 50%,#1a110f 0 4px,transparent 5px),radial-gradient(circle at 66% 50%,#1a110f 0 4px,transparent 5px),#e2dbc4;box-shadow:inset 0 3px 6px rgba(0,0,0,.4)}
+#strip .plug{position:absolute;left:6px;top:4px;width:38px;height:40px;border-radius:9px 9px 12px 12px;background:var(--pc);box-shadow:inset 0 3px 0 rgba(255,255,255,.22),inset 0 -5px 0 rgba(0,0,0,.25),2px 5px 6px rgba(0,0,0,.45)}
+#strip .plug::before{content:"";position:absolute;left:50%;top:-34px;width:12px;height:38px;margin-left:-6px;border-radius:3px 3px 0 0;background:var(--pc);box-shadow:inset 0 2px 0 rgba(255,255,255,.18)}
+#strip .plug::after{content:"";position:absolute;left:9px;right:9px;top:13px;height:3px;border-radius:2px;background:rgba(0,0,0,.22);box-shadow:0 7px 0 rgba(0,0,0,.22)}
 #sound{width:64px;height:46px;border-radius:5px;background:linear-gradient(180deg,#5a0f0a 0 50%,#3a0906 50%);box-shadow:inset 0 0 0 3px #1a110f;margin-left:auto;position:relative}
 #sound[aria-pressed="true"]{background:linear-gradient(180deg,#ff4a2c 0 50%,#b81f10 50%);box-shadow:inset 0 0 0 3px #1a110f,0 0 22px #ff4a2c}
 #strip .tapelabel{position:absolute;right:8px;top:-22px;transform:rotate(4deg);font-size:21px}
@@ -475,7 +478,7 @@ body.dark #plcd{box-shadow:inset 0 0 0 3px #1b2233,0 0 34px rgba(190,255,120,.75
 
   <!-- power -->
   <section class="obj dim" id="strip" data-drag aria-label="Power strip" style="--x:900;--y:1462;--r:-2;--mx:54;--my:3728;--mr:-2">
-    <span class="sock"></span><span class="sock"></span><span class="sock"></span>
+    <span class="sock"><i class="plug" style="--pc:#15100e"></i></span><span class="sock"><i class="plug" style="--pc:#e9e2cf"></i></span><span class="sock"><i class="plug" style="--pc:#ff7a00"></i></span>
     <button id="sound" type="button" aria-pressed="true" aria-label="Sound"></button>
     <span class="tapelabel">sound</span>
   </section>
@@ -712,11 +715,12 @@ function layout() {
 const box = id => { const e = $(id), s = MOB ? (parseFloat(getComputedStyle(e).getPropertyValue("--ms")) || 1) : 1; return [e.offsetLeft, e.offsetTop, e.offsetWidth * s, e.offsetHeight * s]; };
 function cables() {
   const s = box("#strip"), t = box("#tv"), h = box("#hark"), W = stage.offsetWidth;
-  const run = (a, b, col, w) => { const sag = 70 + Math.hypot(a[0] - b[0], a[1] - b[1]) * .16, p = "M" + a + " C" + a[0] + "," + (a[1] + sag) + " " + b[0] + "," + (b[1] + sag) + " " + b;
+  const run = (a, b, col, w) => { const sag = 70 + Math.hypot(a[0] - b[0], a[1] - b[1]) * .16, p = "M" + a + " C" + a[0] + "," + (a[1] - 90) + " " + b[0] + "," + (b[1] + sag) + " " + b;   // a cord leaves its plug upward, then sags
     return '<path d="' + p + '" fill="none" stroke="rgba(0,0,0,.45)" stroke-width="' + (w + 4) + '" transform="translate(3,6)"/><path d="' + p + '" fill="none" stroke="' + col + '" stroke-width="' + w + '" stroke-linecap="round"/>'; };
-  $("#cables").innerHTML = run([s[0] + 40, s[1] + 40], [t[0] + t[2] * .86, t[1] + t[3] - 10], "#15100e", 7)
-    + run([s[0] + 100, s[1] + 40], [h[0] + h[2] - 12, h[1] + h[3] * .5], "#e9e2cf", 6)
-    + run([s[0] + s[2] - 8, s[1] + 44], [W + 30, s[1] - 120], "#ff7a00", 8);
+  const st = stage.getBoundingClientRect(), pl = $$("#strip .plug").map(e => { const r = e.getBoundingClientRect(); return [(r.left + r.width / 2 - st.left) / SC, (r.top - st.top) / SC - 30]; });   // cords leave each plug at the top of its stem
+  $("#cables").innerHTML = run(pl[0], [t[0] + t[2] * .86, t[1] + t[3] - 10], "#15100e", 7)
+    + run(pl[1], [h[0] + h[2] - 12, h[1] + h[3] * .5], "#e9e2cf", 6)
+    + run(pl[2], [W + 30, s[1] - 120], "#ff7a00", 8);
 }
 
 /* ---------- dragging things around ---------- */
@@ -799,11 +803,19 @@ function renderKino() { $("#ch2").innerHTML = tt(101, "KINO", ['<span class="c">
 renderKino();
 $("#ch3").innerHTML = tt(202, "MUZIEK", ['<span class="g">Four playlists. Press one.</span>'].concat(CONTENT.playlists.map(p => ttLink(p.url, p.name) + ' <span class="c">' + esc(p.who) + '</span>'), ['<span>also: the cassette on the table.</span>']));
 $("#ch4").innerHTML = tt(303, "ARCHIVE", CONTENT.archive.map(a => '<span class="y">' + esc(a.name) + '</span> <span class="g">' + esc(a.when) + '</span>\n' + esc(a.what) + (a.url ? " " + ttLink(a.url, a.link) : "")));
+/* Safari keeps painting the old ticker text while the scroll animation runs, so on every change the ticker
+   gets a fresh element and a fresh animation. The duration follows the text length, so the speed stays the same. */
+function restartTicker(txt) {
+  const old = $("#ticker"), sp = old.cloneNode(false); if (txt != null) sp.textContent = txt; else sp.textContent = old.textContent;
+  sp.style.animation = "none"; old.replaceWith(sp); void sp.offsetWidth;
+  sp.style.animation = ""; sp.style.animationDuration = Math.max(14, sp.offsetWidth / 75).toFixed(1) + "s";
+}
+if (document.fonts) document.fonts.addEventListener("loadingdone", () => restartTicker());
 function setTicker() {
   const n = CONTENT.now, t = CONTENT.tracks[A.side], tk = $("#ticker");
   const txt = (A.play ? ["Now miming: " + t.title, "Lips may not match the words", "He does know the words", "Experts confirm: face is real"]
     : ["Jacco remains a work in progress", "On the turntable: " + br(n.listening, "awaiting signal"), "Last film: " + (CONTENT.lately[0] ? CONTENT.lately[0].title : "none on file"), "On the bench: " + br(n.bench, "awaiting signal"), "Experts confirm: face is real", "Weather: wind"]).join("  +++  ") + "  +++";
-  if (tk.textContent !== txt) tk.textContent = txt;
+  if (tk.textContent !== txt) restartTicker(txt);
 }
 setTicker();
 /* On your own server, letterboxd.php returns the newest diary entries; here (claude.ai) it does not exist and nothing changes. */
