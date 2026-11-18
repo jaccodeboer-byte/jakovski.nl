@@ -123,6 +123,13 @@ body.dark #tv .screen{box-shadow:0 0 0 8px #050404,0 0 0 11px #2a231b,0 0 90px 2
 .guide{position:absolute;left:44px;top:428px;display:flex;gap:5px;align-items:center;background:#f4ecd6;color:#1a110f;padding:5px 8px;transform:rotate(-1.5deg);box-shadow:1px 3px 0 rgba(0,0,0,.4);font:700 12px/1 var(--typed);white-space:nowrap}
 .guide button{font:400 11px/1 var(--loud);background:#1a110f;color:#fff;padding:8px 6px;border-radius:2px;text-transform:uppercase}
 .guide button[aria-current="true"]{background:var(--pink)}
+.sing-pick{position:absolute;left:12px;bottom:48px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;z-index:2}
+.sing-pick span{font:700 13px/1 var(--hand);color:#fff;text-shadow:1px 1px 0 #000,0 0 4px #000;transform:rotate(-3deg);margin-bottom:1px}
+.sing-pick button{font:400 11px/1 var(--loud);text-transform:uppercase;background:#ffe100;color:#111;padding:6px 8px 5px;border-radius:2px;box-shadow:2px 2px 0 rgba(0,0,0,.7);text-align:left;max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sing-pick button[aria-pressed="true"]{background:#e3101c;color:#fff}
+.sing-pick button:hover,.sing-pick button:focus-visible{background:#fff;color:#111}
+#singHint{position:fixed;left:50%;bottom:16px;z-index:55;transform:translateX(-50%) rotate(-2deg);font:700 22px/1 var(--hand);color:#1a110f;background:var(--acid);padding:9px 16px 8px;box-shadow:3px 4px 0 rgba(0,0,0,.6);white-space:nowrap}
+#singHint[hidden]{display:none}
 .chyron{position:absolute;left:0;right:0;bottom:16px;display:flex;align-items:stretch;font:400 13px/1 var(--loud);text-transform:uppercase}
 .chyron b{background:#e3101c;color:#fff;padding:6px 8px 5px 14px;font-weight:400;flex:none}
 .tick{flex:1;background:#ffe100;color:#111;overflow:hidden;white-space:nowrap;display:flex;align-items:center}
@@ -364,6 +371,7 @@ body.dark #plcd{box-shadow:inset 0 0 0 3px #1b2233,0 0 34px rgba(190,255,120,.75
         <img src="operator.gif" alt="Jacco on television: long reddish hair, greying beard, round glasses, gold chain. He winks.">
         <canvas id="sing" width="600" height="600" aria-hidden="true"></canvas>
         <span class="bug" id="bug">JTV</span>
+        <div class="sing-pick" id="singPick" role="group" aria-label="Make Jacco sing"><span>make me sing:</span><button type="button" data-side="0"></button><button type="button" data-side="1"></button></div>
         <div class="chyron"><b>Live</b><div class="tick"><span id="ticker"></span></div></div>
       </div>
       <div class="ch tt" id="ch2" hidden></div>
@@ -497,6 +505,7 @@ body.dark #plcd{box-shadow:inset 0 0 0 3px #1b2233,0 0 34px rgba(190,255,120,.75
 <canvas id="chainCv" width="220" height="470" aria-hidden="true"></canvas>
 <button id="pull" type="button" aria-pressed="false" aria-label="Pull the gold chain: lights off"></button>
 <div id="lamp" aria-hidden="true"></div>
+<button type="button" id="singHint" hidden>♪ he is singing on the tv ↑</button>
 <div class="vh" id="announce" aria-live="polite"></div>
 
 <noscript><div style="padding:24px;color:#efe6cf"><h1>Jacco, a work in progress</h1><p>This table needs JavaScript. Short version: Jacco has worked with technology since 1996, builds with AI (agents, a second brain, an assistant called Hark), writes fiction and makes music as The Mariupol Greek Groove Kompania.</p></div></noscript>
@@ -781,9 +790,21 @@ function setPlay(v) {
     player.play().catch(() => { lcd("TAPE JAMMED. PRESS AGAIN."); setPlay(false); }); if (chan !== 1) setChan(1); lcd("HE IS MIMING. DO NOT TELL HIM."); }
   else player.pause();
   A.play = v; $("#cass").classList.toggle("playing", v); $("#cass").setAttribute("aria-pressed", v); $("#cassState").textContent = v ? "■ PLAYING" : "▶ PRESS";
-  $("#ch1").classList.toggle("sing", v); $("#bug").textContent = v ? "JTV · PLAYBACK" : "JTV"; setTicker();
+  $("#ch1").classList.toggle("sing", v); $("#bug").textContent = v ? "JTV · PLAYBACK" : "JTV"; setTicker(); if (typeof pickRefresh === "function") { pickRefresh(); hintRefresh(); }
 }
 player.addEventListener("ended", () => { setPlay(false); lcd("TAPE ENDED. FLIP IT."); });
+/* channel 1: pick a song and he sings it; same buttons stop it */
+function pickRefresh() { $$("#singPick button").forEach(b => { const k = +b.dataset.side, on = A.play && A.side === k;
+  b.textContent = (on ? "■ stop" : "▶ " + "AB"[k] + " · " + CONTENT.tracks[k].title); b.title = CONTENT.tracks[k].title; b.setAttribute("aria-pressed", on); }); }
+$$("#singPick button").forEach(b => b.addEventListener("click", () => { const k = +b.dataset.side;
+  if (A.play && A.side === k) { setPlay(false); return; }
+  if (A.play) player.pause(); if (A.side !== k) { A.side = k; tapeLabel(); } if (!A.on) setSound(true); sfx("thunk"); setPlay(true); }));
+/* playing but the television is out of sight: a sticker points to it */
+pickRefresh();
+let tvSeen = true;
+if ("IntersectionObserver" in window) new IntersectionObserver(es => { tvSeen = es[0].isIntersecting; hintRefresh(); }, { threshold: .25 }).observe($("#tv .screen"));
+function hintRefresh() { $("#singHint").hidden = !(A.play && !tvSeen); }
+$("#singHint").addEventListener("click", () => { dLast = performance.now() - 17000; $("#tv").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" }); });
 const wake = () => { if (A.on && !A.ctx) audioInit(); if (A.on && A.ctx) A.ctx.resume().catch(() => {}); };
 addEventListener("pointerdown", wake, true); addEventListener("keydown", wake, true);
 $("#sound").addEventListener("click", () => setSound(!A.on));
