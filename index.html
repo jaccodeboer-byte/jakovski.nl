@@ -382,7 +382,7 @@ body.dark #plcd{box-shadow:inset 0 0 0 3px #1b2233,0 0 34px rgba(190,255,120,.75
   <p class="obj uv pk" style="--x:250;--y:868;--r:4;--mx:30;--my:1674;--mr:3">the future has been tried before. parts of it worked.</p>
   <p class="obj uv cy" style="--x:800;--y:946;--r:-3;--mx:30;--my:2374;--mr:-3">dial 1996 on the phone ↗</p>
   <p class="obj uv" style="--x:690;--y:536;--r:-2;--mx:150;--my:1248;--mr:-2">a draft? knock on wood. ×3</p>
-  <p class="obj uv" style="--x:566;--y:1196;--r:-4;--mx:70;--my:2776;--mr:-3">side B is for after midnight</p>
+  <p class="obj uv" style="--x:566;--y:1196;--r:-4;--mx:70;--my:2776;--mr:-3">side A is for after midnight</p>
   <p class="obj uv pk" style="--x:60;--y:1548;--r:2;--mx:40;--my:3872;--mr:2">don't tell my whole story.</p>
   <p class="obj uv cy" style="--x:640;--y:22;--r:4;--mx:236;--my:276;--mr:6">ψιτ! channel 5.</p>
   <span class="obj tapelabel dim" id="draftNote" style="--x:1030;--y:52;--r:-3;--mx:210;--my:1262;--mr:-3;font-size:20px;z-index:6">scroll slowly. promaja.</span>
@@ -553,8 +553,8 @@ const CONTENT = {
   now: { listening: "Stelios Kazantzidis", bench: "Harlinger taal" },   // the TV news ticker; the film comes from lately[0]
   deck: ["Stelios Kazantzidis — Sinnefiasmeni Kiriaki", "Umm Kulthum — Arouh Le Meen", "Hamdi, P Money — Skanka"],   // card behind the cassette
   tracks: [                                        // the cassette. Files sit next to this page.
-    { file: "side-b.mp3", title: "Запасной ключ", note: "side A · The Mariupol Greek Groove Kompania" },
-    { file: "side-a.mp3", title: "Zou sti Mariúpoli", note: "side B · after midnight" }
+    { file: "side-b.mp3", title: "Запасной ключ", note: "side A · after midnight" },
+    { file: "side-a.mp3", title: "Zou sti Mariúpoli", note: "side B · The Mariupol Greek Groove Kompania" }
   ],
   favourites: ["Nights of Cabiria", "Pépé le Moko", "Brazil", "Children of Men"],   // tv 2, from Letterboxd
   /* LETTERBOXD-START: a weekly scheduled task replaces the lately array below with the three newest diary entries */
@@ -942,12 +942,7 @@ function jawFor(img) {
 function singDraw(d, w, now) {
   if (!sing.jaw) return; const g = sing.cv.getContext("2d"); if (w == null) w = 1; now = now || performance.now();
   const k = drawPhotos(g, now);
-  if (!mainImg && d >= .7) { const sc = snapCv.getContext("2d", { willReadFrequently: true }); sc.globalCompositeOperation = "copy"; sc.drawImage(sing.cv, 0, 0);
-    /* hair blowing across the mouth: then the mouth stays as the clip shows it, a hole on top of hair looks wrong */
-    const px = sc.getImageData(262, 284, 80, 26).data; let hair = 0;
-    for (let i = 0; i < px.length; i += 16) { const r = px[i], gg = px[i + 1], b = px[i + 2], mx = Math.max(r, gg, b), mn = Math.min(r, gg, b); if (mx > 115 && mx === r && (mx - mn) / mx > .35) { const hue = 60 * (gg - b) / (mx - mn); if (hue > 20 && hue < 48) hair++; } }
-    sing.hairOver += ((hair / (px.length / 16) > .1 ? 1 : 0) - sing.hairOver) * .25;
-    if (sing.hairOver > .5) return; d *= 1 - sing.hairOver * 2; }
+  if (!mainImg && d >= .7) { const sc = snapCv.getContext("2d"); sc.globalCompositeOperation = "copy"; sc.drawImage(sing.cv, 0, 0); }   // the jaw comes from the current wind frame
   if (k <= 1 && sing.blink >= 0 && sing.eyes.complete && sing.eyes.naturalWidth) g.drawImage(sing.eyes, Math.min(5, Math.floor(sing.blink)) * 140, 0, 140, 30, 236, 198, 140, 30);
   if (d < .7) return;
   const hw = 30 + 18 * w, t = .5 - hw / 96, ye = 291 + 26 * t * (1 - t), cy = 595 - ye;      // narrow mouth for dark vowels, wide for bright ones
