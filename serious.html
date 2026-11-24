@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JACCO // 2096 — AI Systems, Culture & Direction</title>
+<meta name="description" content="Jacco de Boer — Creative technologist, AI systems builder, cultural producer, writer & musician. 1996–2096.">
+<meta name="theme-color" content="#050608">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+@font-face{font-family:'Courier Prime';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/courier-prime-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Courier Prime';font-style:normal;font-display:swap;font-weight:700;src:url(fonts/courier-prime-latin-700-normal.woff2) format('woff2')}
+
+:root{
+  color-scheme:dark;
+  --bg:#050608;
+  --surface:rgba(14,17,23,.72);
+  --surface-hi:rgba(22,27,36,.86);
+  --line:rgba(255,255,255,.1);
+  --line-hi:rgba(255,255,255,.24);
+  --ink:#f3f5f8;
+  --muted:#8a94a6;
+  --accent:#c8ff2e;
+  --cyan:#64e9ff;
+  --pink:#ff2e88;
+  --gold:#f6c838;
+  --sans:'Inter','SF Pro Display','Helvetica Neue',system-ui,-apple-system,sans-serif;
+  --mono:'Courier Prime',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.5}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* Full-bleed 3D spatial wireframe canvas */
+#space{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
+.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(circle at 50% 25%,transparent 0%,rgba(5,6,8,.45) 60%,rgba(5,6,8,.92) 100%)}
+
+/* Sticky HUD Navigation */
+.hud{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:14px clamp(16px,4vw,40px);background:rgba(5,6,8,.76);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line)}
+.hud-left{display:flex;align-items:center;gap:14px;font:700 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);display:inline-block}
+.hud-meta{color:var(--muted);font-weight:400;display:none}
+@media(min-width:900px){.hud-meta{display:inline}}
+.hud-nav{display:none;gap:22px;font:400 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.hud-nav a:hover{color:var(--ink)}
+@media(min-width:760px){.hud-nav{display:flex}}
+
+/* High-contrast "Why so serious?" portal button */
+.btn-retro{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;
+  border:2px solid #fff;background:linear-gradient(135deg,var(--accent) 0%,#f6ff82 100%);color:#050608;
+  font:700 12.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  box-shadow:0 0 0 3px rgba(200,255,46,.22),0 0 28px rgba(200,255,46,.65);
+  animation:retroPulse 2.4s ease-in-out infinite;transition:all .2s ease}
+.btn-retro:hover{background:var(--pink);border-color:#fff;color:#fff;
+  box-shadow:0 0 0 4px rgba(255,46,136,.3),0 0 36px rgba(255,46,136,.85);
+  transform:translateY(-2px) scale(1.06);animation:none}
+@keyframes retroPulse{
+  0%,100%{box-shadow:0 0 0 3px rgba(200,255,46,.22),0 0 24px rgba(200,255,46,.55)}
+  50%{box-shadow:0 0 0 6px rgba(200,255,46,.38),0 0 38px rgba(200,255,46,.95)}
+}
+
+/* Main container & raw technical grid */
+main{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 clamp(16px,4vw,40px) 120px}
+section{padding:96px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:40px;flex-wrap:wrap}
+.sec-kicker{font:700 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.sec-title{margin:8px 0 0;font-size:clamp(28px,4vw,46px);font-weight:500;letter-spacing:-.03em;line-height:1.08}
+.sec-sub{font:400 13px/1.5 var(--mono);color:var(--muted);max-width:420px}
+
+/* Hero */
+.hero{min-height:92vh;display:grid;grid-template-columns:1fr;gap:48px;align-content:center;padding-top:120px;padding-bottom:80px}
+@media(min-width:900px){.hero{grid-template-columns:1.35fr .65fr;align-items:center}}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;
+  font:400 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;background:var(--surface)}
+.hero h1{margin:0;font-size:clamp(44px,7.2vw,96px);font-weight:500;letter-spacing:-.045em;line-height:.94}
+.hero h1 span{display:block;color:var(--muted);font-weight:400}
+.hero-lead{margin:28px 0 36px;max-width:560px;font-size:clamp(16px,1.6vw,19px);color:#c3cad6;line-height:1.6;font-weight:400}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:999px;background:var(--ink);color:#050608;
+  font:700 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;transition:transform .18s,background .2s}
+.btn-primary:hover{background:var(--accent);transform:translateY(-2px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:999px;border:1px solid var(--line-hi);
+  color:var(--ink);font:700 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;background:var(--surface);transition:border-color .2s,background .2s}
+.btn-ghost:hover{border-color:var(--ink);background:rgba(255,255,255,.08)}
+
+/* Portrait Telemetry Card */
+.portrait-card{position:relative;border:1px solid var(--line);background:var(--surface);backdrop-filter:blur(16px);padding:14px;border-radius:4px}
+.portrait-frame{position:relative;aspect-ratio:1/1;overflow:hidden;background:#0a0d12;border:1px solid var(--line)}
+.portrait-frame img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.12) brightness(.94);transition:filter .5s ease,transform .6s ease}
+.portrait-card:hover .portrait-frame img{filter:grayscale(.15) contrast(1.06) brightness(1);transform:scale(1.03)}
+.portrait-hud{display:flex;justify-content:space-between;margin-top:12px;font:400 11px/1.4 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.portrait-hud b{color:var(--ink)}
+
+/* Bento / Raw Technical Grid for Builds */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.tile{position:relative;background:rgba(8,10,14,.92);padding:28px 24px;display:flex;flex-direction:column;justify-content:space-between;min-height:190px;overflow:hidden;transition:background .25s}
+.tile::before{content:"";position:absolute;inset:0;opacity:0;transition:opacity .3s;pointer-events:none;
+  background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),rgba(100,233,255,.12),transparent 70%)}
+.tile:hover{background:rgba(14,18,26,.96)}
+.tile:hover::before{opacity:1}
+.tile-top{display:flex;justify-content:space-between;align-items:center;font:400 11px/1 var(--mono);color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px}
+.badge{padding:3px 8px;border:1px solid var(--line-hi);border-radius:999px;font-size:10px;color:var(--cyan)}
+.badge.live{color:var(--accent);border-color:rgba(200,255,46,.4)}
+.tile h3{margin:0 0 10px;font-size:21px;font-weight:500;letter-spacing:-.02em}
+.tile p{margin:0;font-size:14px;color:var(--muted);line-height:1.55}
+
+/* Chronology Scrubber 1996-2026 */
+.chrono{border:1px solid var(--line);background:var(--surface);backdrop-filter:blur(16px);padding:clamp(20px,3vw,36px)}
+.chrono-top{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.chrono-year{font:500 clamp(52px,8vw,92px)/.9 var(--sans);letter-spacing:-.05em;color:var(--ink)}
+.chrono-list{margin:0;padding:0;list-style:none;min-height:110px}
+.chrono-list li{padding:12px 0;border-top:1px solid var(--line);font-size:16px;color:#d6dce6;display:flex;gap:12px}
+.chrono-list li::before{content:"→";font-family:var(--mono);color:var(--accent)}
+.scrubber{width:100%;margin:24px 0 18px;accent-color:var(--accent);cursor:pointer;height:4px}
+.milestones{display:flex;flex-wrap:wrap;gap:8px}
+.milestones button{padding:7px 12px;border:1px solid var(--line);font:400 11px/1 var(--mono);color:var(--muted);letter-spacing:.08em;transition:all .15s}
+.milestones button:hover,.milestones button.on{border-color:var(--accent);color:var(--accent);background:rgba(200,255,46,.07)}
+
+/* Sonic Lab */
+.sonic{display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:860px){.sonic{grid-template-columns:1.25fr .75fr}}
+.deck-box{border:1px solid var(--line);background:var(--surface);backdrop-filter:blur(16px);padding:24px;display:flex;flex-direction:column;gap:16px}
+.wave-hdr{display:flex;justify-content:space-between;font:400 11px/1 var(--mono);color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+#wave{width:100%;height:126px;border:1px solid var(--line);background:#040609;display:block}
+.track-row{display:flex;gap:10px;flex-wrap:wrap}
+.track-btn{flex:1;min-width:190px;padding:14px 16px;border:1px solid var(--line);background:rgba(255,255,255,.02);text-align:left;transition:all .2s}
+.track-btn:hover{border-color:var(--line-hi);background:rgba(255,255,255,.05)}
+.track-btn.on{border-color:var(--accent);background:rgba(200,255,46,.08)}
+.track-btn b{display:block;font-size:15px;font-weight:500;margin-bottom:4px}
+.track-btn span{font:400 11px/1 var(--mono);color:var(--muted);text-transform:uppercase}
+.playlists{border:1px solid var(--line);background:var(--surface);padding:24px}
+.playlists h3{margin:0 0 16px;font:700 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pl-item{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0;border-top:1px solid var(--line);font-size:14px;transition:color .15s}
+.pl-item:hover{color:var(--accent)}
+.pl-item span{font:400 12px/1 var(--mono);color:var(--muted)}
+
+/* Kino & European Radar Map */
+.split{display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:960px){.split{grid-template-columns:.7fr 1.3fr}}
+.kino-box{border:1px solid var(--line);background:var(--surface);padding:24px;display:flex;flex-direction:column;justify-content:space-between}
+.kino-row{display:flex;justify-content:space-between;padding:12px 0;border-top:1px solid var(--line);font-size:15px}
+.kino-row span{font-family:var(--mono);color:var(--accent)}
+
+.map-card{border:1px solid var(--line);background:var(--surface);backdrop-filter:blur(16px);padding:20px;display:flex;flex-direction:column;gap:14px}
+.map-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font:400 11px/1 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.map-legend{display:flex;gap:14px;flex-wrap:wrap}
+.map-legend span{display:inline-flex;align-items:center;gap:6px}
+.map-legend i{width:7px;height:7px;border-radius:50%;display:inline-block}
+.map-stage{position:relative;width:100%;aspect-ratio:16/10;border:1px solid var(--line);background:radial-gradient(circle at 46% 48%,rgba(100,233,255,.07),transparent 65%),#04070c;overflow:hidden}
+#euMap{width:100%;height:100%;display:block}
+.map-node{cursor:pointer}
+.map-node .pulse{transform-box:fill-box;transform-origin:center;animation:mapPulse 2.6s ease-out infinite}
+@keyframes mapPulse{0%{transform:scale(1);opacity:.75}100%{transform:scale(3.1);opacity:0}}
+.map-readout{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;padding:14px 16px;border:1px solid var(--line);background:rgba(4,6,10,.75);font-family:var(--mono)}
+.map-readout b{font-family:var(--sans);font-size:18px;font-weight:500;color:var(--ink)}
+.map-readout .r-tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid var(--line-hi)}
+.map-readout p{margin:6px 0 0;width:100%;font-family:var(--sans);font-size:13.5px;color:#c3cad6}
+.map-pills{display:flex;flex-wrap:wrap;gap:6px}
+.map-pills button{padding:5px 10px;border:1px solid var(--line);font:400 11px/1 var(--mono);color:var(--muted);transition:all .15s}
+.map-pills button:hover,.map-pills button.on{border-color:var(--cyan);color:var(--ink);background:rgba(100,233,255,.1)}
+
+/* HARK_OS Terminal */
+.term{border:1px solid var(--line);background:rgba(4,6,10,.9);backdrop-filter:blur(16px);font-family:var(--mono)}
+.term-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+.term-out{padding:22px 20px;min-height:150px;font-size:14px;line-height:1.65;color:#dbe4f0;white-space:pre-wrap}
+.term-prompts{display:flex;flex-wrap:wrap;gap:8px;padding:14px 16px;border-top:1px solid var(--line);background:rgba(255,255,255,.02)}
+.term-prompts button{padding:8px 13px;border:1px solid var(--line-hi);font:400 12px/1 var(--mono);color:var(--ink);transition:all .15s}
+.term-prompts button:hover{border-color:var(--accent);color:var(--accent);background:rgba(200,255,46,.07)}
+
+/* Footer */
+footer{padding:64px 0 32px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px;border-top:1px solid var(--line)}
+.foot-links{display:flex;gap:24px;font:700 13px/1 var(--mono);text-transform:uppercase;letter-spacing:.1em}
+.foot-links a:hover{color:var(--accent)}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<canvas id="space" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+
+<header class="hud">
+  <div class="hud-left">
+    <i class="dot" aria-hidden="true"></i>
+    <span>JACCO // 2096</span>
+    <span class="hud-meta">53.20°N 5.80°E · <span id="hudClock">--:--:--</span></span>
+  </div>
+  <nav class="hud-nav" aria-label="Sections">
+    <a href="#systems">01 Systems</a>
+    <a href="#chronology">02 Archive</a>
+    <a href="#sonic">03 Audio</a>
+    <a href="#radar">04 Radar</a>
+    <a href="#hark-os">05 Hark_OS</a>
+  </nav>
+  <a class="btn-retro" href="index.html">Why so serious? ↺</a>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <div class="hero-tag"><i class="dot"></i><span>SYSTEM STATUS: WORK IN PROGRESS · SINCE 1996</span></div>
+      <h1>Jacco de Boer<span>AI Systems, Culture &amp; Direction.</span></h1>
+      <p class="hero-lead">Thirty years at the intersection of technology, media, and public culture. Building practical AI agents, civic platforms, fiction, and cross-genre sound — from Fryslân to the Balkans.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="mailto:jaccodeboer@gmail.com">Initiate Contact →</a>
+        <a class="btn-ghost" href="#systems">Explore Systems</a>
+      </div>
+    </div>
+    <div class="portrait-card">
+      <div class="portrait-frame">
+        <img src="operator-still.jpg" alt="Jacco de Boer">
+      </div>
+      <div class="portrait-hud">
+        <span>ID: <b>JAKOVSKI-96</b></span>
+        <span>LOC: <b>FRYSLÂN / NL</b></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 SYSTEMS -->
+  <section id="systems">
+    <div class="sec-head">
+      <div>
+        <div class="sec-kicker">01 // SYSTEMS &amp; BUILDS</div>
+        <h2 class="sec-title">Things people actually use.</h2>
+      </div>
+      <p class="sec-sub">AI-assisted software, civic archives, autonomous workflows, and experimental interfaces built with precision and restraint.</p>
+    </div>
+    <div class="grid" id="buildsGrid"></div>
+  </section>
+
+  <!-- 02 CHRONOLOGY -->
+  <section id="chronology">
+    <div class="sec-head">
+      <div>
+        <div class="sec-kicker">02 // CHRONOLOGY 1996—2026</div>
+        <h2 class="sec-title">Three decades of signal.</h2>
+      </div>
+      <p class="sec-sub">Scrub through the timeline or select a milestone to inspect the archive.</p>
+    </div>
+    <div class="chrono">
+      <div class="chrono-top">
+        <div class="chrono-year" id="cYear">2026</div>
+        <div class="sec-sub" id="cCount" style="text-align:right">YEAR 31 OF 31</div>
+      </div>
+      <ul class="chrono-list" id="cList"></ul>
+      <input class="scrubber" id="cRange" type="range" min="1996" max="2026" value="2026" aria-label="Select year between 1996 and 2026">
+      <div class="milestones" id="cPills"></div>
+    </div>
+  </section>
+
+  <!-- 03 SONIC LAB -->
+  <section id="sonic">
+    <div class="sec-head">
+      <div>
+        <div class="sec-kicker">03 // SONIC LAB</div>
+        <h2 class="sec-title">The Mariupol Greek Groove Kompania.</h2>
+      </div>
+      <p class="sec-sub">Cross-genre productions colliding Rebetiko, boom-bap, and late-night tape textures. Live Web Audio analyzer.</p>
+    </div>
+    <div class="sonic">
+      <div class="deck-box">
+        <div class="wave-hdr"><span>LIVE AUDIO OSCILLOSCOPE</span><span id="waveStatus">STANDBY</span></div>
+        <canvas id="wave" width="700" height="126" aria-hidden="true"></canvas>
+        <div class="track-row" id="trackRow"></div>
+      </div>
+      <div class="playlists">
+        <h3>Curated Spotify Rotations</h3>
+        <div id="plList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 KINO & EUROPEAN RADAR -->
+  <section id="radar">
+    <div class="sec-head">
+      <div>
+        <div class="sec-kicker">04 // KINO &amp; EUROPEAN RADAR</div>
+        <h2 class="sec-title">Cinema &amp; coordinates.</h2>
+      </div>
+      <p class="sec-sub">Recent Letterboxd entries alongside an interactive telemetry map of cities lived in, roots, and fiction.</p>
+    </div>
+    <div class="split">
+      <div class="kino-box">
+        <div>
+          <div class="sec-kicker" style="margin-bottom:14px">LATELY WATCHED</div>
+          <div id="kinoLately"></div>
+          <div class="sec-kicker" style="margin:24px 0 10px;color:var(--muted)">ALL-TIME FOUR</div>
+          <p id="kinoFavs" style="margin:0 0 24px;font-size:14px;color:#c3cad6"></p>
+        </div>
+        <a class="btn-ghost" href="https://letterboxd.com/Jakkovski/" target="_blank" rel="noopener">Open Letterboxd ↗</a>
+      </div>
+
+      <div class="map-card">
+        <div class="map-top">
+          <span>EUROPE // 11 ACTIVE NODES</span>
+          <div class="map-legend">
+            <span><i style="background:var(--accent)"></i>Base</span>
+            <span><i style="background:var(--cyan)"></i>Lived</span>
+            <span><i style="background:var(--gold)"></i>Roots</span>
+            <span><i style="background:var(--pink)"></i>Novel</span>
+          </div>
+        </div>
+        <div class="map-stage">
+          <svg id="euMap" viewBox="0 0 800 500" role="img" aria-label="Interactive European map of locations"></svg>
+        </div>
+        <div class="map-readout" id="mapReadout"></div>
+        <div class="map-pills" id="mapPills"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 HARK_OS -->
+  <section id="hark-os">
+    <div class="sec-head">
+      <div>
+        <div class="sec-kicker">05 // HARK_OS INTERFACE</div>
+        <h2 class="sec-title">Query the second brain.</h2>
+      </div>
+      <p class="sec-sub">A restrained terminal interface to Hark — the personal AI assistant built to manage mail, notes, and occasional philosophy.</p>
+    </div>
+    <div class="term">
+      <div class="term-bar">
+        <span>HARK_OS v2096.4 // READY</span>
+        <span>LOCAL TELEMETRY</span>
+      </div>
+      <div class="term-out" id="termOut">&gt; SYSTEM ONLINE. SELECT A QUERY BELOW TO INSPECT.</div>
+      <div class="term-prompts">
+        <button type="button" data-q="who">01 / Who is Jacco?</button>
+        <button type="button" data-q="ai">02 / Philosophy on AI</button>
+        <button type="button" data-q="signal">03 / Random Signal</button>
+        <button type="button" data-q="contact">04 / Contact Protocol</button>
+        <button type="button" data-q="wisdom">05 / Wisdom</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-links">
+      <a href="mailto:jaccodeboer@gmail.com">jaccodeboer@gmail.com</a>
+      <a href="https://www.linkedin.com/in/jacco-de-boer-53472744a/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+    <a class="btn-retro" href="index.html">Why so serious? ↺</a>
+  </footer>
+</main>
+
+<script>
+const DATA = {
+  builds: [
+    { name: "Harlinger taal", status: "NEARLY LIVE", note: "A language platform for a town that talks its own way." },
+    { name: "Beeldarchief Harlingen", status: "NEARLY LIVE", note: "The town's historical picture archive, made searchable." },
+    { name: "Social Map", status: "DEMO READY", note: "Civic navigation that starts from the resident, not the org chart." },
+    { name: "Gov Information Tool", status: "LIVE", note: "Built with AI for a government department. They actually use it." },
+    { name: "Hark (Second Brain)", status: "ACTIVE", note: "Personal AI layer for mail, calendar and notes. Asks before acting outside." },
+    { name: "Autonomous Agents", status: "ACTIVE", note: "Specialized micro-agents. Each has one job and strong opinions about it." }
+  ],
+  years: {
+    1996: ["KPN / Planet. The web arrives. So do I.", "Worked on the first online coin of the Netherlands."],
+    1997: ["The Planet years. Ran editors for Planet.nl."],
+    1998: ["The Planet years. Hetnet.nl too: its traffic grew twentyfold."],
+    1999: ["Wrote safety rules for the first online communities, with police and justice."],
+    2000: ["Coordinated training at five offices across the Netherlands."],
+    2001: ["Still online. Content, processes, people."],
+    2002: ["Radio for Omrop Fryslân. Three NL Award nominations for radio reports.", "Directed Lekker Ite mei Reitse (another nomination)."],
+    2003: ["Correspondent for the ANP."],
+    2004: ["Training and assessments for companies like AXA."],
+    2005: ["Dutch Bloggie: best music weblog of the year. Four mentions in NRC."],
+    2006: ["Froeks.TV: founded a digital youth channel for Friesland.", "PS Produkties: six TV formats sold."],
+    2007: ["PS Produkties: Frisian-language books. All sold out."],
+    2008: ["Cinema Ascona, co-founder. Guerrilla film screenings."],
+    2009: ["The idea of a European Capital of Culture was born."],
+    2010: ["Fryske Cash: Johnny Cash in Frisian. 40 artists. No subsidy.", "First iOS apps of the Leeuwarder Courant; founded Suksawat & Sikkom."],
+    2011: ["Fryske Cash on CD and vinyl. 6,000 visitors."],
+    2012: ["Notfall Filmfestival: 100 films in the old post office, sold out.", "Founded De Tale Kanaäns (dub poetry). City artist of Leeuwarden."],
+    2013: ["Bid book for Leeuwarden 2018, co-author. We won."],
+    2014: ["Literary festival in snackbar Het Vliet. Supervisory board of Fonds voor Cultuurparticipatie."],
+    2015: ["Jailbreak: tattoo festival in an old prison (PR)."],
+    2016: ["Iepen Up Live starts: a weekly live talk show."],
+    2017: ["The literary festival in the snackbar, again."],
+    2018: ["Leeuwarden-Fryslân 2018. Among the 250 projects: Tiidmasine, Wolfskers, RBxBA, Kriich."],
+    2019: ["Iepen Up Live: 40 shows done. IepenUP: 60+ events a year, stages at Oerol & Psy-Fi."],
+    2020: ["Iepen Up Live final season. Advising councils and province on participation."],
+    2021: ["Advising Tresoar & cultural institutions. First Raad voor Cultuur innovation committee."],
+    2022: ["De Baren: community art about a terp."],
+    2023: ["De Baren box set: the first podcast on vinyl, anywhere."],
+    2024: ["Producing for Arcadia. Volunteering: VluchtelingenWerk, walk-in house, meal project."],
+    2025: ["Arcadia 2025. The last of ~250 projects since the bid."],
+    2026: ["Harlingen. AI tools. This architecture."]
+  },
+  tracks: [
+    { file: "side-b.mp3", title: "Запасной ключ", note: "Side A · After Midnight" },
+    { file: "side-a.mp3", title: "Zou sti Mariúpoli", note: "Side B · Mariupol Greek Groove Kompania" }
+  ],
+  playlists: [
+    { name: "Echoes of Love", who: "Umm Kulthum", url: "https://open.spotify.com/playlist/3EHMppnKRnGYxUH6lBIVBE" },
+    { name: "Deep Elafroloika", who: "Kazantzidis", url: "https://open.spotify.com/playlist/0ym6UuZuxAIguIHGbAi59c" },
+    { name: "Hittos Frittos 2026", who: "Lvbel C5", url: "https://open.spotify.com/playlist/5vKeAvH8iRpeGG7hkjZ7L4" },
+    { name: "D J I P", who: "Hamdi, P Money", url: "https://open.spotify.com/playlist/7lSjSzNycBitLlkamoCeZv" }
+  ],
+  favourites: ["Nights of Cabiria", "Pépé le Moko", "Brazil", "Children of Men"],
+  lately: [
+    { title: "The Voice of Grass", stars: 4 },
+    { title: "GROTESQQQUE", stars: 3 },
+    { title: "Gunsmith Cats", stars: 4 }
+  ],
+  nodes: [
+    { id: "fryslan", name: "Fryslân (Leeuwarden)", cc: "NL", lat: 53.20, lon: 5.80, type: "base", label: "CURRENT BASE", note: "Everyday life. Flat, windy, quietly stubborn — working on AI tools and local culture." },
+    { id: "amsterdam", name: "Amsterdam", cc: "NL", lat: 52.37, lon: 4.90, type: "lived", label: "LIVED", note: "Years of media, internet culture, and late-night concerts." },
+    { id: "amersfoort", name: "Amersfoort", cc: "NL", lat: 52.16, lon: 5.39, type: "lived", label: "LIVED", note: "Early web chapter in the middle of the Netherlands." },
+    { id: "london", name: "London", cc: "UK", lat: 51.51, lon: -0.13, type: "lived", label: "LIVED", note: "Bassline, concrete, bookshops, and fast rain." },
+    { id: "manchester", name: "Manchester", cc: "UK", lat: 53.48, lon: -2.24, type: "lived", label: "LIVED", note: "Red brick, music heritage, and northern humour." },
+    { id: "nanterre", name: "Paris / Nanterre", cc: "FR", lat: 48.89, lon: 2.21, type: "lived", label: "LIVED", note: "Not the Paris of the postcards. Some of it never left." },
+    { id: "dijon", name: "Dijon", cc: "FR", lat: 47.32, lon: 5.04, type: "lived", label: "LIVED", note: "Burgundy limestone, narrow streets, and mustard." },
+    { id: "freiburg", name: "Freiburg im Breisgau", cc: "DE", lat: 47.99, lon: 7.84, type: "lived", label: "LIVED", note: "Edge of the Black Forest, sunniest corner of Germany." },
+    { id: "bleiburg", name: "Bleiburg", cc: "AT", lat: 46.59, lon: 14.80, type: "lived", label: "LIVED", note: "Carinthia — right on the Alpine borderland toward Slovenia." },
+    { id: "balkan", name: "Балкан", cc: "MK / SE-EU", lat: 42.00, lon: 21.43, type: "roots", label: "ROOTS", note: "Family history. Nobody leaves the table hungry. Nobody leaves the table." },
+    { id: "ukraine", name: "Оekraïne / Запоріжжя", cc: "UA", lat: 47.84, lon: 35.14, type: "novel", label: "NOVEL SETTING", note: "The novel I am writing is set in Ukraine. It argues back." }
+  ],
+  signals: [
+    "The technology is the easy part. Then people arrive.",
+    "I treat work as a puzzle. The good part is finding out why it got stuck.",
+    "Every archive is a machine for unexpected connections.",
+    "He is more curious about people than about machines. Do not tell the machines.",
+    "Literature goes well with bitterballen. Tested in a snackbar, 2014."
+  ]
+};
+
+const $ = s => document.querySelector(s);
+
+/* 1. Live HUD Clock */
+setInterval(() => { $("#hudClock").textContent = new Date().toTimeString().slice(0, 8); }, 1000);
+$("#hudClock").textContent = new Date().toTimeString().slice(0, 8);
+
+/* 2. Builds Bento Grid with hover spotlight */
+const bg = $("#buildsGrid");
+DATA.builds.forEach((b, i) => {
+  const t = document.createElement("div");
+  t.className = "tile";
+  const cls = b.status === "LIVE" || b.status === "ACTIVE" ? "badge live" : "badge";
+  t.innerHTML = `<div class="tile-top"><span>0${i + 1}</span><span class="${cls}">${b.status}</span></div><div><h3>${b.name}</h3><p>${b.note}</p></div>`;
+  t.addEventListener("pointermove", e => {
+    const r = t.getBoundingClientRect();
+    t.style.setProperty("--mx", (e.clientX - r.left) + "px");
+    t.style.setProperty("--my", (e.clientY - r.top) + "px");
+  });
+  bg.append(t);
+});
+
+/* 3. Chronology Scrubber */
+const cYear = $("#cYear"), cCount = $("#cCount"), cList = $("#cList"), cRange = $("#cRange"), cPills = $("#cPills");
+const milestones = [1996, 2002, 2006, 2010, 2012, 2014, 2018, 2023, 2026];
+function renderYear(y) {
+  y = Number(y);
+  cYear.textContent = y;
+  cCount.textContent = `YEAR ${String(y - 1995).padStart(2, "0")} OF 31`;
+  cRange.value = y;
+  const items = DATA.years[y] || ["Signal quiet. Probably building."];
+  cList.innerHTML = items.map(x => `<li>${x}</li>`).join("");
+  [...cPills.children].forEach(b => b.classList.toggle("on", Number(b.dataset.y) === y));
+}
+milestones.forEach(y => {
+  const b = document.createElement("button");
+  b.type = "button"; b.textContent = y; b.dataset.y = y;
+  b.addEventListener("click", () => renderYear(y));
+  cPills.append(b);
+});
+cRange.addEventListener("input", e => renderYear(e.target.value));
+renderYear(2026);
+
+/* 4. Sonic Lab + Real Web Audio API Oscilloscope & Spectrum */
+const audio = new Audio();
+audio.preload = "none";
+let actx = null, analyser = null, timeData = null, freqData = null;
+function initAudioGraph() {
+  if (actx) { if (actx.state === "suspended") actx.resume().catch(() => {}); return; }
+  const C = window.AudioContext || window.webkitAudioContext;
+  if (!C) return;
+  try {
+    actx = new C();
+    const src = actx.createMediaElementSource(audio);
+    analyser = actx.createAnalyser();
+    analyser.fftSize = 512;
+    analyser.smoothingTimeConstant = 0.82;
+    src.connect(analyser);
+    analyser.connect(actx.destination);
+    timeData = new Uint8Array(analyser.fftSize);
+    freqData = new Uint8Array(analyser.frequencyBinCount);
+  } catch (e) { analyser = null; }
+}
+
+let curTrack = -1, playing = false;
+const trackRow = $("#trackRow");
+DATA.tracks.forEach((tr, i) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "track-btn";
+  b.innerHTML = `<b>▶ ${tr.title}</b><span>${tr.note}</span>`;
+  b.addEventListener("click", () => {
+    initAudioGraph();
+    if (curTrack === i && playing) {
+      audio.pause(); playing = false;
+    } else {
+      if (curTrack !== i) { audio.src = tr.file; curTrack = i; }
+      if (actx && actx.state === "suspended") actx.resume().catch(() => {});
+      audio.play().catch(() => {}); playing = true;
+    }
+    refreshTracks();
+  });
+  trackRow.append(b);
+});
+audio.addEventListener("ended", () => { playing = false; refreshTracks(); });
+function refreshTracks() {
+  [...trackRow.children].forEach((b, i) => {
+    const on = playing && curTrack === i;
+    b.classList.toggle("on", on);
+    b.querySelector("b").textContent = (on ? "■ " : "▶ ") + DATA.tracks[i].title;
+  });
+  $("#waveStatus").textContent = playing ? "SIGNAL LOCKED · " + DATA.tracks[curTrack].title.toUpperCase() : "STANDBY";
+}
+const plList = $("#plList");
+DATA.playlists.forEach(p => {
+  const a = document.createElement("a");
+  a.className = "pl-item"; a.href = p.url; a.target = "_blank"; a.rel = "noopener";
+  a.innerHTML = `<b>${p.name} ↗</b><span>${p.who}</span>`;
+  plList.append(a);
+});
+
+/* 5. Kino */
+function renderKino() {
+  $("#kinoLately").innerHTML = DATA.lately.map(f =>
+    `<div class="kino-row"><b>${f.title}</b><span>${"★".repeat(Math.floor(f.stars))}${f.stars % 1 ? "½" : ""}</span></div>`
+  ).join("");
+  $("#kinoFavs").textContent = DATA.favourites.join("  ·  ");
+}
+renderKino();
+if (location.protocol.startsWith("http") && !/claude|anthropic/.test(location.hostname)) {
+  fetch("letterboxd.php", { cache: "no-store" }).then(r => r.ok ? r.json() : []).then(f => {
+    if (!Array.isArray(f) || !f.length) return;
+    DATA.lately = f.slice(0, 3).map(x => ({ title: String(x.title), stars: +x.stars || 0 }));
+    renderKino();
+  }).catch(() => {});
+}
+
+/* 6. Interactive European Telemetry Map */
+(function buildEuropeMap() {
+  const svg = $("#euMap");
+  const NS = "http://www.w3.org/2000/svg";
+  const sEl = (tag, attrs) => {
+    const e = document.createElementNS(NS, tag);
+    for (const [k, v] of Object.entries(attrs || {})) e.setAttribute(k, v);
+    return e;
+  };
+  /* Equirectangular-ish projection tuned for Europe: lon [-11..40], lat [35..60] */
+  const proj = (lon, lat) => [
+    ((lon + 11) / 51) * 760 + 20,
+    ((60 - lat) / 25) * 460 + 20
+  ];
+  const poly = pts => pts.map(([lo, la]) => proj(lo, la).map(v => v.toFixed(1)).join(",")).join(" ");
+
+  /* Subtle lat/lon tactical grid */
+  const gridG = sEl("g", { stroke: "rgba(255,255,255,.06)", "stroke-width": "1" });
+  for (let lo = -10; lo <= 40; lo += 5) {
+    const [x] = proj(lo, 50);
+    gridG.append(sEl("line", { x1: x, y1: 0, x2: x, y2: 500 }));
+  }
+  for (let la = 35; la <= 60; la += 5) {
+    const [, y] = proj(0, la);
+    gridG.append(sEl("line", { x1: 0, y1: y, x2: 800, y2: y }));
+  }
+  svg.append(gridG);
+
+  /* Minimalist Europe landmasses (lon, lat) */
+  const LAND = [
+    /* Continental Europe (Iberia -> France -> Benelux -> Germany -> Poland -> Baltics -> Ukraine -> Balkans -> Italy) */
+    [[-9.3,38.7],[-8.9,42.8],[-1.8,43.4],[-4.5,48.4],[2.0,51.0],[4.8,53.0],[8.5,54.0],[9.8,57.5],[12.5,55.7],[14.2,54.0],[19.0,54.5],[21.0,56.0],[24.5,59.4],[30.0,60.0],[39.5,58.0],[39.5,47.2],[36.5,45.2],[33.5,44.6],[30.5,46.4],[28.6,44.5],[28.0,41.2],[26.0,40.8],[23.8,37.8],[22.0,36.8],[20.0,39.5],[19.4,41.5],[15.5,44.5],[13.7,45.6],[12.3,45.4],[14.0,42.5],[18.4,40.1],[15.6,38.0],[13.5,41.2],[10.3,43.8],[8.9,44.4],[5.4,43.3],[3.1,42.4],[-0.5,38.0],[-5.6,36.0],[-8.9,37.0]],
+    /* Great Britain */
+    [[-5.5,50.1],[-3.2,51.4],[-4.8,53.3],[-3.0,54.5],[-5.0,57.8],[-3.0,58.6],[-1.8,57.5],[-1.5,55.0],[0.2,53.5],[1.7,52.5],[1.3,51.1],[-2.0,50.6]],
+    /* Ireland */
+    [[-10.0,51.8],[-9.5,54.3],[-6.0,55.2],[-5.8,53.3],[-6.4,52.2],[-8.5,51.6]],
+    /* Scandinavia southern tip */
+    [[5.0,60.0],[5.3,59.0],[8.0,58.1],[10.8,59.2],[12.8,55.5],[16.0,56.2],[18.5,59.3],[17.5,60.0]],
+    /* Sicily / Sardinia / Corsica */
+    [[12.5,37.8],[15.6,38.2],[15.1,36.7],[13.0,37.4]],
+    [[8.3,41.2],[9.7,41.1],[9.5,39.0],[8.4,39.1]],
+    [[8.6,42.9],[9.5,42.7],[9.3,41.4],[8.6,41.9]]
+  ];
+  const landG = sEl("g", { fill: "rgba(255,255,255,.045)", stroke: "rgba(100,233,255,.26)", "stroke-width": "1.2", "stroke-linejoin": "round" });
+  LAND.forEach(p => landG.append(sEl("polygon", { points: poly(p) })));
+  svg.append(landG);
+
+  const COLORS = { base: "#c8ff2e", lived: "#64e9ff", roots: "#f6c838", novel: "#ff2e88" };
+  const base = DATA.nodes[0], [bx, by] = proj(base.lon, base.lat);
+
+  /* Curved telemetry arcs from Fryslân to every other node */
+  const arcG = sEl("g", { fill: "none" });
+  DATA.nodes.slice(1).forEach(n => {
+    const [nx, ny] = proj(n.lon, n.lat);
+    const mx = (bx + nx) / 2, my = (by + ny) / 2 - Math.hypot(nx - bx, ny - by) * 0.16;
+    arcG.append(sEl("path", {
+      d: `M${bx.toFixed(1)},${by.toFixed(1)} Q${mx.toFixed(1)},${my.toFixed(1)} ${nx.toFixed(1)},${ny.toFixed(1)}`,
+      stroke: COLORS[n.type], "stroke-opacity": ".28", "stroke-width": "1.1", "stroke-dasharray": "3 4"
+    }));
+  });
+  svg.append(arcG);
+
+  /* Interactive glowing nodes + pills */
+  const nodesG = sEl("g", {});
+  const pills = $("#mapPills");
+  const nodeEls = new Map();
+
+  function selectNode(id) {
+    const n = DATA.nodes.find(x => x.id === id) || DATA.nodes[0];
+    const col = COLORS[n.type];
+    $("#mapReadout").innerHTML = `
+      <div><b>${n.name}</b> <span style="color:var(--muted);font-size:12px">(${n.cc} · ${n.lat.toFixed(2)}°N, ${Math.abs(n.lon).toFixed(2)}°${n.lon < 0 ? "W" : "E"})</span></div>
+      <span class="r-tag" style="color:${col};border-color:${col}">${n.label}</span>
+      <p>${n.note}</p>`;
+    [...pills.children].forEach(b => b.classList.toggle("on", b.dataset.id === n.id));
+    nodeEls.forEach((el, k) => el.setAttribute("r", k === n.id ? "6.5" : "4.2"));
+  }
+
+  DATA.nodes.forEach((n, idx) => {
+    const [x, y] = proj(n.lon, n.lat), col = COLORS[n.type];
+    const g = sEl("g", { class: "map-node", tabindex: "0", role: "button", "aria-label": n.name + ", " + n.label });
+    const pulse = sEl("circle", { cx: x, cy: y, r: 5, fill: "none", stroke: col, "stroke-width": "1.3", class: "pulse" });
+    pulse.style.animationDelay = (idx * 0.23) + "s";
+    const core = sEl("circle", { cx: x, cy: y, r: 4.2, fill: col, stroke: "#050608", "stroke-width": "1.5" });
+    const hit = sEl("circle", { cx: x, cy: y, r: 13, fill: "transparent" });
+    g.append(pulse, core, hit);
+    if (n.type !== "lived" || n.id === "london" || n.id === "nanterre" || n.id === "freiburg" || n.id === "bleiburg") {
+      const lbl = sEl("text", { x: x + 9, y: y + 3, fill: "rgba(243,245,248,.78)", "font-family": "Courier Prime,monospace", "font-size": "10.5" });
+      lbl.textContent = n.name.split(" ")[0];
+      g.append(lbl);
+    }
+    g.addEventListener("pointerenter", () => selectNode(n.id));
+    g.addEventListener("click", () => selectNode(n.id));
+    g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectNode(n.id); } });
+    nodesG.append(g);
+    nodeEls.set(n.id, core);
+
+    const pill = document.createElement("button");
+    pill.type = "button"; pill.dataset.id = n.id; pill.textContent = n.name.split(" (")[0];
+    pill.addEventListener("click", () => selectNode(n.id));
+    pills.append(pill);
+  });
+  svg.append(nodesG);
+  selectNode("fryslan");
+})();
+
+/* 7. HARK_OS Terminal */
+const WISDOM = [
+  { who: "Guy Debord", q: "The spectacle is not a collection of images, but a social relation among people, mediated by images." },
+  { who: "Nikolai Gogol", q: "It is no use to blame the looking glass if your face is awry." },
+  { who: "Slavoj Žižek", q: "We feel free because we lack the very language to articulate our unfreedom." },
+  { who: "Isaac Asimov", q: "The saddest aspect of life right now is that science gathers knowledge faster than society gathers wisdom." },
+  { who: "Eimear McBride", q: "I don't think there's any point in writing if you're not going to take risks." },
+  { who: "Chuck D", q: "Rap is black America's CNN." },
+  { who: "Pier Paolo Pasolini", q: "Nothing is more anarchic than power." },
+  { who: "Catherine Malabou", q: "Plasticity is the capacity to receive form and the capacity to give form." },
+  { who: "Alain Badiou", q: "To love is to struggle, beyond solitude, with everything in the world that can animate existence." },
+  { who: "Jacques Rancière", q: "Politics is about the distribution of the sensible." },
+  { who: "Frédéric Gros", q: "Walking is not a sport." },
+  { who: "Homer Simpson", q: "Trying is the first step towards failure." }
+];
+
+let sigI = 0, lastWis = -1, typeT = null;
+function streamOut(text) {
+  clearInterval(typeT);
+  const out = $("#termOut");
+  let i = 0; out.textContent = "";
+  typeT = setInterval(() => {
+    out.textContent = text.slice(0, i += 3);
+    if (i >= text.length) { out.textContent = text; clearInterval(typeT); }
+  }, 14);
+}
+const REPLIES = {
+  who: "> QUERY: IDENTITY\nJacco de Boer (Leeuwarden / Harlingen, NL).\nCultural producer, creative technologist, writer and musician.\nOnline since 1996. Co-author of the Leeuwarden-Fryslân 2018 bid book; ~250 cultural projects delivered since.",
+  ai: "> QUERY: AI PHILOSOPHY\nBuild small, sharp tools that people actually use — civic archives, resident-first maps, personal second brains.\nKeep humans in the loop. Never ship vaporware.",
+  contact: "> QUERY: CONTACT PROTOCOL\nMAIL     : jaccodeboer@gmail.com\nLINKEDIN : linkedin.com/in/jacco-de-boer-53472744a/\nSTATUS   : Open to sharp collaborations and conversations."
+};
+document.querySelectorAll(".term-prompts button").forEach(b => {
+  b.addEventListener("click", () => {
+    const q = b.dataset.q;
+    if (q === "signal") {
+      streamOut("> SIGNAL #" + ((sigI % DATA.signals.length) + 1) + "\n" + DATA.signals[sigI++ % DATA.signals.length]);
+    } else if (q === "wisdom") {
+      let idx;
+      do { idx = Math.floor(Math.random() * WISDOM.length); } while (idx === lastWis && WISDOM.length > 1);
+      lastWis = idx;
+      const w = WISDOM[idx];
+      streamOut(`> WISDOM // ${w.who.toUpperCase()}\n"${w.q}"`);
+    } else {
+      streamOut(REPLIES[q]);
+    }
+  });
+});
+
+/* 8. Interactive 3D Spatial Wireframe Torus + Real-time Audio Oscilloscope Loop */
+const cv = $("#space"), g = cv.getContext("2d");
+const wv = $("#wave"), wg = wv.getContext("2d");
+let W = 0, H = 0, mx = 0, my = 0, tx = 0, ty = 0;
+function resize() {
+  const dpr = Math.min(2, devicePixelRatio || 1);
+  W = innerWidth; H = innerHeight;
+  cv.width = W * dpr; cv.height = H * dpr;
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+resize(); addEventListener("resize", resize);
+addEventListener("pointermove", e => { tx = (e.clientX / W - .5) * 2; ty = (e.clientY / H - .5) * 2; }, { passive: true });
+
+const PTS = [];
+const R1 = 220, R2 = 82;
+for (let u = 0; u < 28; u++) {
+  for (let v = 0; v < 14; v++) {
+    const a = (u / 28) * Math.PI * 2, b = (v / 14) * Math.PI * 2;
+    PTS.push([
+      (R1 + R2 * Math.cos(b)) * Math.cos(a),
+      (R1 + R2 * Math.cos(b)) * Math.sin(a),
+      R2 * Math.sin(b)
+    ]);
+  }
+}
+
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function frame(now) {
+  mx += (tx - mx) * .05; my += (ty - my) * .05;
+  g.clearRect(0, 0, W, H);
+  const t = reduced ? 0 : now * .00028;
+  const rx = t * .7 + my * .45, ry = t + mx * .55;
+  const cx = W * .68, cy = H * .46 - scrollY * .08;
+  const cX = Math.cos(rx), sX = Math.sin(rx), cY = Math.cos(ry), sY = Math.sin(ry);
+
+  g.fillStyle = "rgba(100,233,255,.55)";
+  g.strokeStyle = "rgba(255,255,255,.07)";
+  g.lineWidth = 1;
+
+  const proj = [];
+  for (let i = 0; i < PTS.length; i++) {
+    let [x, y, z] = PTS[i];
+    const x1 = x * cY - z * sY, z1 = x * sY + z * cY;
+    const y2 = y * cX - z1 * sX, z2 = y * sX + z1 * cX;
+    const sc = 620 / (620 + z2);
+    const px = cx + x1 * sc, py = cy + y2 * sc;
+    proj.push([px, py, sc]);
+    const r = Math.max(.8, sc * 1.6);
+    g.fillRect(px, py, r, r);
+  }
+  g.beginPath();
+  for (let u = 0; u < 28; u++) {
+    for (let v = 0; v < 14; v++) {
+      const i = u * 14 + v, p = proj[i], p2 = proj[u * 14 + ((v + 1) % 14)], p3 = proj[((u + 1) % 28) * 14 + v];
+      g.moveTo(p[0], p[1]); g.lineTo(p2[0], p2[1]);
+      g.moveTo(p[0], p[1]); g.lineTo(p3[0], p3[1]);
+    }
+  }
+  g.stroke();
+
+  /* Real-time Audio Oscilloscope + Frequency Bars */
+  wg.clearRect(0, 0, 700, 126);
+  wg.strokeStyle = "rgba(255,255,255,.06)"; wg.lineWidth = 1;
+  wg.beginPath(); wg.moveTo(0, 63); wg.lineTo(700, 63); wg.stroke();
+
+  let hasLiveSignal = false;
+  if (playing && analyser && timeData && freqData) {
+    analyser.getByteTimeDomainData(timeData);
+    analyser.getByteFrequencyData(freqData);
+    for (let i = 0; i < timeData.length; i++) { if (Math.abs(timeData[i] - 128) > 1) { hasLiveSignal = true; break; } }
+  }
+
+  if (hasLiveSignal) {
+    /* Subtle cyan frequency spectrum bars in background */
+    const bars = 48, step = Math.floor(freqData.length * 0.65 / bars), bw = 700 / bars;
+    wg.fillStyle = "rgba(100,233,255,.16)";
+    for (let i = 0; i < bars; i++) {
+      const h = (freqData[i * step] / 255) * 95;
+      wg.fillRect(i * bw + 2, 126 - h, bw - 4, h);
+    }
+    /* Crisp live PCM oscilloscope line */
+    wg.strokeStyle = "#c8ff2e";
+    wg.lineWidth = 2;
+    wg.beginPath();
+    const slice = 700 / timeData.length;
+    for (let i = 0; i < timeData.length; i++) {
+      const v = (timeData[i] - 128) / 128;
+      const y = 63 + v * 52;
+      if (i === 0) wg.moveTo(0, y); else wg.lineTo(i * slice, y);
+    }
+    wg.stroke();
+  } else {
+    /* Standby or file:// fallback */
+    wg.strokeStyle = playing ? "#c8ff2e" : "rgba(255,255,255,.22)";
+    wg.lineWidth = playing ? 2 : 1.2;
+    wg.beginPath();
+    for (let x = 0; x <= 700; x += 5) {
+      const amp = playing ? (26 + Math.sin(now * .009 + x * .05) * 16) : 3;
+      const y = 63 + Math.sin(x * .035 + now * (playing ? .015 : .002)) * amp * Math.sin((x / 700) * Math.PI);
+      if (x === 0) wg.moveTo(x, y); else wg.lineTo(x, y);
+    }
+    wg.stroke();
+  }
+
+  if (!reduced) requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
