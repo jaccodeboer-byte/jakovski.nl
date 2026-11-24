@@ -617,7 +617,7 @@ body.party #dancers{display:block}
 <button type="button" id="singHint" hidden>♪ he is singing on the tv ↑</button>
 <div class="vh" id="announce" aria-live="polite"></div>
 
-<noscript><div style="padding:24px;color:#efe6cf"><h1>Jacco, a work in progress</h1><p>This table needs JavaScript. Short version: Jacco has worked with technology since 1996, builds with AI (agents, a second brain, an assistant called Hark), writes fiction and makes music as The Mariupol Greek Groove Kompania.</p></div></noscript>
+<noscript><div style="padding:24px;color:#efe6cf"><h1>Jacco, a work in progress</h1><p>This table needs JavaScript. Short version: Jacco has worked with technology since 1996, builds with AI (agents, a second brain, a machine called FALMAT-96), writes fiction and makes music as The Mariupol Greek Groove Kompania.</p></div></noscript>
 
 <script>
 /* =====================================================================
@@ -660,7 +660,7 @@ const CONTENT = {
     { name: "Beeldarchief Harlingen", note: "the town's picture archive, searchable. Nearly live." },
     { name: "A social map", note: "that starts from the resident, not from the org chart. Demo ready." },
     { name: "An information tool", note: "built with AI for a government department. They actually use it." },
-    { name: "Hark", note: "a second brain for mail, calendar and notes. It asks before it does anything outside." },
+    { name: "FALMAT", note: "a second brain for mail, calendar and notes. It asks before it does anything outside." },
     { name: "Agents", note: "several. Each has one job and strong opinions about it." },
     { name: "A coffee-reading machine", note: "nobody asked for it. It works." },
     { name: "This table", note: "you are sitting at it." }
@@ -1466,7 +1466,7 @@ let harkDieT = null;
 $$("#strip .plug").forEach(btn => btn.addEventListener("click", () => {
   const k = btn.dataset.plug, on = !PLUG[k]; PLUG[k] = on;
   btn.classList.toggle("out", !on); btn.setAttribute("aria-pressed", !on);
-  btn.setAttribute("aria-label", (on ? "Unplug " : "Plug in ") + (k === "tv" ? "television" : k === "hark" ? "Hark" : "orange cable"));
+  btn.setAttribute("aria-label", (on ? "Unplug " : "Plug in ") + (k === "tv" ? "television" : k === "hark" ? "FALMAT-96" : "orange cable"));
   sfx("thunk"); { const t0 = performance.now(); const track = () => { cables(); if (performance.now() - t0 < 280) requestAnimationFrame(track); }; requestAnimationFrame(track); }
   if (k === "tv") {
     $("#tv").classList.toggle("off", !on);
