@@ -444,6 +444,8 @@ body.party #dancers{display:block}
 @media (prefers-reduced-motion:reduce){#fan.max,.glint,.draft *,#phone.buzz,.roll,#lamp,#lamp.zap,#paper.windy,#paper.windmax,#cup.clink,.tick span,#hark .led,#cass.playing .reel{animation:none}.tick span{padding-left:8px}*{transition:none!important}}
 #seriousBtn{z-index:26;width:118px;height:118px;border-radius:50%;display:grid;place-items:center;text-align:center;padding:10px;background:radial-gradient(circle at 30% 25%,#2d3542 0%,#101318 65%,#050608 100%);color:#f4f6f8;border:2px solid rgba(255,255,255,.75);outline:2.4px solid #160d09;font:700 13px/1.2 var(--typed);text-transform:uppercase;letter-spacing:.14em;text-decoration:none;box-shadow:5px 7px 0 #140b08,0 12px 22px rgba(0,0,0,.6);transition:transform .14s,border-color .2s,box-shadow .2s}
 #seriousBtn:hover{transform:rotate(calc(var(--r,0)*1deg)) scale(1.08);border-color:#fff;box-shadow:5px 7px 0 #140b08,0 0 24px rgba(255,255,255,.28)}
+#backSerious{z-index:28;display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:#070a0f;color:#c8ff2e;border:1.5px solid #c8ff2e;outline:2px solid #160d09;font:700 12px/1 var(--typed);text-transform:uppercase;letter-spacing:.12em;text-decoration:none;box-shadow:4px 5px 0 #140b08,0 0 18px rgba(200,255,46,.22);transition:transform .14s,background .18s,color .18s}
+#backSerious:hover{background:#c8ff2e;color:#050608;transform:rotate(calc(var(--r,0)*1deg)) translateY(-2px) scale(1.04)}
 </style>
 </head>
 <body>
@@ -460,6 +462,7 @@ body.party #dancers{display:block}
     <h1>Jacco</h1>
     <span class="tapelabel">a work in progress</span>
   </header>
+  <a class="obj" id="backSerious" href="index.html" style="--x:54;--y:286;--r:-2;--mx:14;--my:16;--mr:-1">← Back to serious</a>
 
   <p class="obj uv" style="--x:56;--y:322;--r:-6;--mx:20;--my:252;--mr:-4">you turned off the light. good.<br>now we can talk.</p>
   <p class="obj uv pk" style="--x:250;--y:868;--r:4;--mx:30;--my:1674;--mr:3">the future has been tried before. parts of it worked.</p>
